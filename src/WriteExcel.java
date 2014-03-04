@@ -1,6 +1,5 @@
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Locale;
 
 import jxl.CellView;
@@ -36,14 +35,14 @@ public class WriteExcel {
 	WritableWorkbook workbook;
 	WritableSheet sheet;
 
-	public void write() throws IOException, WriteException {
+	public void initializeExcelSheet() throws IOException, WriteException {
 		File file = new File(inputFile);
 		WorkbookSettings wbSettings = new WorkbookSettings();
 
 		wbSettings.setLocale(new Locale("en", "EN"));
 
 		workbook = Workbook.createWorkbook(file, wbSettings);
-		workbook.createSheet("AAPL", 0);
+		workbook.createSheet(this.companyName, 0);
 		sheet = workbook.getSheet(0);
 		// createLabel(excelSheet);
 		writeFeatures();
@@ -109,47 +108,42 @@ public class WriteExcel {
 	void addNewDay(String day, double[] val) throws RowsExceededException,
 			WriteException, IOException {
 
-		int row = sheet.getRows() + 1;
+		int row = sheet.getRows();
 		Label label = new Label(0, row, day);
 		sheet.addCell(label);
 
 		for (int j = 0; j < val.length; j++)
 			addNumber(j + 1, row, (int) val[j]);
 
-		workbook.write();
 	}
 
-	void close() throws WriteException, IOException {
+	void writeAndClose() throws WriteException, IOException {
+		workbook.write();
 		workbook.close();
 	}
 
-	public void calcCorrel() throws WriteException {
-		addLabel(0, 11, "correlation");
+	void calcCorrel() throws WriteException {
+		int curRow = sheet.getRows();
+		addLabel(0, curRow, "correlation");
 		StringBuffer buf = new StringBuffer();
 		buf.append("CORREL(A1:A10,B1:B10)");
-		Formula f = new Formula(1, 11, buf.toString());
+		Formula f = new Formula(1, curRow, buf.toString());
 		sheet.addCell(f);
 		buf = new StringBuffer();
 	}
 
 	private void addCaption(int column, int row, String s)
 			throws RowsExceededException, WriteException {
-		Label label;
-		label = new Label(column, row, s, timesBoldUnderline);
-		sheet.addCell(label);
+		sheet.addCell(new Label(column, row, s, timesBoldUnderline));
 	}
 
 	private void addNumber(int column, int row, Integer integer)
 			throws WriteException, RowsExceededException {
-		Number number;
-		number = new Number(column, row, integer);
-		sheet.addCell(number);
+		sheet.addCell(new Number(column, row, integer));
 	}
 
 	private void addLabel(int column, int row, String s) throws WriteException,
 			RowsExceededException {
-		Label label;
-		label = new Label(column, row, s, times);
-		sheet.addCell(label);
+		sheet.addCell(new Label(column, row, s, times));
 	}
 }

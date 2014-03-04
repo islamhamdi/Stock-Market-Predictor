@@ -2,7 +2,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.TreeMap;
 
 import org.gephi.data.attributes.api.AttributeController;
@@ -301,19 +300,20 @@ public class StatisticsTool {
 		GraphDistance distance = new GraphDistance();
 		distance.execute(graphModel, attributeModel);
 		graphFeatures.setMAX_DIST(distance.getDiameter());
-		System.out.println(distance.getReport());
+		// System.out.println(distance.getReport());
 		graphFeatures.printGraphFeatures();
 	}
 
 	String[] getFeaturesList() {
-		String[] gphFeatures = graphFeatures.getGraphFeaturesList();
 		String[] actFeatures = activityFeatures.getActivityFeaturesList();
+		String[] gphFeatures = graphFeatures.getGraphFeaturesList();
 		featuresList = new String[gphFeatures.length + actFeatures.length];
 		int index = 0;
-		for (int i = 0; i < gphFeatures.length; i++)
-			featuresList[index++] = gphFeatures[i];
 		for (int i = 0; i < actFeatures.length; i++)
 			featuresList[index++] = actFeatures[i];
+
+		for (int i = 0; i < gphFeatures.length; i++)
+			featuresList[index++] = gphFeatures[i];
 		return featuresList;
 	}
 
