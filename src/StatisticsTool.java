@@ -1,6 +1,4 @@
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
@@ -23,6 +21,7 @@ import twitter4j.URLEntity;
 import twitter4j.UserMentionEntity;
 
 public class StatisticsTool {
+
 	static class NodeIdentifier {
 		Node node;
 		String nodeIndex;
@@ -38,20 +37,47 @@ public class StatisticsTool {
 		}
 	}
 
-	private Parser streamer;
-	public static Graph graph;
+	private int nodeCounter, edgeCounter, totalFollowersCounter,
+			totalFriendsCounter;
+
 	private TreeMap<Long, NodeIdentifier> nodeMap, usersMap;
 	private TreeMap<String, NodeIdentifier> hashtagsMap, urlsMap;
 	private ArrayList<NodeIdentifier> nodesList;
-	private int nodeCounter, edgeCounter, totalFollowersCounter,
-			totalFriendsCounter;
-	private FileOutputStream fout;
-	private ObjectOutputStream oos;
+	private double[] featureValues;
+
+	private Parser streamer;
+	private Graph graph;
 	private GraphModel graphModel;
-	private ActivityFeatures activityFeatures = new ActivityFeatures();
-	private GraphFeatures graphFeatures = new GraphFeatures();
-	private String[] featuresList;
+	private ActivityFeatures activityFeatures;
+	private GraphFeatures graphFeatures;
 	private AttributeModel attributeModel;
+
+	public StatisticsTool(String path) throws IOException {
+		this.nodeMap = new TreeMap<Long, NodeIdentifier>();
+		this.hashtagsMap = new TreeMap<String, NodeIdentifier>();
+		this.urlsMap = new TreeMap<String, NodeIdentifier>();
+		this.usersMap = new TreeMap<Long, NodeIdentifier>();
+		this.nodesList = new ArrayList<NodeIdentifier>();
+		this.graphFeatures = new GraphFeatures();
+		this.activityFeatures = new ActivityFeatures();
+		this.nodeCounter = this.edgeCounter = this.totalFollowersCounter = this.totalFriendsCounter = 0;
+		this.featureValues = null;
+
+		// initialize parser
+		this.streamer = new Parser(path);
+		this.streamer.initializeParser();
+
+		ProjectController pc = Lookup.getDefault().lookup(
+				ProjectController.class);
+		pc.newProject();
+		GraphController graphController = Lookup.getDefault().lookup(
+				GraphController.class);
+		attributeModel = Lookup.getDefault().lookup(AttributeController.class)
+				.getModel();
+		graphModel = graphController.getModel();
+		graph = graphModel.getGraph();
+
+	}
 
 	private void handleUsers(Status curTweet, Node tweetNode) {
 		// Creator user
@@ -234,7 +260,6 @@ public class StatisticsTool {
 			// Handle created/mentioned users
 			handleUsers(curTweet, tweetNID.node);
 		}
-		oos.close();
 	}
 
 	void addSimilarityNodes() {
@@ -278,16 +303,22 @@ public class StatisticsTool {
 		}
 	}
 
-	void buildActivityFeatures() {
+	void buildActivityFeatures() throws Exception {
+		if (activityFeatures == null)
+			throw new Exception("Activity features are not set !");
+
 		activityFeatures.setTHTG(hashtagsMap.size());
 		if (!usersMap.isEmpty()) {
 			activityFeatures.setUFLW(totalFollowersCounter / usersMap.size());
 			activityFeatures.setUFRN(totalFriendsCounter / usersMap.size());
 		}
-		activityFeatures.printActivityFeatures();
+		// activityFeatures.printActivityFeatures();
 	}
 
-	void buildGraphFeatures() {
+	void buildGraphFeatures() throws Exception {
+		if (graphFeatures == null)
+			throw new Exception("Graph features are not set !");
+
 		graphFeatures.setNUM_NODES(nodeCounter);
 		graphFeatures.setNUM_EDGES(edgeCounter);
 
@@ -301,69 +332,24 @@ public class StatisticsTool {
 		distance.execute(graphModel, attributeModel);
 		graphFeatures.setMAX_DIST(distance.getDiameter());
 		// System.out.println(distance.getReport());
-		graphFeatures.printGraphFeatures();
+		// graphFeatures.printGraphFeatures();
 	}
 
-	String[] getFeaturesList() {
-		String[] actFeatures = activityFeatures.getActivityFeaturesList();
-		String[] gphFeatures = graphFeatures.getGraphFeaturesList();
-		featuresList = new String[gphFeatures.length + actFeatures.length];
-		int index = 0;
-		for (int i = 0; i < actFeatures.length; i++)
-			featuresList[index++] = actFeatures[i];
+	double[] getFeaturesValues() throws Exception {
+		if (activityFeatures.getValues() == null
+				|| graphFeatures.getValues() == null)
+			throw new Exception("Features values are not set !");
 
-		for (int i = 0; i < gphFeatures.length; i++)
-			featuresList[index++] = gphFeatures[i];
-		return featuresList;
-	}
-
-	double[] getFeatureValues() {
-		int index = 0;
-		double[] gphValues = graphFeatures.getValues();
-		double[] actValues = activityFeatures.getValues();
-		double[] featureValues = new double[gphValues.length + actValues.length];
-
-		for (int i = 0; i < actValues.length; i++)
-			featureValues[index++] = actValues[i];
-
-		for (int i = 0; i < gphValues.length; i++)
-			featureValues[index++] = gphValues[i];
-
+		if (featureValues == null) {
+			featureValues = Helper.combineDoubles(activityFeatures.getValues(),
+					graphFeatures.getValues());
+		}
 		return featureValues;
 	}
 
-	void initialize(String path) throws IOException {
-
-		// initialize parser
-		streamer = new Parser(path);
-		streamer.initializeParser();
-
-		// initialize graph topology
-		nodeMap = new TreeMap<Long, NodeIdentifier>();
-		hashtagsMap = new TreeMap<String, NodeIdentifier>();
-		urlsMap = new TreeMap<String, NodeIdentifier>();
-		usersMap = new TreeMap<Long, NodeIdentifier>();
-		nodesList = new ArrayList<NodeIdentifier>();
-		graphFeatures = new GraphFeatures();
-		activityFeatures = new ActivityFeatures();
-		fout = new FileOutputStream("/home/islamhamdi/Desktop/artificial.txt");
-		oos = new ObjectOutputStream(fout);
-		nodeCounter = edgeCounter = totalFollowersCounter = totalFriendsCounter = 0;
-
-		ProjectController pc = Lookup.getDefault().lookup(
-				ProjectController.class);
-		pc.newProject();
-		GraphController graphController = Lookup.getDefault().lookup(
-				GraphController.class);
-		attributeModel = Lookup.getDefault().lookup(AttributeController.class)
-				.getModel();
-		graphModel = graphController.getModel();
-		graph = graphModel.getGraph();
-	}
-
-	public static void main(String[] args) throws IOException {
-		StatisticsTool gexfGraph = new StatisticsTool();
-		gexfGraph.initialize("/home/islamhamdi/Desktop/TwitterStockData");
+	public static void main(String[] args) throws Exception {
+		StatisticsTool gexfGraph = new StatisticsTool(
+				"/home/islamhamdi/Desktop/TwitterStockData");
 		gexfGraph.parseData();
 		gexfGraph.addSimilarityNodes();
 		gexfGraph.buildActivityFeatures();

@@ -3,6 +3,8 @@ public class GraphFeatures {
 	private int NUM_EDGES; // number of edges
 	private int NUM_CMP; // number of connected components
 	private double MAX_DIST; // max diameter for any component
+	private static final String[] GRAPH_FEATURES_NAMES = new String[] {
+			"NUM_NODES", "NUM_EDGES", "NUM_CMP", "MAX_DIST" };
 
 	public GraphFeatures() {
 		this.NUM_NODES = 0;
@@ -50,8 +52,8 @@ public class GraphFeatures {
 				+ "]";
 	}
 
-	public String[] getGraphFeaturesList() {
-		return new String[] { "NUM_NODES", "NUM_EDGES", "NUM_CMP", "MAX_DIST" };
+	public static String[] getGraphFeaturesNames() {
+		return GRAPH_FEATURES_NAMES;
 	}
 
 	public double[] getValues() {

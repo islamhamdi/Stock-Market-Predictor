@@ -9,6 +9,8 @@ public class ActivityFeatures {
 	private int TURL; // number of tweets with URLs
 	private int UFLW; // avg number of followers for user
 	private int UID; // number diff users that posted a tweet
+	private static String[] ACTIVITY_FEATURES_NAMES = new String[] { "RTID",
+			"RTU", "TGEO", "TID", "TSUM", "UFRN", "THTG", "TURL", "UFLW", "UID" };
 
 	public ActivityFeatures() {
 		this.RTID = 0;
@@ -111,9 +113,8 @@ public class ActivityFeatures {
 				+ ", UID=" + UID + "]";
 	}
 
-	public String[] getActivityFeaturesList() {
-		return new String[] { "RTID", "RTU", "TGEO", "TID", "TSUM", "UFRN",
-				"THTG", "TURL", "UFLW", "UID" };
+	public static String[] getActivityFeaturesList() {
+		return ACTIVITY_FEATURES_NAMES;
 	}
 
 	public double[] getValues() {
