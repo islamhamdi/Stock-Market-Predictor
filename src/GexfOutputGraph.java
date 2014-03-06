@@ -52,11 +52,7 @@ public class GexfOutputGraph {
 	private TreeMap<String, NodeIdentifier> urlsMap;
 	private TreeMap<Long, NodeIdentifier> usersMap;
 	private ArrayList<NodeIdentifier> nodesList;
-	private int nodeCounter, edgeCounter, totalFollowersCounter,
-			totalFriendsCounter;
-	private FileOutputStream fout;
-	private ObjectOutputStream oos;
-	private ActivityFeatures features;
+	private int nodeCounter, edgeCounter;
 
 	private void generateGexfFile() {
 		StaxGraphWriter graphWriter = new StaxGraphWriter();
@@ -88,14 +84,6 @@ public class GexfOutputGraph {
 					.setNodeShape(Constants.USER_NODE_SHAPE);
 			userNID.setText(curTweet.getUser().getScreenName());
 			usersMap.put(creatorUserID, userNID);
-
-			// increment number of diff users that have re-tweeted
-			if (curTweet.isRetweet())
-				features.incRTU();
-
-			features.incUID();
-			totalFollowersCounter += curTweet.getUser().getFollowersCount();
-			totalFriendsCounter += curTweet.getUser().getFriendsCount();
 		}
 
 		tweetNode.connectTo("" + (edgeCounter++), "Creates", userNID.node);
@@ -129,9 +117,6 @@ public class GexfOutputGraph {
 					tweetNode.connectTo("" + (edgeCounter++), "Mentioned",
 							curUserNID.node);
 			}
-
-			// tweets that mention any user
-			features.incTUSM();
 		}
 	}
 
@@ -175,8 +160,6 @@ public class GexfOutputGraph {
 				}
 			}
 
-			// number of tweets with URLs
-			features.incTURL();
 		}
 	}
 
@@ -216,7 +199,6 @@ public class GexfOutputGraph {
 
 		Status curTweet;
 		while ((curTweet = streamer.getNextStatus()) != null) {
-
 			// TWEET Node
 			Long tweetID = curTweet.getId();
 
@@ -237,12 +219,6 @@ public class GexfOutputGraph {
 					tweetNID.node.connectTo("" + (edgeCounter++), "Retweet",
 							origTweetNID.node);
 				}
-				features.incRTID(); // increment number of re-tweets
-			} else {
-				features.incTID();// increment number of tweets
-
-				if (curTweet.getGeoLocation() != null)
-					features.incTGEO();// increment #tweets with geo-location
 			}
 
 			// Check for hashTag, financial symbols
@@ -254,7 +230,6 @@ public class GexfOutputGraph {
 			// Handle created/mentioned users
 			handleUsers(curTweet, tweetNID.node);
 		}
-		oos.close();
 	}
 
 	private void addSimilarityNodes() {
@@ -300,15 +275,6 @@ public class GexfOutputGraph {
 		}
 	}
 
-	private void buildActivityFeatures() {
-		features.setTHTG(hashtagsMap.size());
-		if (!usersMap.isEmpty()) {
-			features.setUFLW(totalFollowersCounter / usersMap.size());
-			features.setUFRN(totalFriendsCounter / usersMap.size());
-		}
-		features.printActivityFeatures();
-	}
-
 	private void initialize(String path, EdgeType graphType, Mode graphMode)
 			throws IOException {
 
@@ -322,10 +288,7 @@ public class GexfOutputGraph {
 		urlsMap = new TreeMap<String, NodeIdentifier>();
 		usersMap = new TreeMap<Long, NodeIdentifier>();
 		nodesList = new ArrayList<NodeIdentifier>();
-		fout = new FileOutputStream("/home/islamhamdi/Desktop/artificial.txt");
-		oos = new ObjectOutputStream(fout);
-		features = new ActivityFeatures();
-		nodeCounter = edgeCounter = totalFollowersCounter = totalFriendsCounter = 0;
+		nodeCounter = edgeCounter = 0;
 
 		// gexf initialization
 		gexf = new GexfImpl();
@@ -343,11 +306,11 @@ public class GexfOutputGraph {
 
 	public static void main(String[] args) throws IOException {
 		GexfOutputGraph gexfGraph = new GexfOutputGraph();
-		gexfGraph.initialize("/home/islamhamdi/Desktop/TwitterStockData",
+		gexfGraph.initialize(
+				"/home/islamhamdi/Desktop/TwitterStockData/$AAPL/27-02-2014",
 				EdgeType.UNDIRECTED, Mode.STATIC);
 		gexfGraph.parseData();
-		gexfGraph.addSimilarityNodes();
-		gexfGraph.buildActivityFeatures();
+		// gexfGraph.addSimilarityNodes();
 		gexfGraph.generateGexfFile();
 	}
 }

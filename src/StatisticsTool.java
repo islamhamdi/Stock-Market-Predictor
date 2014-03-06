@@ -75,8 +75,53 @@ public class StatisticsTool {
 		attributeModel = Lookup.getDefault().lookup(AttributeController.class)
 				.getModel();
 		graphModel = graphController.getModel();
-		graph = graphModel.getGraph();
+		graph = graphModel.getUndirectedGraph();
+	}
 
+	void parseData() throws IOException {
+
+		Status curTweet;
+		while ((curTweet = streamer.getNextStatus()) != null) {
+
+			// TWEET Node
+			Long tweetID = curTweet.getId();
+			NodeIdentifier tweetNID = new NodeIdentifier(graphModel.factory()
+					.newNode("" + nodeCounter), "" + (nodeCounter++));
+
+			tweetNID.setText(curTweet.getText());
+			nodeMap.put(tweetID, tweetNID);
+			nodesList.add(tweetNID);
+			graph.addNode(tweetNID.node);
+
+			if (curTweet.isRetweet()) {
+				// Check for original Retweeted Status
+				Long originalTweetId = curTweet.getRetweetedStatus().getId();
+				if (nodeMap.containsKey(originalTweetId)) {
+					NodeIdentifier origTweetNID = nodeMap.get(originalTweetId);
+
+					Edge newEdge = graphModel.factory().newEdge(tweetNID.node,
+							origTweetNID.node);
+					graph.addEdge(newEdge);
+					edgeCounter++;
+				}
+				activityFeatures.incRTID(); // increment number of re-tweets
+			} else {
+				activityFeatures.incTID();// increment number of tweets
+
+				if (curTweet.getGeoLocation() != null)
+					activityFeatures.incTGEO();// increment #tweets with
+												// geo-location
+			}
+
+			// Check for hashTag, financial symbols
+			handleHashTags(curTweet, tweetNID.node);
+
+			// Check for URLs
+			handleURLs(curTweet, tweetNID.node);
+
+			// Handle created/mentioned users
+			handleUsers(curTweet, tweetNID.node);
+		}
 	}
 
 	private void handleUsers(Status curTweet, Node tweetNode) {
@@ -215,53 +260,6 @@ public class StatisticsTool {
 		}
 	}
 
-	void parseData() throws IOException {
-
-		Status curTweet;
-		while ((curTweet = streamer.getNextStatus()) != null) {
-
-			// TWEET Node
-			Long tweetID = curTweet.getId();
-
-			NodeIdentifier tweetNID = new NodeIdentifier(graphModel.factory()
-					.newNode("" + nodeCounter), "" + (nodeCounter++));
-
-			tweetNID.setText(curTweet.getText());
-			nodeMap.put(tweetID, tweetNID);
-			nodesList.add(tweetNID);
-			graph.addNode(tweetNID.node);
-
-			if (curTweet.isRetweet()) {
-				// Check for original Retweeted Status
-				Long originalTweetId = curTweet.getRetweetedStatus().getId();
-				if (nodeMap.containsKey(originalTweetId)) {
-					NodeIdentifier origTweetNID = nodeMap.get(originalTweetId);
-
-					Edge newEdge = graphModel.factory().newEdge(tweetNID.node,
-							origTweetNID.node);
-					graph.addEdge(newEdge);
-					edgeCounter++;
-				}
-				activityFeatures.incRTID(); // increment number of re-tweets
-			} else {
-				activityFeatures.incTID();// increment number of tweets
-
-				if (curTweet.getGeoLocation() != null)
-					activityFeatures.incTGEO();// increment #tweets with
-												// geo-location
-			}
-
-			// Check for hashTag, financial symbols
-			handleHashTags(curTweet, tweetNID.node);
-
-			// Check for URLs
-			handleURLs(curTweet, tweetNID.node);
-
-			// Handle created/mentioned users
-			handleUsers(curTweet, tweetNID.node);
-		}
-	}
-
 	void addSimilarityNodes() {
 		boolean[] visited = new boolean[nodesList.size()];
 		ArrayList<ArrayList<NodeIdentifier>> ans = new ArrayList<ArrayList<NodeIdentifier>>();
@@ -331,7 +329,6 @@ public class StatisticsTool {
 		GraphDistance distance = new GraphDistance();
 		distance.execute(graphModel, attributeModel);
 		graphFeatures.setMAX_DIST(distance.getDiameter());
-		// System.out.println(distance.getReport());
 		// graphFeatures.printGraphFeatures();
 	}
 
@@ -349,10 +346,10 @@ public class StatisticsTool {
 
 	public static void main(String[] args) throws Exception {
 		StatisticsTool gexfGraph = new StatisticsTool(
-				"/home/islamhamdi/Desktop/TwitterStockData");
+				"/home/islamhamdi/Desktop/TwitterStockData/$AAPL/27-02-2014");
 		gexfGraph.parseData();
-		gexfGraph.addSimilarityNodes();
-		gexfGraph.buildActivityFeatures();
-		gexfGraph.buildGraphFeatures();
+		// gexfGraph.addSimilarityNodes();
+		// gexfGraph.buildActivityFeatures();
+		// gexfGraph.buildGraphFeatures();
 	}
 }

@@ -6,8 +6,8 @@ import jxl.write.WriteException;
 public class Main {
 
 	public static void main(String[] args) throws Exception, WriteException {
-		String StatFolderPath = GLOBAL.StatFolderPath;
-		String path = GLOBAL.path;
+		String StatFolderPath = Global.StatFolderPath;
+		String path = Global.path;
 		File statDir = new File(StatFolderPath);
 		if (!statDir.exists())
 			statDir.mkdir();
@@ -62,7 +62,7 @@ public class Main {
 				excel.drawTable(20, 0, 0);
 
 				excel.drawTable(25, 0, 0);
-				
+
 				excel.writeAndClose();
 			}
 	}

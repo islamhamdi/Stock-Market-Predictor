@@ -105,8 +105,7 @@ public class WriteExcel {
 	}
 
 	public double[] read(String dayx) throws IOException, ParseException {
-		File inputWorkbook = new File(GLOBAL.historyPath + CompanyName
-				+ ".xls");
+		File inputWorkbook = new File(Global.historyPath + CompanyName + ".xls");
 		Workbook w;
 		String volume = "0", price = "0";
 		try {
@@ -133,7 +132,6 @@ public class WriteExcel {
 			}
 
 		} catch (BiffException e) {
-
 			e.printStackTrace();
 		}
 
