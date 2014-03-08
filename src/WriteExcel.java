@@ -139,14 +139,6 @@ public class WriteExcel {
 		return true;
 	}
 
-	static boolean areEquals(String price_day, String day2)
-			throws ParseException {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		Date from = sdf.parse(price_day);
-		SimpleDateFormat sdf2 = new SimpleDateFormat("dd-MM-yyy");
-		Date to = sdf2.parse(day2);
-		return from.equals(to);
-	}
 
 	public double[] read(String dayx) throws IOException, ParseException {
 		File inputWorkbook = new File(GLOBAL.historyPath + CompanyName + ".xls");
@@ -162,7 +154,7 @@ public class WriteExcel {
 			for (int i = 1; i < sheet.getRows(); i++) {
 				Cell cell = sheet.getCell(0, i);
 				String day2 = cell.getContents();
-				if (areEquals(day2, dayx)) {
+				if (GLOBAL.areEquals(day2, dayx)) {
 					found = true;
 					volume = sheet.getCell(5, i).getContents();
 					price = sheet.getCell(6, i).getContents();

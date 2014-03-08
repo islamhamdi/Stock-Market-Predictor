@@ -1,11 +1,18 @@
 import java.io.File;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.HashSet;
 
 import org.apache.batik.dom.svg12.Global;
 
+import jxl.Cell;
+import jxl.Sheet;
+import jxl.Workbook;
+import jxl.read.biff.BiffException;
 import jxl.write.WriteException;
 
 public class Main {
@@ -43,18 +50,24 @@ public class Main {
 				File dir = new File(path + "/" + folderName);
 				File[] files = dir.listFiles();
 
-				int n = files.length;
+				HashSet<String> hs = getAvailableDays(folderName);
+				int n = 0;
+				for (int j = 0; j < files.length; j++) {
+					if (hs.contains(files[j].getName()))
+						n++;
+				}
 
 				myComp[] f = new myComp[n];
-				for (int j = 0; j < n; j++) {
-					f[j] = new myComp(files[j]);
+				int index = 0;
+				for (int j = 0; j < files.length; j++) {
+					if (hs.contains(files[j].getName()))
+						f[index++] = new myComp(files[j]);
 				}
 				Arrays.sort(f);
 
 				int start = excel.getRowsCnt() - GLOBAL.lag_var - 1;
 				System.out.println(start);
-				for (int j = start; j < n; j++) {
-					
+				for (int j = start; j < f.length; j++) {
 					if (f[j].file.isFile()) {
 						System.out.println(f[j].file.getName());
 						tool = new StatisticsTool(f[j].file.getAbsolutePath());
@@ -69,14 +82,12 @@ public class Main {
 								"Make sure companies directories contain only files.");
 					}
 				}
-				System.out
-						.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-				// excel.calcCorrel();
+				System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 				excel.drawTables();
-
 				excel.writeAndClose();
 			}
 	}
+
 	static class myComp implements Comparable<myComp> {
 		File file;
 		DateFormat f = new SimpleDateFormat("dd-MM-yyyy");
@@ -97,4 +108,23 @@ public class Main {
 		}
 
 	}
+
+	public static HashSet<String> getAvailableDays(String CompanyName)
+			throws Exception {
+		HashSet<String> hs = new HashSet<String>();
+		File inputWorkbook = new File(GLOBAL.historyPath + CompanyName + ".xls");
+		Workbook w;
+		w = Workbook.getWorkbook(inputWorkbook);
+		Sheet sheet = w.getSheet(0);
+		for (int i = 1; i < sheet.getRows(); i++) {
+			Cell cell = sheet.getCell(0, i);
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			String s = cell.getContents();
+			Date from = sdf.parse(s);
+			SimpleDateFormat sdf2 = new SimpleDateFormat("dd-MM-yyyy");
+			hs.add(sdf2.format(from));
+		}
+		return hs;
+	}
+
 }
