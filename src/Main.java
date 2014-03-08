@@ -1,13 +1,18 @@
 import java.io.File;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+
+import org.apache.batik.dom.svg12.Global;
 
 import jxl.write.WriteException;
 
 public class Main {
 
 	public static void main(String[] args) throws Exception, WriteException {
-		String StatFolderPath = Global.StatFolderPath;
-		String path = Global.path;
+		String StatFolderPath = GLOBAL.StatFolderPath;
+		String path = GLOBAL.path;
 		File statDir = new File(StatFolderPath);
 		if (!statDir.exists())
 			statDir.mkdir();
@@ -38,18 +43,26 @@ public class Main {
 				File dir = new File(path + "/" + folderName);
 				File[] files = dir.listFiles();
 
-				Arrays.sort(files);
+				int n = files.length;
 
-				int start = excel.getRows() - 1;
-				for (int j = start; j < files.length; j++) {
-					if (files[j].isFile()) {
-						System.out.println(files[j].getName());
-						tool = new StatisticsTool(files[j].getAbsolutePath());
+				myComp[] f = new myComp[n];
+				for (int j = 0; j < n; j++) {
+					f[j] = new myComp(files[j]);
+				}
+				Arrays.sort(f);
+
+				int start = excel.getRowsCnt() - GLOBAL.lag_var - 1;
+				System.out.println(start);
+				for (int j = start; j < n; j++) {
+					
+					if (f[j].file.isFile()) {
+						System.out.println(f[j].file.getName());
+						tool = new StatisticsTool(f[j].file.getAbsolutePath());
 						tool.parseData();
 						// tool.addSimilarityNodes();
 						tool.buildActivityFeatures();
 						tool.buildGraphFeatures();
-						excel.addNewDay(files[j].getName(),
+						excel.addNewDay(f[j].file.getName(),
 								tool.getFeaturesValues());
 					} else {
 						throw new Exception(
@@ -59,11 +72,29 @@ public class Main {
 				System.out
 						.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 				// excel.calcCorrel();
-				excel.drawTable(20, 0, 0);
-
-				excel.drawTable(25, 0, 0);
+				excel.drawTables();
 
 				excel.writeAndClose();
 			}
+	}
+	static class myComp implements Comparable<myComp> {
+		File file;
+		DateFormat f = new SimpleDateFormat("dd-MM-yyyy");
+		String name;
+
+		public myComp(File f) {
+			file = f;
+			name = f.getName();
+		}
+
+		@Override
+		public int compareTo(myComp o) {
+			try {
+				return f.parse(name).compareTo(f.parse(o.name));
+			} catch (ParseException e) {
+				return 0;
+			}
+		}
+
 	}
 }
