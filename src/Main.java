@@ -1,5 +1,4 @@
 import java.io.File;
-import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -7,19 +6,16 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 
-import org.apache.batik.dom.svg12.Global;
-
 import jxl.Cell;
 import jxl.Sheet;
 import jxl.Workbook;
-import jxl.read.biff.BiffException;
 import jxl.write.WriteException;
 
 public class Main {
 
 	public static void main(String[] args) throws Exception, WriteException {
-		String StatFolderPath = GLOBAL.StatFolderPath;
-		String path = GLOBAL.path;
+		String StatFolderPath = Global.StatFolderPath;
+		String path = Global.path;
 		File statDir = new File(StatFolderPath);
 		if (!statDir.exists())
 			statDir.mkdir();
@@ -65,7 +61,7 @@ public class Main {
 				}
 				Arrays.sort(f);
 
-				int start = excel.getRowsCnt() - GLOBAL.lag_var - 1;
+				int start = excel.getRowsCnt() - Global.lag_var - 1;
 				System.out.println(start);
 				for (int j = start; j < f.length; j++) {
 					if (f[j].file.isFile()) {
@@ -112,7 +108,7 @@ public class Main {
 	public static HashSet<String> getAvailableDays(String CompanyName)
 			throws Exception {
 		HashSet<String> hs = new HashSet<String>();
-		File inputWorkbook = new File(GLOBAL.historyPath + CompanyName + ".xls");
+		File inputWorkbook = new File(Global.historyPath + CompanyName + ".xls");
 		Workbook w;
 		w = Workbook.getWorkbook(inputWorkbook);
 		Sheet sheet = w.getSheet(0);

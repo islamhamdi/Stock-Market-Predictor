@@ -28,9 +28,9 @@ public class WriteExcel {
 	String CompanyName;
 	WritableWorkbook workbook;
 	WritableSheet sheet;
-	int colPos = GLOBAL.specialCell;
+	int colPos = Global.specialCell;
 	String Start = "16-02-2014";
-	int lag_var = GLOBAL.lag_var;
+	int lag_var = Global.lag_var;
 	String[] price_cols = new String[2 * lag_var + 1];
 	String[] volume_cols = new String[2 * lag_var + 1];
 
@@ -50,7 +50,7 @@ public class WriteExcel {
 		workbook = Workbook.createWorkbook(file);
 		workbook.createSheet("Report", 0);
 		sheet = workbook.getSheet(0);
-		sheet.getSettings().setDefaultColumnWidth(GLOBAL.COLWIDTH);
+		sheet.getSettings().setDefaultColumnWidth(Global.COLWIDTH);
 		writeFeatures();
 		adddummyDays();
 		writeAndClose();
@@ -74,12 +74,12 @@ public class WriteExcel {
 		sheet = workbook.getSheet(0);
 
 		int k = 0;
-		int pos = GLOBAL.price_start_col - lag_var;
+		int pos = Global.price_start_col - lag_var;
 		for (int i = -lag_var; i <= lag_var; i++) {
 			price_cols[k++] = convert(++pos);
 		}
 		k = 0;
-		pos = GLOBAL.volume_start_col - lag_var;
+		pos = Global.volume_start_col - lag_var;
 		for (int i = -lag_var; i <= lag_var; i++) {
 			volume_cols[k++] = convert(++pos);
 		}
@@ -92,13 +92,13 @@ public class WriteExcel {
 			addCaption(i + 1, 0, features[i]);
 		}
 		int k = 0;
-		int pos = GLOBAL.price_start_col - lag_var;
+		int pos = Global.price_start_col - lag_var;
 		for (int i = -lag_var; i <= lag_var; i++) {
 			addCaption(pos++, 0, "price(" + (-i) + ")");
 			price_cols[k++] = convert(pos);
 		}
 		k = 0;
-		pos = GLOBAL.volume_start_col - lag_var;
+		pos = Global.volume_start_col - lag_var;
 		for (int i = -lag_var; i <= lag_var; i++) {
 			addCaption(pos++, 0, "volume(" + (-i) + ")");
 			volume_cols[k++] = convert(pos);
@@ -124,13 +124,13 @@ public class WriteExcel {
 		for (int j = 0; j < n; j++)
 			addNumber(j + 1, row, val[j]);
 
-		int start_price = GLOBAL.price_start_col;
+		int start_price = Global.price_start_col;
 		for (int i = -lag_var; i <= lag_var; i++) {
 			if (row + i > 0)
 				addNumber(start_price + i, row + i, d[0]);
 
 		}
-		int start_Volume = GLOBAL.volume_start_col;
+		int start_Volume = Global.volume_start_col;
 		for (int i = -lag_var; i <= lag_var; i++) {
 			if (row + i > 0)
 				addNumber(start_Volume + i, row + i, d[1]);
@@ -139,9 +139,8 @@ public class WriteExcel {
 		return true;
 	}
 
-
 	public double[] read(String dayx) throws IOException, ParseException {
-		File inputWorkbook = new File(GLOBAL.historyPath + CompanyName + ".xls");
+		File inputWorkbook = new File(Global.historyPath + CompanyName + ".xls");
 		Workbook w;
 		String volume = "0", price = "0";
 		try {
@@ -154,7 +153,7 @@ public class WriteExcel {
 			for (int i = 1; i < sheet.getRows(); i++) {
 				Cell cell = sheet.getCell(0, i);
 				String day2 = cell.getContents();
-				if (GLOBAL.areEquals(day2, dayx)) {
+				if (Global.areEquals(day2, dayx)) {
 					found = true;
 					volume = sheet.getCell(5, i).getContents();
 					price = sheet.getCell(6, i).getContents();
