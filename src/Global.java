@@ -11,6 +11,7 @@ public class Global {
 	static int price_start_col = 30;
 	static int specialCell = 60;
 	static int COLWIDTH = 12;
+	public static String[] companies;
 
 	static boolean areEquals(String price_day, String day2)
 			throws ParseException {
