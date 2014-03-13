@@ -189,6 +189,8 @@ public class StatisticsTool {
 	private void handleURLs(Status curTweet, Node tweetNode) throws IOException {
 		URLEntity[] urls = curTweet.getURLEntities();
 		MediaEntity[] mediaUrls = curTweet.getMediaEntities();
+		if (mediaUrls == null)
+			mediaUrls = new MediaEntity[0];
 		String[] list = new String[urls.length + mediaUrls.length];
 		int index = 0;
 

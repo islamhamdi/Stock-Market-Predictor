@@ -48,8 +48,13 @@ public class WriteExcel {
 	public void createExcel() throws Exception {
 		File file = new File(path);
 		workbook = Workbook.createWorkbook(file);
-		workbook.createSheet("Report", 0);
+		workbook.createSheet("Twitter", 0);
+		workbook.createSheet("StockTwits", 1);
 		sheet = workbook.getSheet(0);
+		sheet.getSettings().setDefaultColumnWidth(Global.COLWIDTH);
+		writeFeatures();
+		adddummyDays();
+		sheet = workbook.getSheet(1);
 		sheet.getSettings().setDefaultColumnWidth(Global.COLWIDTH);
 		writeFeatures();
 		adddummyDays();
@@ -66,13 +71,12 @@ public class WriteExcel {
 		}
 	}
 
-	public void initializeExcelSheet() throws IOException, WriteException,
-			BiffException {
+	public void initializeExcelSheet(int sheetNum) throws IOException,
+			WriteException, BiffException {
 		File file = new File(path);
 		Workbook myWorkbook = Workbook.getWorkbook(file);
 		workbook = Workbook.createWorkbook(file, myWorkbook);
-		sheet = workbook.getSheet(0);
-
+		sheet = workbook.getSheet(sheetNum);
 		int k = 0;
 		int pos = Global.price_start_col - lag_var;
 		for (int i = -lag_var; i <= lag_var; i++) {
@@ -85,6 +89,7 @@ public class WriteExcel {
 		}
 
 	}
+
 
 	public void writeFeatures() throws WriteException {
 		addCaption(0, 0, "Day");
