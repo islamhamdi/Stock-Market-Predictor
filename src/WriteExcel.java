@@ -29,7 +29,6 @@ public class WriteExcel {
 	WritableWorkbook workbook;
 	WritableSheet sheet;
 	int colPos = Global.specialCell;
-	String Start = "16-02-2014";
 	int lag_var = Global.lag_var;
 	String[] price_cols = new String[2 * lag_var + 1];
 	String[] volume_cols = new String[2 * lag_var + 1];
@@ -62,13 +61,33 @@ public class WriteExcel {
 	}
 
 	private void adddummyDays() throws Exception {
+		String name = sheet.getName();
+		String Start = "16-02-2014";
+		if (name.equals("StockTwits"))
+			Start = "28-02-2014";
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 		Date date = sdf.parse(Start);
 		double v[] = new double[0];
-		for (int i = 10; i > 0; i--) {
+		System.out.println("");
+
+		int cnt = 0, i;
+		for (i = 1; i < 20; i++) {
 			Date d = new Date(date.getTime() - TimeUnit.DAYS.toMillis(i));
-			addNewDay(sdf.format(d), v);
+			double[] D = read(sdf.format(d));
+			if (D[0] == -1 && D[1] == -1) {
+			} else {
+				cnt++;
+			}
+			if (cnt == Global.lag_var)
+				break;
+
 		}
+
+		for (; i > 0; i--) {
+			Date d = new Date(date.getTime() - TimeUnit.DAYS.toMillis(i));
+			 addNewDay(sdf.format(d), v);
+		}
+
 	}
 
 	public void initializeExcelSheet(int sheetNum) throws IOException,
@@ -89,7 +108,6 @@ public class WriteExcel {
 		}
 
 	}
-
 
 	public void writeFeatures() throws WriteException {
 		addCaption(0, 0, "Day");

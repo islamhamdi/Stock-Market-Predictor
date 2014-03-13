@@ -21,12 +21,10 @@ public class Main {
 	static WriteExcel excel;
 
 	public static void main(String[] args) throws Exception, WriteException {
-		
-		// 0 mean Twitter- 1 mean StockTwits- Data 
-		Global.files_to_run = 0;
-		
-		
-		
+
+		// 0 mean Twitter- 1 mean StockTwits- Data
+		Global.files_to_run = 1;
+
 		if (Global.files_to_run == 0) {
 			path = Global.path1;
 			sheetNum = 0;
@@ -55,6 +53,9 @@ public class Main {
 				myComp[] f = getFileList(folderName);
 
 				int start = excel.getRowsCnt() - Global.lag_var - 1;
+				System.out.println("cnt=" + excel.getRowsCnt());
+				System.out.println("cnt=" + Global.lag_var);
+
 				System.out.println(start);
 				for (int j = start; j < f.length; j++) {
 					if (f[j].file.isFile()) {
