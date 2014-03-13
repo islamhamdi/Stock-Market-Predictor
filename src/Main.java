@@ -21,7 +21,12 @@ public class Main {
 	static WriteExcel excel;
 
 	public static void main(String[] args) throws Exception, WriteException {
-		Global.files_to_run = 1;
+		
+		// 0 mean Twitter- 1 mean StockTwits- Data 
+		Global.files_to_run = 0;
+		
+		
+		
 		if (Global.files_to_run == 0) {
 			path = Global.path1;
 			sheetNum = 0;
