@@ -1,3 +1,5 @@
+package StockTwits;
+
 import java.io.Serializable;
 import java.net.URL;
 import java.text.DateFormat;
@@ -258,9 +260,9 @@ public class MyStatus implements Status, Serializable {
 	private void setHashTagEntities(String s) {
 		ArrayList<HashtagEntity> list = new ArrayList<HashtagEntity>();
 
-		for (int i = 0; i < Global.companies.length; i++)
-			if (s.contains(Global.companies[i]))
-				list.add(new myHashtagEntity(Global.companies[i]));
+		for (int i = 0; i < GLOBAL.companies.length; i++)
+			if (s.contains(GLOBAL.companies[i]))
+				list.add(new myHashtagEntity(GLOBAL.companies[i]));
 
 		hashtagEntities = new HashtagEntity[list.size()];
 		for (int i = 0; i < list.size(); i++)
