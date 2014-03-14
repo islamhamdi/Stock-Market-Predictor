@@ -3,6 +3,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Global {
+
 	// static String path = "/home/islamhamdi/Desktop/TwitterStockData";
 	// static String StatFolderPath = "Statistics";
 	// static String historyPath =
@@ -13,7 +14,7 @@ public class Global {
 	
 //	static String path1 = "S:\\Dropbox\\Stock Market Daily Data\\Twitter";
 //	static String path2 = "S:\\Dropbox\\Stock Market Daily Data\\StockTwits";
-//	
+	
 //	static String StatFolderPath = "S:\\Dropbox\\Stock Market Daily Data\\statistics";
 //	static String historyPath = "S:\\Dropbox\\Stock Market Daily Data\\historical prices\\";
 
@@ -43,4 +44,5 @@ public class Global {
 		return from.equals(to);
 	}
 
+	
 }
