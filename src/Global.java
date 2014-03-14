@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class Global {
 	static String path = "/home/islamhamdi/Desktop/TwitterStockData";
+	static String urlExpandedPath = "/home/islamhamdi/Desktop/TwitterStockDataExpanded/";
 	static String StatFolderPath = "Statistics";
 	static String historyPath = "/home/islamhamdi/Dropbox/Stock Market Daily Data/historical prices/";
 	static int lag_var = 7;
@@ -11,6 +12,17 @@ public class Global {
 	static int price_start_col = 30;
 	static int specialCell = 60;
 	static int COLWIDTH = 12;
+
+	// URLExpander & My status globals
+	public static String seperated = "SeparatedData";
+	public static String idMap = "@ user-id-map";
+	public static String idSet = "@ tweet-id-set";
+	public static String lineSeparator = "=8=7=6=5=";
+	public static String companiesFolder = "Serialized Data";
+	public static String data = "data";
+	public static String status = "Tweet";
+	public static String[] companies;
+	public final static int THREAD_COUNT = 50;
 
 	static boolean areEquals(String price_day, String day2)
 			throws ParseException {

@@ -157,7 +157,7 @@ public class WriteExcel {
 					found = true;
 					volume = sheet.getCell(5, i).getContents();
 					price = sheet.getCell(6, i).getContents();
-					System.out.println("v=" + volume + ", price= " + price);
+					// System.out.println("v=" + volume + ", price= " + price);
 				}
 			}
 
