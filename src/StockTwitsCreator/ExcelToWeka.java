@@ -1,4 +1,4 @@
-package StockTwits;
+package StockTwitsCreator;
 
 import java.io.BufferedWriter;
 import java.io.File;

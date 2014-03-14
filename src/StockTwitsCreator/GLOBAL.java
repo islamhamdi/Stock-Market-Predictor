@@ -1,4 +1,4 @@
-package StockTwits;
+package StockTwitsCreator;
 
 public class GLOBAL {
 	public static String seperated = "SeparatedData";

@@ -1,4 +1,4 @@
-package StockTwits;
+package StockTwitsCreator;
 
 import java.io.Serializable;
 import java.net.URL;
