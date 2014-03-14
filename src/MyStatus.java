@@ -30,7 +30,7 @@ public class MyStatus implements Status, Serializable {
 	private User user;
 	private long tweetID;
 	private String source;
-	private Place place;
+	private myPlace place;
 	private String text;
 	private HashtagEntity[] hashtagEntities;
 	private URLEntity[] URLEntities;
@@ -53,7 +53,7 @@ public class MyStatus implements Status, Serializable {
 	public MyStatus(Status status, String[] URLs) {
 		this.tweetID = status.getId();
 		this.source = status.getSource();
-		this.place = status.getPlace();
+		this.place = new myPlace(status.getPlace().getName());
 		this.text = status.getText();
 		this.date = status.getCreatedAt();
 		this.user = status.getUser();

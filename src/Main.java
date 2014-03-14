@@ -12,14 +12,25 @@ import jxl.Workbook;
 import jxl.write.WriteException;
 
 public class Main {
-	public static String statFolderPath = Global.StatFolderPath;
-	public static String path = Global.path;
+	static String path;
+	static int sheetNum;
+	static String statPath = Global.StatFolderPath;
+	static WriteExcel excel;
 
 	public static void main(String[] args) throws Exception, WriteException {
 
-		long before = System.nanoTime();
+		// 0 mean Twitter- 1 mean StockTwits- Data
+		Global.files_to_run = 1;
 
-		File statDir = new File(statFolderPath);
+		if (Global.files_to_run == 0) {
+			path = Global.path1;
+			sheetNum = 0;
+		} else {
+			sheetNum = 1;
+			path = Global.path2;
+		}
+
+		File statDir = new File(statPath);
 		if (!statDir.exists())
 			statDir.mkdir();
 
@@ -27,41 +38,41 @@ public class Main {
 		File[] folders = statusDir.listFiles();
 		String[] featuresList = Helper.getFeaturesList();
 		StatisticsTool tool;
+		excel = new WriteExcel();
 
-		WriteExcel excel = new WriteExcel();
 		excel.passFeatures(featuresList);
-		for (int i = 0; i < folders.length; i++)
-			if (folders[i].isDirectory()) {
-
-				String folderName = folders[i].getName();
+		HashSet<String> avCompanies = getAvailableCompanies();
+		for (int i = 0; i < folders.length; i++) {
+			String folderName = folders[i].getName();
+			if (folders[i].isDirectory() && avCompanies.contains(folderName)) {
 				System.out.println("____" + folderName + "_____");
 
 				// URL Expansion
-//				URLExpander urlExpander = new URLExpander(
-//						folders[i].getAbsolutePath(), Global.urlExpandedPath
-//								+ folders[i].getName() + "/");
-//				urlExpander.startURLExpander();
-//
-//				while (!urlExpander.isTerminated())
-				//					;
+				// URLExpander urlExpander = new URLExpander(
+				// folders[i].getAbsolutePath(), Global.urlExpandedPath
+				// + folders[i].getName() + "/");
+				// urlExpander.startURLExpander();
+				//
+				// while (!urlExpander.isTerminated())
+				// ;
 
-				System.out
-						.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@2");
+				openExcelWriter(folderName);
+				myComp[] f = getFileList(folderName);
 
-				// Excel initialization
-				myComp[] files = initExcelAndSortFiles(statDir, folderName,
-						excel);
-				int startIndex = excel.getRowsCnt() - Global.lag_var - 1;
+				int start = excel.getRowsCnt() - Global.lag_var - 1;
+				System.out.println("cnt=" + excel.getRowsCnt());
+				System.out.println("cnt=" + Global.lag_var);
 
-				for (int j = startIndex; j < files.length; j++) {
-					if (files[j].file.isFile()) {
-						tool = new StatisticsTool(
-								files[j].file.getAbsolutePath());
+				System.out.println(start);
+				for (int j = start; j < f.length; j++) {
+					if (f[j].file.isFile()) {
+						System.out.println(f[j].file.getName());
+						tool = new StatisticsTool(f[j].file.getAbsolutePath());
 						tool.parseData();
 						// tool.addSimilarityNodes();
 						tool.buildActivityFeatures();
 						tool.buildGraphFeatures();
-						excel.addNewDay(files[j].file.getName(),
+						excel.addNewDay(f[j].file.getName(),
 								tool.getFeaturesValues());
 					} else {
 						throw new Exception(
@@ -72,20 +83,20 @@ public class Main {
 				excel.drawTables();
 				excel.writeAndClose();
 			}
-		System.out.println((System.nanoTime() - before) / 1000000000.0);
+		}
 	}
 
-	private static myComp[] initExcelAndSortFiles(File statDir,
-			String folderName, WriteExcel excel) throws Exception {
-		String statfilePath = statFolderPath + "/" + folderName + ".xls";
+	private static void openExcelWriter(String folderName) throws Exception {
+		String statfilePath = statPath + "/" + folderName + ".xls";
 		excel.setOutputFile(statfilePath, folderName);
-
-		statDir = new File(statfilePath);
+		File statDir = new File(statfilePath);
 		if (!statDir.exists()) {
 			excel.createExcel();
 		}
-		excel.initializeExcelSheet();
+		excel.initializeExcelSheet(sheetNum);
+	}
 
+	private static myComp[] getFileList(String folderName) throws Exception {
 		File dir = new File(path + "/" + folderName);
 		File[] files = dir.listFiles();
 
@@ -145,4 +156,13 @@ public class Main {
 		return hs;
 	}
 
+	static HashSet<String> getAvailableCompanies() {
+		File dir = new File(Global.historyPath);
+		File[] files = dir.listFiles();
+		HashSet<String> hs = new HashSet<>();
+		for (int i = 0; i < files.length; i++) {
+			hs.add(files[i].getName().replace(".xls", ""));
+		}
+		return hs;
+	}
 }
