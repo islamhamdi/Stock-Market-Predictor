@@ -35,18 +35,19 @@ public class MyStatus implements Status, Serializable {
 	private myPlace place;
 	private String text;
 	private HashtagEntity[] hashtagEntities;
+	private SymbolEntity[] symbolEntities;
 	private URLEntity[] URLEntities;
 	private UserMentionEntity[] UserMentionEntities;
 
-	public MyStatus(String userName, int followerCount, int friendCount,
-			String date, long tweetID, String text, String sourceURL,
-			String placeName, HashMap<String, Long> map) {
+	public MyStatus(String userName, int followerCount, int friendCount, String date, long tweetID, String text,
+			String sourceURL, String placeName, HashMap<String, Long> map) {
 		this.tweetID = tweetID;
 		this.source = sourceURL;
 		this.place = new myPlace(placeName);
 		this.text = text;
 		setDate(date);
 		setUser(userName, followerCount, friendCount, map);
+		setSymbolEntities(text);
 		setHashTagEntities(text);
 		setURLEntities(text);
 		setUserMentionEntity(map);
@@ -94,7 +95,7 @@ public class MyStatus implements Status, Serializable {
 
 	@Override
 	public SymbolEntity[] getSymbolEntities() {
-		return null;
+		return symbolEntities;
 	}
 
 	@Override
@@ -199,7 +200,7 @@ public class MyStatus implements Status, Serializable {
 
 	@Override
 	public boolean isRetweet() {
-		return getText().matches("[\"](@[a-zA-Z]+:.+)[\"].*");
+		return getText().matches("[\"](@[a-zA-Z0-9]+:.+)[\"].*");
 	}
 
 	@Override
@@ -239,8 +240,7 @@ public class MyStatus implements Status, Serializable {
 	}
 
 	private void setURLEntities(String text) {
-		String[] sites = { "http", "bit.ly", "goo.gl", "bitly", "ow.ly",
-				"tinyurl" };
+		String[] sites = { "http", "bit.ly", "goo.gl", "bitly", "ow.ly", "tinyurl" };
 		StringTokenizer st = new StringTokenizer(text);
 		ArrayList<URLEntity> list = new ArrayList<URLEntity>();
 		while (st.hasMoreTokens()) {
@@ -257,20 +257,34 @@ public class MyStatus implements Status, Serializable {
 			URLEntities[i] = list.get(i);
 	}
 
-	private void setHashTagEntities(String s) {
-		ArrayList<HashtagEntity> list = new ArrayList<HashtagEntity>();
+	private void setSymbolEntities(String s) {
+		ArrayList<SymbolEntity> list = new ArrayList<SymbolEntity>();
 
 		for (int i = 0; i < GLOBAL.companies.length; i++)
 			if (s.contains(GLOBAL.companies[i]))
-				list.add(new myHashtagEntity(GLOBAL.companies[i]));
+				list.add(new MySymbolEntity(GLOBAL.companies[i]));
 
-		hashtagEntities = new HashtagEntity[list.size()];
+		symbolEntities = new SymbolEntity[list.size()];
 		for (int i = 0; i < list.size(); i++)
+			symbolEntities[i] = list.get(i);
+	}
+
+	private void setHashTagEntities(String s) {
+		ArrayList<HashtagEntity> list = new ArrayList<HashtagEntity>();
+
+		StringTokenizer st = new StringTokenizer(s);
+		while (st.hasMoreTokens()) {
+			String tmp = st.nextToken();
+			if (tmp.charAt(0) == '#')
+				list.add(new myHashtagEntity(tmp));
+		}
+		
+		hashtagEntities = new HashtagEntity[list.size()];
+		for(int i = 0; i < list.size(); i++)
 			hashtagEntities[i] = list.get(i);
 	}
 
-	private void setUser(String userName, int followerCount, int friendCount,
-			HashMap<String, Long> map) {
+	private void setUser(String userName, int followerCount, int friendCount, HashMap<String, Long> map) {
 		if (!map.containsKey(userName))
 			map.put(userName, (long) map.size());
 
@@ -300,8 +314,7 @@ public class MyStatus implements Status, Serializable {
 		private long ID;
 		private int followerCount, friendCount;
 
-		public myUser(String userName, long userID, int followerCount,
-				int follwingCount) {
+		public myUser(String userName, long userID, int followerCount, int follwingCount) {
 			this.name = userName;
 			this.ID = userID;
 			this.followerCount = followerCount;
@@ -735,8 +748,7 @@ public class MyStatus implements Status, Serializable {
 		}
 	}
 
-	private class myUserMentionEntity implements UserMentionEntity,
-			Serializable {
+	private class myUserMentionEntity implements UserMentionEntity, Serializable {
 		/**
 		 * 
 		 */
@@ -777,6 +789,29 @@ public class MyStatus implements Status, Serializable {
 		@Override
 		public String getText() {
 			return null;
+		}
+	}
+
+	private class MySymbolEntity implements SymbolEntity {
+		private String text;
+
+		public MySymbolEntity(String symbol) {
+			text = symbol;
+		}
+
+		@Override
+		public String getText() {
+			return text;
+		}
+
+		@Override
+		public int getEnd() {
+			return 0;
+		}
+
+		@Override
+		public int getStart() {
+			return 0;
 		}
 
 	}
