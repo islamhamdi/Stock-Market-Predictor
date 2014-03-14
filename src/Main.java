@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,9 +10,11 @@ import java.util.HashSet;
 import jxl.Cell;
 import jxl.Sheet;
 import jxl.Workbook;
+import jxl.read.biff.BiffException;
 import jxl.write.WriteException;
 
 public class Main {
+
 	static String path;
 	static int sheetNum;
 	static String statPath = Global.StatFolderPath;
@@ -43,19 +46,12 @@ public class Main {
 		excel.passFeatures(featuresList);
 		HashSet<String> avCompanies = getAvailableCompanies();
 		for (int i = 0; i < folders.length; i++) {
+
 			String folderName = folders[i].getName();
+
 			if (folders[i].isDirectory() && avCompanies.contains(folderName)) {
+
 				System.out.println("____" + folderName + "_____");
-
-				// URL Expansion
-				// URLExpander urlExpander = new URLExpander(
-				// folders[i].getAbsolutePath(), Global.urlExpandedPath
-				// + folders[i].getName() + "/");
-				// urlExpander.startURLExpander();
-				//
-				// while (!urlExpander.isTerminated())
-				// ;
-
 				openExcelWriter(folderName);
 				myComp[] f = getFileList(folderName);
 
@@ -81,8 +77,10 @@ public class Main {
 				}
 				System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 				excel.drawTables();
+				excel.adddummyDaysAtEnd();
 				excel.writeAndClose();
 			}
+
 		}
 	}
 
@@ -114,6 +112,7 @@ public class Main {
 				f[index++] = new myComp(files[j]);
 		}
 		Arrays.sort(f);
+
 		return f;
 	}
 
@@ -138,10 +137,10 @@ public class Main {
 
 	}
 
-	public static HashSet<String> getAvailableDays(String companyName)
+	public static HashSet<String> getAvailableDays(String CompanyName)
 			throws Exception {
 		HashSet<String> hs = new HashSet<String>();
-		File inputWorkbook = new File(Global.historyPath + companyName + ".xls");
+		File inputWorkbook = new File(Global.historyPath + CompanyName + ".xls");
 		Workbook w;
 		w = Workbook.getWorkbook(inputWorkbook);
 		Sheet sheet = w.getSheet(0);
@@ -165,4 +164,5 @@ public class Main {
 		}
 		return hs;
 	}
+
 }

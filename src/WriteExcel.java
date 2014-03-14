@@ -90,6 +90,30 @@ public class WriteExcel {
 
 	}
 
+	
+	public void adddummyDaysAtEnd() throws Exception {
+		int size = getRowsCnt();
+		String lastDay = sheet.getCell(0, size-1).getContents();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		Date date = sdf.parse(lastDay);
+		double v[] = new double[0];
+
+		int cnt = 0, i;
+		for (i = 1; i < 20; i++) {
+			Date d = new Date(date.getTime() + TimeUnit.DAYS.toMillis(i));
+			double[] D = read(sdf.format(d));
+			if (D[0] == -1 && D[1] == -1) {
+			} else {
+				addNewDay(sdf.format(d), v);
+				cnt++;
+			}
+			if (cnt == Global.lag_var)
+				break;
+		}
+	}
+
+	
+	
 	public void initializeExcelSheet(int sheetNum) throws IOException,
 			WriteException, BiffException {
 		File file = new File(path);
@@ -117,13 +141,13 @@ public class WriteExcel {
 		int k = 0;
 		int pos = Global.price_start_col - lag_var;
 		for (int i = -lag_var; i <= lag_var; i++) {
-			addCaption(pos++, 0, "price(" + (-i) + ")");
+			addCaption(pos++, 0, "price(" + i + ")");
 			price_cols[k++] = convert(pos);
 		}
 		k = 0;
 		pos = Global.volume_start_col - lag_var;
 		for (int i = -lag_var; i <= lag_var; i++) {
-			addCaption(pos++, 0, "volume(" + (-i) + ")");
+			addCaption(pos++, 0, "volume(" + i + ")");
 			volume_cols[k++] = convert(pos);
 		}
 
@@ -180,7 +204,7 @@ public class WriteExcel {
 					found = true;
 					volume = sheet.getCell(5, i).getContents();
 					price = sheet.getCell(6, i).getContents();
-					// System.out.println("v=" + volume + ", price= " + price);
+					System.out.println("v=" + volume + ", price= " + price);
 				}
 			}
 
@@ -255,7 +279,7 @@ public class WriteExcel {
 
 		int pos = fcolumn + 1;
 		for (int i = -lag_var; i <= lag_var; i++) {
-			addCaption(pos++, frow, "price(" + (-i) + ")");
+			addCaption(pos++, frow, "price(" + i + ")");
 		}
 
 		int cnt = 1;
@@ -282,7 +306,7 @@ public class WriteExcel {
 
 		int pos = fcolumn + 1;
 		for (int i = -lag_var; i <= lag_var; i++) {
-			addCaption(pos++, frow, "volume(" + (-i) + ")");
+			addCaption(pos++, frow, "volume(" + i + ")");
 		}
 
 		int cnt = 1;
