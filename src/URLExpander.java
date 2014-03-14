@@ -15,6 +15,7 @@ import java.util.TreeMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import StockTwits.MyStatus;
 import twitter4j.Status;
 import twitter4j.URLEntity;
 import twitter4j.internal.http.HttpClient;
