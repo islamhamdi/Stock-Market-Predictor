@@ -1,7 +1,6 @@
 public class ActivityFeatures {
 	private int RTID; // number of re-tweets
 	private int RTU; // number of diff users that have re-tweeted
-	private int TGEO; // number of tweets with geo-location
 	private int TID; // number of tweets
 	private int TUSM; // number of tweets that mention any user
 	private int UFRN; // avg number of friends for user that posted in graph
@@ -10,12 +9,11 @@ public class ActivityFeatures {
 	private int UFLW; // avg number of followers for user
 	private int UID; // number diff users that posted a tweet
 	private static String[] ACTIVITY_FEATURES_NAMES = new String[] { "RTID",
-			"RTU", "TGEO", "TID", "TSUM", "UFRN", "THTG", "TURL", "UFLW", "UID" };
+			"RTU", "TID", "TSUM", "UFRN", "THTG", "TURL", "UFLW", "UID" };
 
 	public ActivityFeatures() {
 		this.RTID = 0;
 		this.RTU = 0;
-		this.TGEO = 0;
 		this.TID = 0;
 		this.TUSM = 0;
 		this.UFRN = 0;
@@ -31,10 +29,6 @@ public class ActivityFeatures {
 
 	public void setRTU(int rTU) {
 		RTU = rTU;
-	}
-
-	public void setTGEO(int tGEO) {
-		TGEO = tGEO;
 	}
 
 	public void setTID(int tID) {
@@ -73,10 +67,6 @@ public class ActivityFeatures {
 		RTU++;
 	}
 
-	public void incTGEO() {
-		TGEO++;
-	}
-
 	public void incTID() {
 		TID++;
 	}
@@ -107,10 +97,9 @@ public class ActivityFeatures {
 
 	@Override
 	public String toString() {
-		return "ActivityFeatures [RTID=" + RTID + ", RTU=" + RTU + ", TGEO="
-				+ TGEO + ", TID=" + TID + ", TUSM=" + TUSM + ", UFRN=" + UFRN
-				+ ", THTG=" + THTG + ", TURL=" + TURL + ", UFLW=" + UFLW
-				+ ", UID=" + UID + "]";
+		return "ActivityFeatures [RTID=" + RTID + ", RTU=" + RTU + ", TID="
+				+ TID + ", TUSM=" + TUSM + ", UFRN=" + UFRN + ", THTG=" + THTG
+				+ ", TURL=" + TURL + ", UFLW=" + UFLW + ", UID=" + UID + "]";
 	}
 
 	public static String[] getActivityFeaturesList() {
@@ -118,8 +107,8 @@ public class ActivityFeatures {
 	}
 
 	public double[] getValues() {
-		return new double[] { this.RTID, this.RTU, this.TGEO, this.TID,
-				this.TUSM, this.UFRN, this.THTG, this.TURL, this.UFLW, this.UID };
+		return new double[] { this.RTID, this.RTU, this.TID, this.TUSM,
+				this.UFRN, this.THTG, this.TURL, this.UFLW, this.UID };
 	}
 
 	public void printActivityFeatures() {

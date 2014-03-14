@@ -107,10 +107,6 @@ public class StatisticsTool {
 				activityFeatures.incRTID(); // increment number of re-tweets
 			} else {
 				activityFeatures.incTID();// increment number of tweets
-
-				if (curTweet.getGeoLocation() != null)
-					activityFeatures.incTGEO();// increment #tweets with
-												// geo-location
 			}
 
 			// Check for hashTag, financial symbols
