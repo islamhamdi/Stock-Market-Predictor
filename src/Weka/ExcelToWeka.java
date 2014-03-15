@@ -1,4 +1,4 @@
-package StockTwitsCreator;
+package Weka;
 
 import java.io.BufferedWriter;
 import java.io.File;
