@@ -1,4 +1,5 @@
 package StockTwitsCreator;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -35,7 +36,8 @@ public class CompanySeparator {
 	// body(txt) may be more than one line
 	// =8=7=6=5=
 
-	public void Seperate(String directory) throws IOException, ClassNotFoundException {
+	public void Seperate(String directory) throws IOException,
+			ClassNotFoundException {
 		System.out.println("=> Start dividing tweets on Companies files");
 
 		BufferedWriter[] data = new BufferedWriter[GLOBAL.companies.length];
@@ -59,7 +61,8 @@ public class CompanySeparator {
 		for (int i = 0; i < files.length; i++) {
 			System.out.println("Load File : " + files[i].getName());
 
-			BufferedReader br = new BufferedReader(new FileReader(files[i].getAbsolutePath()));
+			BufferedReader br = new BufferedReader(new FileReader(
+					files[i].getAbsolutePath()));
 
 			while (br.ready()) {
 				totalTweets++;
@@ -95,8 +98,9 @@ public class CompanySeparator {
 							if (data[k] != null)
 								data[k].close();
 
-							data[k] = new BufferedWriter(new FileWriter(directory + "/" + GLOBAL.seperated + "/"
-									+ GLOBAL.companies[k] + " @ " + System.currentTimeMillis()));
+							data[k] = new BufferedWriter(new FileWriter(
+									directory + "/" + GLOBAL.seperated + "/"
+											+ GLOBAL.companies[k]));
 						}
 
 						data[k].write(status.toString());
@@ -117,12 +121,15 @@ public class CompanySeparator {
 
 		System.out.println("=> Finish dividing tweets on companies files\n");
 		for (int i = 0; i < tweetsCnt.length; i++)
-			System.out.println("Total tweets of company " + GLOBAL.companies[i] + " : " + tweetsCnt[i]);
+			System.out.println("Total tweets of company " + GLOBAL.companies[i]
+					+ " : " + tweetsCnt[i]);
 
-		System.out.println("\nTotal tweets : " + totalTweets + ", Unique tweets : " + tweetSet.size() + "\n");
+		System.out.println("\nTotal tweets : " + totalTweets
+				+ ", Unique tweets : " + tweetSet.size() + "\n");
 	}
 
-	private HashSet<Long> readHashSet(String directory) throws IOException, ClassNotFoundException {
+	private HashSet<Long> readHashSet(String directory) throws IOException,
+			ClassNotFoundException {
 		FileInputStream fin;
 		try {
 			fin = new FileInputStream(directory + GLOBAL.idSet);
@@ -138,7 +145,8 @@ public class CompanySeparator {
 		return set;
 	}
 
-	private void writeHashSet(String directory, HashSet<Long> set) throws IOException {
+	private void writeHashSet(String directory, HashSet<Long> set)
+			throws IOException {
 		FileOutputStream fout = new FileOutputStream(directory + GLOBAL.idSet);
 		ObjectOutputStream oos = new ObjectOutputStream(fout);
 		oos.writeObject(set);

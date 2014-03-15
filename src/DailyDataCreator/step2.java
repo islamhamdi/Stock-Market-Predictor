@@ -18,12 +18,12 @@ import twitter4j.Status;
 public class step2 {
 
 	public step2() throws Exception {
-		String finaloutputDir = "S:\\Dropbox\\Stock Market Daily Data\\Twitter\\";
+		String finaloutputDir = "S:\\Dropbox\\Stock Market Daily Data\\StockTwits\\";
 		File dir = new File(finaloutputDir);
 		if (!dir.exists())
 			dir.mkdir();
 
-		String inputDir = "./out1/";
+		String inputDir = "S:\\GitWork\\gephi-twitter-visualization\\Data\\Serialized Data\\";
 		dir = new File(inputDir);
 
 		if (!dir.exists())
@@ -86,6 +86,7 @@ public class step2 {
 							.getTimeZone("America/New_York"));
 
 					String name = formatter.format(d);
+					
 
 					// write if ok
 					ObjectOutputStream oos;

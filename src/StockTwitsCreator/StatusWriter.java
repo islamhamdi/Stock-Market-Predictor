@@ -1,4 +1,5 @@
 package StockTwitsCreator;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -16,7 +17,8 @@ import twitter4j.Status;
 
 public class StatusWriter {
 
-	public void Write(String directory) throws IOException, ClassNotFoundException {
+	public void Write(String directory) throws IOException,
+			ClassNotFoundException {
 		System.out.println("=> Start converting .txt files to status files\n");
 
 		File dir = new File(directory + "/" + GLOBAL.companiesFolder);
@@ -26,7 +28,8 @@ public class StatusWriter {
 		HashMap<String, Long> map = readHashMap(directory);
 		int tweetsCount = 0;
 		for (int i = 0; i < GLOBAL.companies.length; i++) {
-			System.out.println("=> Start Reading Company : " + GLOBAL.companies[i] + " files");
+			System.out.println("=> Start Reading Company : "
+					+ GLOBAL.companies[i] + " files");
 
 			File statusDir = new File(directory + "/" + GLOBAL.seperated + "/");
 			File[] files = statusDir.listFiles();
@@ -41,7 +44,8 @@ public class StatusWriter {
 					tweetsCount += list.size();
 
 					// write status to file
-					writeList(directory + "/" + GLOBAL.companiesFolder + "/" + GLOBAL.companies[i], list);
+					writeList(directory + "/" + GLOBAL.companiesFolder + "/"
+							+ GLOBAL.companies[i], list);
 				}
 
 			}
@@ -53,8 +57,9 @@ public class StatusWriter {
 		System.out.println("Total Tweets : " + tweetsCount);
 	}
 
-	private void writeList(String directory, ArrayList<Status> list) throws IOException {
-		FileOutputStream fout = new FileOutputStream(directory + " @ " + System.currentTimeMillis());
+	private void writeList(String directory, ArrayList<Status> list)
+			throws IOException {
+		FileOutputStream fout = new FileOutputStream(directory);
 		ObjectOutputStream oos = new ObjectOutputStream(fout);
 
 		for (Status s : list) {
@@ -65,7 +70,8 @@ public class StatusWriter {
 		fout.close();
 	}
 
-	private void writeHashMap(String directory, HashMap<String, Long> map) throws IOException {
+	private void writeHashMap(String directory, HashMap<String, Long> map)
+			throws IOException {
 		FileOutputStream fout = new FileOutputStream(directory + GLOBAL.idMap);
 		ObjectOutputStream oos = new ObjectOutputStream(fout);
 		oos.writeObject(map);
@@ -74,7 +80,8 @@ public class StatusWriter {
 		fout.close();
 	}
 
-	private HashMap<String, Long> readHashMap(String directory) throws IOException, ClassNotFoundException {
+	private HashMap<String, Long> readHashMap(String directory)
+			throws IOException, ClassNotFoundException {
 		FileInputStream fin;
 		try {
 			fin = new FileInputStream(directory + GLOBAL.idMap);
@@ -86,12 +93,14 @@ public class StatusWriter {
 		ObjectInputStream ois = new ObjectInputStream(fin);
 		HashMap<String, Long> map = (HashMap<String, Long>) ois.readObject();
 		ois.close();
-		
+
 		return map;
 	}
 
-	private ArrayList<Status> createStatus(File file, HashMap<String, Long> map) throws IOException {
-		BufferedReader br = new BufferedReader(new FileReader(file.getAbsolutePath()));
+	private ArrayList<Status> createStatus(File file, HashMap<String, Long> map)
+			throws IOException {
+		BufferedReader br = new BufferedReader(new FileReader(
+				file.getAbsolutePath()));
 		ArrayList<Status> list = new ArrayList<Status>();
 
 		while (br.ready()) {
@@ -112,11 +121,11 @@ public class StatusWriter {
 				tweetText += s;
 			}
 
-			Status status = new MyStatus(userName, followersCnt, friendsCnt, date, tweetID, tweetText, sourceURL,
-					location, map);
+			Status status = new MyStatus(userName, followersCnt, friendsCnt,
+					date, tweetID, tweetText, sourceURL, location, map);
 			list.add(status);
 		}
-		
+
 		br.close();
 		return list;
 	}
