@@ -63,7 +63,8 @@ public class Main {
 				for (int j = start; j < f.length; j++) {
 					if (f[j].file.isFile()) {
 						System.out.println(f[j].file.getName());
-						tool = new StatisticsTool(f[j].file.getAbsolutePath());
+						tool = new StatisticsTool(folderName,
+								f[j].file.getAbsolutePath());
 						tool.parseData();
 						// tool.addSimilarityNodes();
 						tool.buildActivityFeatures();

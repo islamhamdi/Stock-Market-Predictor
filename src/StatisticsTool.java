@@ -17,6 +17,7 @@ import org.openide.util.Lookup;
 import twitter4j.HashtagEntity;
 import twitter4j.MediaEntity;
 import twitter4j.Status;
+import twitter4j.SymbolEntity;
 import twitter4j.URLEntity;
 import twitter4j.UserMentionEntity;
 
@@ -44,6 +45,7 @@ public class StatisticsTool {
 	private TreeMap<String, NodeIdentifier> hashtagsMap, urlsMap;
 	private ArrayList<NodeIdentifier> nodesList;
 	private double[] featureValues;
+	private String curCompanyName;
 
 	private Parser streamer;
 	private Graph graph;
@@ -52,7 +54,8 @@ public class StatisticsTool {
 	private GraphFeatures graphFeatures;
 	private AttributeModel attributeModel;
 
-	public StatisticsTool(String path) throws IOException {
+	public StatisticsTool(String curCompanyName, String path)
+			throws IOException {
 		this.nodeMap = new TreeMap<Long, NodeIdentifier>();
 		this.hashtagsMap = new TreeMap<String, NodeIdentifier>();
 		this.urlsMap = new TreeMap<String, NodeIdentifier>();
@@ -62,6 +65,7 @@ public class StatisticsTool {
 		this.activityFeatures = new ActivityFeatures();
 		this.nodeCounter = this.edgeCounter = this.totalFollowersCounter = this.totalFriendsCounter = 0;
 		this.featureValues = null;
+		this.curCompanyName = curCompanyName;
 
 		// initialize parser
 		this.streamer = new Parser(path);
@@ -110,7 +114,7 @@ public class StatisticsTool {
 			}
 
 			// Check for hashTag, financial symbols
-			handleHashTags(curTweet, tweetNID.node);
+			handleHashTagsAndSymbols(curTweet, tweetNID.node);
 
 			// Check for URLs
 			handleURLs(curTweet, tweetNID.node);
@@ -228,29 +232,37 @@ public class StatisticsTool {
 		}
 	}
 
-	private void handleHashTags(Status curTweet, Node tweetNode) {
+	private void handleHashTagsAndSymbols(Status curTweet, Node tweetNode) {
+
 		HashtagEntity[] hashtags = curTweet.getHashtagEntities();
+		SymbolEntity[] symbols = curTweet.getSymbolEntities();
+		String[] tags = Helper.combineTags(hashtags, symbols);
 
-		if (hashtags != null && hashtags.length > 0) {
-			for (int i = 0; i < hashtags.length; i++) {
-				String hashtagText = hashtags[i].getText();
-				NodeIdentifier hashtagNID;
+		if (tags != null && tags.length > 0) {
+			for (int i = 0; i < tags.length; i++) {
+				String tagText = tags[i];
 
-				if (hashtagsMap.containsKey(hashtagText)) {
-					hashtagNID = hashtagsMap.get(hashtagText);
+				// skip $company_name as a symbol
+				if (tagText.equals(this.curCompanyName))
+					continue;
+
+				NodeIdentifier tagNID;
+
+				if (hashtagsMap.containsKey(tagText)) {
+					tagNID = hashtagsMap.get(tagText);
 				} else {
 					// create new hash tag node
-					hashtagNID = new NodeIdentifier(graphModel.factory()
-							.newNode("" + nodeCounter), "" + (nodeCounter++));
-					hashtagNID.setText(hashtagText);
-					hashtagsMap.put(hashtagText, hashtagNID);
-					graph.addNode(hashtagNID.node);
+					tagNID = new NodeIdentifier(graphModel.factory().newNode(
+							"" + nodeCounter), "" + (nodeCounter++));
+					tagNID.setText(tagText);
+					hashtagsMap.put(tagText, tagNID);
+					graph.addNode(tagNID.node);
 				}
 
 				// repeated hashtags in the same tweet
-				if (!graph.isAdjacent(tweetNode, hashtagNID.node)) {
+				if (!graph.isAdjacent(tweetNode, tagNID.node)) {
 					Edge newEdge = graphModel.factory().newEdge(tweetNode,
-							hashtagNID.node);
+							tagNID.node);
 					graph.addEdge(newEdge);
 					edgeCounter++;
 				}
@@ -308,7 +320,7 @@ public class StatisticsTool {
 			activityFeatures.setUFLW(totalFollowersCounter / usersMap.size());
 			activityFeatures.setUFRN(totalFriendsCounter / usersMap.size());
 		}
-		// activityFeatures.printActivityFeatures();
+		activityFeatures.printActivityFeatures();
 	}
 
 	void buildGraphFeatures() throws Exception {
@@ -340,14 +352,5 @@ public class StatisticsTool {
 					graphFeatures.getValues());
 		}
 		return featureValues;
-	}
-
-	public static void main(String[] args) throws Exception {
-		StatisticsTool gexfGraph = new StatisticsTool(
-				"/home/islamhamdi/Desktop/TwitterStockData/$AAPL/27-02-2014");
-		gexfGraph.parseData();
-		// gexfGraph.addSimilarityNodes();
-		// gexfGraph.buildActivityFeatures();
-		// gexfGraph.buildGraphFeatures();
 	}
 }

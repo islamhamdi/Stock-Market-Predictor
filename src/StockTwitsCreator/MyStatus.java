@@ -62,6 +62,7 @@ public class MyStatus implements Status, Serializable {
 		this.user = status.getUser();
 		this.hashtagEntities = status.getHashtagEntities();
 		this.UserMentionEntities = status.getUserMentionEntities();
+		this.symbolEntities = status.getSymbolEntities();
 
 		URLEntities = new myURLEntity[URLs.length];
 		for (int i = 0; i < URLs.length; i++)

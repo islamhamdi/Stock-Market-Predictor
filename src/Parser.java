@@ -5,6 +5,7 @@ import java.io.ObjectInputStream;
 import java.util.ArrayList;
 
 import twitter4j.Status;
+import StockTwitsCreator.MyStatus;
 
 public class Parser {
 	private Status currentStatus;
