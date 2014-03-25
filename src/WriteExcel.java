@@ -276,7 +276,7 @@ public class WriteExcel {
 		}
 
 		int cnt = 1;
-		for (char ch2 = 'B'; ch2 <= 'O'; ch2++) {
+		for (char ch2 = 'B'; ch2 < 'O'; ch2++) {
 			int index = 0;
 			pos = fcolumn + 1;
 			for (int i = -lag_var; i <= lag_var; i++) {
@@ -303,7 +303,7 @@ public class WriteExcel {
 		}
 
 		int cnt = 1;
-		for (char ch2 = 'B'; ch2 <= 'O'; ch2++) {
+		for (char ch2 = 'B'; ch2 < 'O'; ch2++) {
 			int index = 0;
 			pos = fcolumn + 1;
 			for (int i = -lag_var; i <= lag_var; i++) {
