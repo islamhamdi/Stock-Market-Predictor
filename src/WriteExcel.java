@@ -23,15 +23,23 @@ import jxl.write.biff.RowsExceededException;
 
 public class WriteExcel {
 
-	String path;
-	String[] features;
-	String CompanyName;
-	WritableWorkbook workbook;
-	WritableSheet sheet;
-	int colPos = Global.specialCell;
-	int lag_var = Global.lag_var;
-	String[] price_cols = new String[2 * lag_var + 1];
-	String[] volume_cols = new String[2 * lag_var + 1];
+	// company path and name
+	private String path, CompanyName;
+
+	// each feature represented by a column
+	private String[] features;
+
+	// book to write in
+	private WritableWorkbook workbook;
+
+	// current writable sheet
+	private WritableSheet sheet;
+
+	private int specialCol = Global.specialCell;
+	private int lag_var = Global.lag_var;
+
+	private String[] price_cols = new String[2 * lag_var + 1];
+	private String[] volume_cols = new String[2 * lag_var + 1];
 
 	public void passFeatures(String[] features) throws IOException {
 		this.features = features;
@@ -41,64 +49,66 @@ public class WriteExcel {
 			throws IOException {
 		this.path = companyPath;
 		this.CompanyName = CompanyName;
-
 	}
 
 	public void createExcel() throws Exception {
 		File file = new File(path);
 		workbook = Workbook.createWorkbook(file);
+
 		workbook.createSheet("Twitter", 0);
 		workbook.createSheet("StockTwits", 1);
-		sheet = workbook.getSheet(0);
-		sheet.getSettings().setDefaultColumnWidth(Global.COLWIDTH);
-		writeFeatures();
-		adddummyDays();
-		sheet = workbook.getSheet(1);
-		sheet.getSettings().setDefaultColumnWidth(Global.COLWIDTH);
-		writeFeatures();
-		adddummyDays();
+		workbook.createSheet("Combined Data", 2);
+
+		for (int i = 0; i < 3; i++) {
+			sheet = workbook.getSheet(i);
+			sheet.getSettings().setDefaultColumnWidth(Global.COLWIDTH);
+			writeFeatures();
+			adddummyDays();
+		}
+
 		writeAndClose();
 	}
 
+	/*
+	 * add dummy days at start of sheet with no features
+	 */
 	private void adddummyDays() throws Exception {
 		String Start = Global.startDate;
-		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-		Date date = sdf.parse(Start);
+		Date date = Global.sdf.parse(Start);
 		double v[] = new double[0];
 		int cnt = 0, i;
 		for (i = 1; i < 20; i++) {
 			Date d = new Date(date.getTime() - TimeUnit.DAYS.toMillis(i));
-			double[] D = read(sdf.format(d));
-			if (D[0] == -1 && D[1] == -1) {
-			} else {
+			double[] D = read(Global.sdf.format(d));
+			if (D[0] != -1)
 				cnt++;
-			}
-			if (cnt == Global.lag_var)
+			if (cnt == lag_var)
 				break;
-
 		}
-
 		for (; i > 0; i--) {
 			Date d = new Date(date.getTime() - TimeUnit.DAYS.toMillis(i));
-			addNewDay(sdf.format(d), v);
+			addNewDay(Global.sdf.format(d), v);
 		}
 
 	}
 
+
+	/*
+	 * add dummy days at end of sheet with no features
+	 */
+	
 	public void adddummyDaysAtEnd() throws Exception {
 		int size = getRowsCnt();
 		String lastDay = sheet.getCell(0, size - 1).getContents();
-		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-		Date date = sdf.parse(lastDay);
+		Date date = Global.sdf.parse(lastDay);
 		double v[] = new double[0];
 
 		int cnt = 0, i;
 		for (i = 1; i < 20; i++) {
 			Date d = new Date(date.getTime() + TimeUnit.DAYS.toMillis(i));
-			double[] D = read(sdf.format(d));
-			if (D[0] == -1 && D[1] == -1) {
-			} else {
-				if (addNewDay(sdf.format(d), v))
+			double[] D = read(Global.sdf.format(d));
+			if (D[0] != -1) {
+				if (addNewDay(Global.sdf.format(d), v))
 					cnt++;
 			}
 			if (cnt == Global.lag_var)
@@ -108,10 +118,12 @@ public class WriteExcel {
 
 	public void initializeExcelSheet(int sheetNum) throws IOException,
 			WriteException, BiffException {
+		
 		File file = new File(path);
 		Workbook myWorkbook = Workbook.getWorkbook(file);
 		workbook = Workbook.createWorkbook(file, myWorkbook);
 		sheet = workbook.getSheet(sheetNum);
+		
 		int k = 0;
 		int pos = Global.price_start_col - lag_var;
 		for (int i = -lag_var; i <= lag_var; i++) {
@@ -122,7 +134,6 @@ public class WriteExcel {
 		for (int i = -lag_var; i <= lag_var; i++) {
 			volume_cols[k++] = convert(++pos);
 		}
-
 	}
 
 	public void writeFeatures() throws WriteException {
@@ -143,11 +154,11 @@ public class WriteExcel {
 			volume_cols[k++] = convert(pos);
 		}
 
-		addNumber(colPos, 0, 1.0);
+		addNumber(specialCol, 0, 1.0);
 	}
 
 	public int getRowsCnt() throws Exception {
-		Cell cell = sheet.getCell(colPos, 0);
+		Cell cell = sheet.getCell(specialCol, 0);
 		return (int) Double.parseDouble(cell.getContents());
 	}
 
@@ -157,7 +168,7 @@ public class WriteExcel {
 			return false;
 
 		int row = getRowsCnt();
-		addNumber(colPos, 0, row + 1.0);
+		addNumber(specialCol, 0, row + 1.0);
 		addCaption(0, row, day);
 		int n = val.length;
 		for (int j = 0; j < n; j++)
@@ -188,25 +199,15 @@ public class WriteExcel {
 			// Get the first sheet
 			Sheet sheet = w.getSheet(0);
 			// Loop over first 10 column and lines
-			boolean found = false;
 			for (int i = 1; i < sheet.getRows(); i++) {
 				Cell cell = sheet.getCell(0, i);
 				String day2 = cell.getContents();
 				if (Global.areEquals(day2, dayx)) {
-					found = true;
 					volume = sheet.getCell(5, i).getContents();
 					price = sheet.getCell(6, i).getContents();
-					// System.out.println("v=" + volume + ", price= " + price);
 				}
 			}
-
-			if (!found) {
-				price = "-1";
-				volume = "-1";
-			}
-
 		} catch (BiffException e) {
-
 			e.printStackTrace();
 		}
 
