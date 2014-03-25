@@ -247,7 +247,7 @@ public class GexfOutputGraph {
 					if (!visited[j]) {
 						NodeIdentifier next = nodesList.get(j);
 						if (JaccardSimilarity.getJaccardCoefficient(
-								currentNID.text, next.text) > Constants.JACCARD_THRESHOLD) {
+								currentNID.text, next.text) > Constants.MIN_JACCARD_THRESHOLD) {
 							visited[j] = true;
 							tempAns.add(next);
 						}

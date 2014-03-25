@@ -38,6 +38,8 @@ public class Global {
 	public static String[] companies;
 
 	public final static int THREAD_COUNT = 50;
+	public final static int TWITTER_DATA = 0;
+	public final static int STOCK_TWITS_DATA = 1;
 
 	static boolean areEquals(String price_day, String day2)
 			throws ParseException {

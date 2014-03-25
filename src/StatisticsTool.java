@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 import java.util.TreeMap;
 
 import org.gephi.data.attributes.api.AttributeController;
@@ -35,6 +36,10 @@ public class StatisticsTool {
 
 		public void setText(String s) {
 			text = s;
+		}
+
+		public String toString() {
+			return "Text = " + text;
 		}
 	}
 
@@ -98,15 +103,21 @@ public class StatisticsTool {
 			graph.addNode(tweetNID.node);
 
 			if (curTweet.isRetweet()) {
-				// Check for original Retweeted Status
-				Long originalTweetId = curTweet.getRetweetedStatus().getId();
-				if (nodeMap.containsKey(originalTweetId)) {
-					NodeIdentifier origTweetNID = nodeMap.get(originalTweetId);
 
-					Edge newEdge = graphModel.factory().newEdge(tweetNID.node,
-							origTweetNID.node);
-					graph.addEdge(newEdge);
-					edgeCounter++;
+				// Perform original tweets check on twitter data only
+				if (Global.files_to_run == Global.TWITTER_DATA) {
+					// Check for original Retweeted Status
+					Long originalTweetId = curTweet.getRetweetedStatus()
+							.getId();
+					if (nodeMap.containsKey(originalTweetId)) {
+						NodeIdentifier origTweetNID = nodeMap
+								.get(originalTweetId);
+
+						Edge newEdge = graphModel.factory().newEdge(
+								tweetNID.node, origTweetNID.node);
+						graph.addEdge(newEdge);
+						edgeCounter++;
+					}
 				}
 				activityFeatures.incRTID(); // increment number of re-tweets
 			} else {
@@ -271,12 +282,25 @@ public class StatisticsTool {
 	}
 
 	void addSimilarityNodes() {
+
+		// No need to add similarity nodes for twitter data
+		if (Global.files_to_run == Global.TWITTER_DATA)
+			return;
+
 		boolean[] visited = new boolean[nodesList.size()];
 		ArrayList<ArrayList<NodeIdentifier>> ans = new ArrayList<ArrayList<NodeIdentifier>>();
 
-		for (int i = 0; i < nodesList.size(); i++)
+		for (int i = 0; i < nodesList.size(); i++) {
 			if (!visited[i]) {
 				NodeIdentifier currentNID = nodesList.get(i);
+
+				String tweetText = currentNID.text;
+
+				// a retweet starts with @username: or RT
+				if (!(tweetText.matches("(@[a-zA-Z0-9]+:.+).*") || tweetText
+						.toUpperCase().startsWith("RT")))
+					continue;
+
 				ArrayList<NodeIdentifier> tempAns = new ArrayList<NodeIdentifier>();
 				tempAns.add(currentNID);
 				visited[i] = true;
@@ -284,14 +308,29 @@ public class StatisticsTool {
 				for (int j = i + 1; j < nodesList.size(); j++)
 					if (!visited[j]) {
 						NodeIdentifier next = nodesList.get(j);
-						if (JaccardSimilarity.getJaccardCoefficient(
-								currentNID.text, next.text) > Constants.JACCARD_THRESHOLD) {
+						String retweetBody = tweetText.substring(tweetText
+								.indexOf(' ') + 1);
+						double cofff = JaccardSimilarity.getJaccardCoefficient(
+								retweetBody, next.text);
+						if (cofff > Constants.MIN_JACCARD_THRESHOLD
+								&& cofff < Constants.MAX_JACCARD_THRESHOLD) {
 							visited[j] = true;
 							tempAns.add(next);
 						}
 					}
 				ans.add(tempAns);
 			}
+		}
+
+		// for (int i = 0; i < ans.size(); i++) {
+		// ArrayList<NodeIdentifier> current = ans.get(i);
+		// if (current.size() > 1) { // similar nodes exist
+		// for (int j = 0; j < current.size(); j++) {
+		// System.out.println(current.get(j));
+		// }
+		// System.out.println("=========================");
+		// }
+		// }
 
 		for (int i = 0; i < ans.size(); i++) {
 			ArrayList<NodeIdentifier> current = ans.get(i);
@@ -339,7 +378,7 @@ public class StatisticsTool {
 		GraphDistance distance = new GraphDistance();
 		distance.execute(graphModel, attributeModel);
 		graphFeatures.setMAX_DIST(distance.getDiameter());
-		// graphFeatures.printGraphFeatures();
+		graphFeatures.printGraphFeatures();
 	}
 
 	double[] getFeaturesValues() throws Exception {

@@ -23,7 +23,7 @@ public class Main {
 	public static void main(String[] args) throws Exception, WriteException {
 
 		// 0 mean Twitter- 1 mean StockTwits- Data
-		Global.files_to_run = 1;
+		Global.files_to_run = Global.STOCK_TWITS_DATA;
 
 		if (Global.files_to_run == 0) {
 			path = Global.path1;
@@ -56,17 +56,17 @@ public class Main {
 				myComp[] f = getFileList(folderName);
 
 				int start = excel.getRowsCnt() - Global.lag_var - 1;
-				System.out.println("cnt=" + excel.getRowsCnt());
-				System.out.println("cnt=" + Global.lag_var);
+				// System.out.println("cnt=" + excel.getRowsCnt());
+				// System.out.println("cnt=" + Global.lag_var);
 
-				System.out.println(start);
+				// System.out.println(start);
 				for (int j = start; j < f.length; j++) {
 					if (f[j].file.isFile()) {
 						System.out.println(f[j].file.getName());
 						tool = new StatisticsTool(folderName,
 								f[j].file.getAbsolutePath());
 						tool.parseData();
-						// tool.addSimilarityNodes();
+						tool.addSimilarityNodes();
 						tool.buildActivityFeatures();
 						tool.buildGraphFeatures();
 						excel.addNewDay(f[j].file.getName(),

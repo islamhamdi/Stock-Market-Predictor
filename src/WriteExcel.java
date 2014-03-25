@@ -85,15 +85,14 @@ public class WriteExcel {
 
 		for (; i > 0; i--) {
 			Date d = new Date(date.getTime() - TimeUnit.DAYS.toMillis(i));
-			 addNewDay(sdf.format(d), v);
+			addNewDay(sdf.format(d), v);
 		}
 
 	}
 
-	
 	public void adddummyDaysAtEnd() throws Exception {
 		int size = getRowsCnt();
-		String lastDay = sheet.getCell(0, size-1).getContents();
+		String lastDay = sheet.getCell(0, size - 1).getContents();
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 		Date date = sdf.parse(lastDay);
 		double v[] = new double[0];
@@ -112,8 +111,6 @@ public class WriteExcel {
 		}
 	}
 
-	
-	
 	public void initializeExcelSheet(int sheetNum) throws IOException,
 			WriteException, BiffException {
 		File file = new File(path);
@@ -204,7 +201,7 @@ public class WriteExcel {
 					found = true;
 					volume = sheet.getCell(5, i).getContents();
 					price = sheet.getCell(6, i).getContents();
-					System.out.println("v=" + volume + ", price= " + price);
+					// System.out.println("v=" + volume + ", price= " + price);
 				}
 			}
 

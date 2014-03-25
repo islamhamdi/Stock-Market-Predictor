@@ -22,5 +22,6 @@ public class Constants {
 	public static final NodeShape URL_NODE_SHAPE = NodeShape.TRIANGLE;
 	public static final NodeShape SIMILARITY_NODE_SHAPE = NodeShape.IMAGE;
 
-	public static final double JACCARD_THRESHOLD = .8;
+	public static final double MIN_JACCARD_THRESHOLD = .8;
+	public static final double MAX_JACCARD_THRESHOLD = .9;
 }
