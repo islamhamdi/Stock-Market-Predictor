@@ -4,29 +4,27 @@ import java.util.Date;
 
 public class Global {
 
-	static String path1 = "/home/islamhamdi/Desktop/TwitterStockData";
-	static String path2 = "/home/islamhamdi/Desktop/StockTwitsData";
-	static String StatFolderPath = "Statistics";
-	static String historyPath = "/home/islamhamdi/Dropbox/Stock Market Daily Data/historical prices/";
+	// static String path1 = "/home/islamhamdi/Desktop/TwitterStockData";
+	// static String path2 = "/home/islamhamdi/Desktop/StockTwitsData";
+	// static String StatFolderPath = "Statistics";
+	// static String historyPath =
+	// "/home/islamhamdi/Dropbox/Stock Market Daily Data/historical prices/";
 
 	// set 0 for twitter 1 for stockTwits
 	static int files_to_run;
 
 	static String startDate = "20-2-2014";
 
-	// static String path1 =
-	// "/home/mohamed/Dropbox/Stock Market Daily Data/Twitter";
-	// static String path2 =
-	// "/home/mohamed/Dropbox/Stock Market Daily Data/StockTwits";
-	// static String StatFolderPath =
-	// "/home/mohamed/Dropbox/Stock Market Daily Data/statistics";
-	// static String historyPath =
-	// "/home/mohamed/Dropbox/Stock Market Daily Data/historical prices/";
+	static String path1 = "/home/mohamed/Dropbox/Stock Market Daily Data/Twitter";
+	static String path2 = "/home/mohamed/Dropbox/Stock Market Daily Data/StockTwits";
+	static String StatFolderPath = "/home/mohamed/Dropbox/Stock Market Daily Data/statistics";
+	static String historyPath = "/home/mohamed/Dropbox/Stock Market Daily Data/historical prices/";
 
 	static int lag_var = 3;
+	static int features_num = 13;
 
-	static int volume_start_col = 30;
-	static int price_start_col = 20;
+	static int price_start_col = features_num + lag_var + 1;
+	static int volume_start_col = price_start_col + 2 * lag_var + 1;
 
 	static int specialCell = 60;
 	static int COLWIDTH = 12;
@@ -47,4 +45,11 @@ public class Global {
 		return from.equals(to);
 	}
 
+	public static String seperated = "SeparatedData";
+	public static String idMap = "@ user-id-map";
+	public static String idSet = "@ tweet-id-set";
+	public static String lineSeparator = "=8=7=6=5=";
+	public static String companiesFolder = "Serialized Data";
+	public static String data = "data";
+	public static String status = "Tweet";
 }
