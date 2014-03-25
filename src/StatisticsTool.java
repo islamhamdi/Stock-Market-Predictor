@@ -101,7 +101,7 @@ public class StatisticsTool {
 			nodesList.add(tweetNID);
 			graph.addNode(tweetNID.node);
 
-			if (curTweet.isRetweet()) {	
+			if (curTweet.isRetweet()) {
 
 				// Perform original tweets check on twitter data only
 				if (Global.files_to_run == Global.TWITTER_DATA) {
@@ -252,7 +252,7 @@ public class StatisticsTool {
 				String tagText = tags[i];
 
 				// skip $company_name as a symbol
-				if (tagText.equals(this.curCompanyName))
+				if (("$" + tagText).equals(this.curCompanyName))
 					continue;
 
 				NodeIdentifier tagNID;
