@@ -1,6 +1,5 @@
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.StringTokenizer;
 import java.util.TreeMap;
 
 import org.gephi.data.attributes.api.AttributeController;
@@ -102,7 +101,7 @@ public class StatisticsTool {
 			nodesList.add(tweetNID);
 			graph.addNode(tweetNID.node);
 
-			if (curTweet.isRetweet()) {
+			if (curTweet.isRetweet()) {	
 
 				// Perform original tweets check on twitter data only
 				if (Global.files_to_run == Global.TWITTER_DATA) {
@@ -120,9 +119,8 @@ public class StatisticsTool {
 					}
 				}
 				activityFeatures.incRTID(); // increment number of re-tweets
-			} else {
-				activityFeatures.incTID();// increment number of tweets
 			}
+			activityFeatures.incTID();// increment number of tweets/retweets
 
 			// Check for hashTag, financial symbols
 			handleHashTagsAndSymbols(curTweet, tweetNID.node);

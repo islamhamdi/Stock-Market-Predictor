@@ -39,8 +39,9 @@ public class MyStatus implements Status, Serializable {
 	private URLEntity[] URLEntities;
 	private UserMentionEntity[] UserMentionEntities;
 
-	public MyStatus(String userName, int followerCount, int friendCount, String date, long tweetID, String text,
-			String sourceURL, String placeName, HashMap<String, Long> map) {
+	public MyStatus(String userName, int followerCount, int friendCount,
+			String date, long tweetID, String text, String sourceURL,
+			String placeName, HashMap<String, Long> map) {
 		this.tweetID = tweetID;
 		this.source = sourceURL;
 		this.place = new myPlace(placeName);
@@ -201,7 +202,8 @@ public class MyStatus implements Status, Serializable {
 
 	@Override
 	public boolean isRetweet() {
-		return getText().matches("[\"](@[a-zA-Z0-9]+:.+)[\"].*");
+		return getText().matches("(@[a-zA-Z0-9]+:.+).*")
+				|| getText().toUpperCase().startsWith("RT");
 	}
 
 	@Override
@@ -241,7 +243,8 @@ public class MyStatus implements Status, Serializable {
 	}
 
 	private void setURLEntities(String text) {
-		String[] sites = { "http", "bit.ly", "goo.gl", "bitly", "ow.ly", "tinyurl" };
+		String[] sites = { "http", "bit.ly", "goo.gl", "bitly", "ow.ly",
+				"tinyurl" };
 		StringTokenizer st = new StringTokenizer(text);
 		ArrayList<URLEntity> list = new ArrayList<URLEntity>();
 		while (st.hasMoreTokens()) {
@@ -279,13 +282,14 @@ public class MyStatus implements Status, Serializable {
 			if (tmp.charAt(0) == '#')
 				list.add(new myHashtagEntity(tmp));
 		}
-		
+
 		hashtagEntities = new HashtagEntity[list.size()];
-		for(int i = 0; i < list.size(); i++)
+		for (int i = 0; i < list.size(); i++)
 			hashtagEntities[i] = list.get(i);
 	}
 
-	private void setUser(String userName, int followerCount, int friendCount, HashMap<String, Long> map) {
+	private void setUser(String userName, int followerCount, int friendCount,
+			HashMap<String, Long> map) {
 		if (!map.containsKey(userName))
 			map.put(userName, (long) map.size());
 
@@ -315,7 +319,8 @@ public class MyStatus implements Status, Serializable {
 		private long ID;
 		private int followerCount, friendCount;
 
-		public myUser(String userName, long userID, int followerCount, int follwingCount) {
+		public myUser(String userName, long userID, int followerCount,
+				int follwingCount) {
 			this.name = userName;
 			this.ID = userID;
 			this.followerCount = followerCount;
@@ -749,7 +754,8 @@ public class MyStatus implements Status, Serializable {
 		}
 	}
 
-	private class myUserMentionEntity implements UserMentionEntity, Serializable {
+	private class myUserMentionEntity implements UserMentionEntity,
+			Serializable {
 		/**
 		 * 
 		 */

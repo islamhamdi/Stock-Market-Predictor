@@ -45,12 +45,10 @@ public class Parser {
 	public Status getNextStatus() throws IOException {
 		try {
 			return currentStatus = (Status) ois.readObject();
-			// return currentStatus;
 		} catch (Exception e) {
 			fin.close();
 			ois.close();
 
-			// /---------------------
 			return null;
 
 			// if (fileIndex + 1 >= filesList.length)
