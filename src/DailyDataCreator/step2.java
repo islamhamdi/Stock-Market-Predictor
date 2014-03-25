@@ -1,4 +1,5 @@
 package DailyDataCreator;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -16,14 +17,17 @@ import java.util.TimeZone;
 import twitter4j.Status;
 
 public class step2 {
+	static SimpleDateFormat sdf2 = new SimpleDateFormat("dd-MM-yyy");
+	static Date st;
 
 	public step2() throws Exception {
-		String finaloutputDir = "S:\\Dropbox\\Stock Market Daily Data\\StockTwits\\";
+		st = sdf2.parse("20-2-2014");
+		String finaloutputDir = "/media/mohamed/661038916B7ACCAB/StockTwits";
 		File dir = new File(finaloutputDir);
 		if (!dir.exists())
 			dir.mkdir();
-
-		String inputDir = "S:\\GitWork\\gephi-twitter-visualization\\Data\\Serialized Data\\";
+		String inputDir = "/home/mohamed/workspace/gephi-twitter-visualization/Data/Serialized Data";
+		// String inputDir = "./out1/";
 		dir = new File(inputDir);
 
 		if (!dir.exists())
@@ -76,8 +80,13 @@ public class step2 {
 					}
 				}
 				System.out.println("read file " + input[i].getName());
-				Status msg = (Status) is.readObject();
-
+				Status msg = null;
+				try {
+					msg = (Status) is.readObject();
+				} catch (Exception e) {
+					System.out
+							.println(input[i].getAbsolutePath() + " is Empty");
+				}
 				while (msg != null) {
 					Date d = msg.getCreatedAt();
 
@@ -86,22 +95,22 @@ public class step2 {
 							.getTimeZone("America/New_York"));
 
 					String name = formatter.format(d);
-					
-
+					d = formatter.parse(name);
 					// write if ok
-					ObjectOutputStream oos;
-					if (writer.get(name) != null) {
-						oos = writer.get(name);
-						counter.put(name, counter.get(name) + 1);
-					} else {
-						counter.put(name, 1);
-						oos = new ObjectOutputStream(new FileOutputStream(
-								fullDir + "/" + name, true));
-						arrlst.add(oos);
-						writer.put(name, oos);
+					if (d.after(st)) {
+						ObjectOutputStream oos;
+						if (writer.get(name) != null) {
+							oos = writer.get(name);
+							counter.put(name, counter.get(name) + 1);
+						} else {
+							counter.put(name, 1);
+							oos = new ObjectOutputStream(new FileOutputStream(
+									fullDir + "/" + name, true));
+							arrlst.add(oos);
+							writer.put(name, oos);
+						}
+						oos.writeObject(msg);
 					}
-					oos.writeObject(msg);
-
 					try {
 						msg = (Status) is.readObject();
 					} catch (Exception e) {
