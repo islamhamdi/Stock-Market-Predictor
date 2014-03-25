@@ -16,10 +16,9 @@ public class step1 {
 
 	public static void main(String[] args) throws IOException,
 			ClassNotFoundException {
-		Scanner sc = new Scanner(new File("companies.txt"));
-		int n = sc.nextInt();
-		companies = new String[n];
-		for (int i = 0; i < n; i++) {
+		Scanner sc = new Scanner(new File("TrackingCompanies.txt"));
+		companies = new String[169];
+		for (int i = 0; i < 169; i++) {
 			companies[i] = sc.next();
 		}
 

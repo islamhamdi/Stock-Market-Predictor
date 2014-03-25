@@ -264,9 +264,9 @@ public class MyStatus implements Status, Serializable {
 	private void setSymbolEntities(String s) {
 		ArrayList<SymbolEntity> list = new ArrayList<SymbolEntity>();
 
-		for (int i = 0; i < GLOBAL.companies.length; i++)
-			if (s.contains(GLOBAL.companies[i]))
-				list.add(new MySymbolEntity(GLOBAL.companies[i]));
+		for (int i = 0; i < Global.companies.length; i++)
+			if (s.contains(Global.companies[i]))
+				list.add(new MySymbolEntity(Global.companies[i]));
 
 		symbolEntities = new SymbolEntity[list.size()];
 		for (int i = 0; i < list.size(); i++)

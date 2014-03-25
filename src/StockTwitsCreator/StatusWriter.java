@@ -21,31 +21,31 @@ public class StatusWriter {
 			ClassNotFoundException {
 		System.out.println("=> Start converting .txt files to status files\n");
 
-		File dir = new File(directory + "/" + GLOBAL.companiesFolder);
+		File dir = new File(directory + "/" + Global.companiesFolder);
 		dir.mkdir();
 
 		// map of (username , userID)
 		HashMap<String, Long> map = readHashMap(directory);
 		int tweetsCount = 0;
-		for (int i = 0; i < GLOBAL.companies.length; i++) {
+		for (int i = 0; i < Global.companies.length; i++) {
 			System.out.println("=> Start Reading Company : "
-					+ GLOBAL.companies[i] + " files");
+					+ Global.companies[i] + " files");
 
-			File statusDir = new File(directory + "/" + GLOBAL.seperated + "/");
+			File statusDir = new File(directory + "/" + Global.seperated + "/");
 			File[] files = statusDir.listFiles();
 
 			for (int j = 0; j < files.length; j++) {
 				StringTokenizer st = new StringTokenizer(files[j].getName());
 
-				if (st.nextToken().equals(GLOBAL.companies[i])) {
+				if (st.nextToken().equals(Global.companies[i])) {
 					System.out.println("Load file : " + files[j].getName());
 
 					ArrayList<Status> list = createStatus(files[j], map);
 					tweetsCount += list.size();
 
 					// write status to file
-					writeList(directory + "/" + GLOBAL.companiesFolder + "/"
-							+ GLOBAL.companies[i], list);
+					writeList(directory + "/" + Global.companiesFolder + "/"
+							+ Global.companies[i], list);
 				}
 
 			}
@@ -72,7 +72,7 @@ public class StatusWriter {
 
 	private void writeHashMap(String directory, HashMap<String, Long> map)
 			throws IOException {
-		FileOutputStream fout = new FileOutputStream(directory + GLOBAL.idMap);
+		FileOutputStream fout = new FileOutputStream(directory + Global.idMap);
 		ObjectOutputStream oos = new ObjectOutputStream(fout);
 		oos.writeObject(map);
 
@@ -84,10 +84,10 @@ public class StatusWriter {
 			throws IOException, ClassNotFoundException {
 		FileInputStream fin;
 		try {
-			fin = new FileInputStream(directory + GLOBAL.idMap);
+			fin = new FileInputStream(directory + Global.idMap);
 		} catch (FileNotFoundException e) {
 			writeHashMap(directory, new HashMap<String, Long>());
-			fin = new FileInputStream(directory + GLOBAL.idMap);
+			fin = new FileInputStream(directory + Global.idMap);
 		}
 
 		ObjectInputStream ois = new ObjectInputStream(fin);
@@ -117,7 +117,7 @@ public class StatusWriter {
 
 			// read message
 			String s;
-			while (!(s = br.readLine()).equals(GLOBAL.lineSeparator)) {
+			while (!(s = br.readLine()).equals(Global.lineSeparator)) {
 				tweetText += s;
 			}
 

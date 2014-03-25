@@ -19,8 +19,8 @@ public class CompanySeparator {
 
 	public CompanySeparator() {
 		companySet = new HashMap<String, Integer>();
-		for (int i = 0; i < GLOBAL.companies.length; i++)
-			companySet.put(GLOBAL.companies[i], i);
+		for (int i = 0; i < Global.companies.length; i++)
+			companySet.put(Global.companies[i], i);
 	}
 
 	// ***** File Format *****
@@ -40,13 +40,13 @@ public class CompanySeparator {
 			ClassNotFoundException {
 		System.out.println("=> Start dividing tweets on Companies files");
 
-		BufferedWriter[] data = new BufferedWriter[GLOBAL.companies.length];
-		int[] counter = new int[GLOBAL.companies.length];
+		BufferedWriter[] data = new BufferedWriter[Global.companies.length];
+		int[] counter = new int[Global.companies.length];
 
-		File dir = new File(directory + "/" + GLOBAL.seperated);
+		File dir = new File(directory + "/" + Global.seperated);
 		dir.mkdir();
 
-		for (int i = 0; i < GLOBAL.companies.length; i++) {
+		for (int i = 0; i < Global.companies.length; i++) {
 			counter[i] = 0;
 		}
 
@@ -56,7 +56,7 @@ public class CompanySeparator {
 		File[] files = statusDir.listFiles();
 		StringBuilder status = new StringBuilder(), message = new StringBuilder();
 		int totalTweets = 0;
-		int[] tweetsCnt = new int[GLOBAL.companies.length];
+		int[] tweetsCnt = new int[Global.companies.length];
 
 		for (int i = 0; i < files.length; i++) {
 			System.out.println("Load File : " + files[i].getName());
@@ -77,7 +77,7 @@ public class CompanySeparator {
 
 				// read message
 				String s;
-				while (!(s = br.readLine()).equals(GLOBAL.lineSeparator)) {
+				while (!(s = br.readLine()).equals(Global.lineSeparator)) {
 					message.append(s).append(' ');
 					status.append(s).append('\n');
 				}
@@ -87,9 +87,9 @@ public class CompanySeparator {
 
 				tweetSet.add(tweetID);
 
-				status.append(GLOBAL.lineSeparator + "\n");
-				for (int k = 0; k < GLOBAL.companies.length; k++) {
-					boolean found = message.indexOf(GLOBAL.companies[k]) >= 0;
+				status.append(Global.lineSeparator + "\n");
+				for (int k = 0; k < Global.companies.length; k++) {
+					boolean found = message.indexOf(Global.companies[k]) >= 0;
 
 					if (found) {
 						tweetsCnt[k]++;
@@ -99,8 +99,8 @@ public class CompanySeparator {
 								data[k].close();
 
 							data[k] = new BufferedWriter(new FileWriter(
-									directory + "/" + GLOBAL.seperated + "/"
-											+ GLOBAL.companies[k]));
+									directory + "/" + Global.seperated + "/"
+											+ Global.companies[k]));
 						}
 
 						data[k].write(status.toString());
@@ -121,7 +121,7 @@ public class CompanySeparator {
 
 		System.out.println("=> Finish dividing tweets on companies files\n");
 		for (int i = 0; i < tweetsCnt.length; i++)
-			System.out.println("Total tweets of company " + GLOBAL.companies[i]
+			System.out.println("Total tweets of company " + Global.companies[i]
 					+ " : " + tweetsCnt[i]);
 
 		System.out.println("\nTotal tweets : " + totalTweets
@@ -132,10 +132,10 @@ public class CompanySeparator {
 			ClassNotFoundException {
 		FileInputStream fin;
 		try {
-			fin = new FileInputStream(directory + GLOBAL.idSet);
+			fin = new FileInputStream(directory + Global.idSet);
 		} catch (FileNotFoundException e) {
 			writeHashSet(directory, new HashSet<Long>());
-			fin = new FileInputStream(directory + GLOBAL.idSet);
+			fin = new FileInputStream(directory + Global.idSet);
 		}
 
 		ObjectInputStream ois = new ObjectInputStream(fin);
@@ -147,7 +147,7 @@ public class CompanySeparator {
 
 	private void writeHashSet(String directory, HashSet<Long> set)
 			throws IOException {
-		FileOutputStream fout = new FileOutputStream(directory + GLOBAL.idSet);
+		FileOutputStream fout = new FileOutputStream(directory + Global.idSet);
 		ObjectOutputStream oos = new ObjectOutputStream(fout);
 		oos.writeObject(set);
 
