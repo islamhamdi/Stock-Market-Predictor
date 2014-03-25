@@ -201,7 +201,7 @@ public class MyStatus implements Status, Serializable {
 
 	@Override
 	public boolean isRetweet() {
-		return getText().matches("[\"](@[a-zA-Z0-9]+:.+)[\"].*");
+		return getText().matches("(@[a-zA-Z0-9]+:.+).*")||getText().toUpperCase().startsWith("RT");
 	}
 
 	@Override
