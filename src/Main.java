@@ -22,7 +22,7 @@ public class Main {
 	public static void main(String[] args) throws Exception, WriteException {
 
 		// 0 mean Twitter- 1 mean StockTwits- Data
-		Global.files_to_run = Global.STOCK_TWITS_DATA;
+		Global.files_to_run = Global.TWITTER_DATA;
 
 		if (Global.files_to_run == 0) {
 			path = Global.path1;
@@ -97,18 +97,25 @@ public class Main {
 	private static myComp[] getFileList(String folderName) throws Exception {
 		File dir = new File(path + "/" + folderName);
 		File[] files = dir.listFiles();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		Date start = sdf.parse(Global.startDate);
 
 		HashSet<String> hs = getAvailableDays(folderName);
+
 		int n = 0;
 		for (int j = 0; j < files.length; j++) {
-			if (hs.contains(files[j].getName()))
+			Date cur = sdf.parse(files[j].getName());
+
+			if (hs.contains(files[j].getName()) && cur.after(start))
 				n++;
 		}
 
 		myComp[] f = new myComp[n];
 		int index = 0;
 		for (int j = 0; j < files.length; j++) {
-			if (hs.contains(files[j].getName()))
+			Date cur = sdf.parse(files[j].getName());
+
+			if (hs.contains(files[j].getName()) && cur.after(start))
 				f[index++] = new myComp(files[j]);
 		}
 		Arrays.sort(f);

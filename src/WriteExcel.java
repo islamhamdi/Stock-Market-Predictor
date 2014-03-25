@@ -61,15 +61,10 @@ public class WriteExcel {
 	}
 
 	private void adddummyDays() throws Exception {
-		String name = sheet.getName();
-		String Start = "16-02-2014";
-		if (name.equals("StockTwits"))
-			Start = "28-02-2014";
+		String Start = Global.startDate;
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 		Date date = sdf.parse(Start);
 		double v[] = new double[0];
-		System.out.println("");
-
 		int cnt = 0, i;
 		for (i = 1; i < 20; i++) {
 			Date d = new Date(date.getTime() - TimeUnit.DAYS.toMillis(i));
@@ -103,8 +98,8 @@ public class WriteExcel {
 			double[] D = read(sdf.format(d));
 			if (D[0] == -1 && D[1] == -1) {
 			} else {
-				addNewDay(sdf.format(d), v);
-				cnt++;
+				if (addNewDay(sdf.format(d), v))
+					cnt++;
 			}
 			if (cnt == Global.lag_var)
 				break;
