@@ -80,7 +80,7 @@ public class WriteExcel {
 		for (i = 1; i < 20; i++) {
 			Date d = new Date(date.getTime() - TimeUnit.DAYS.toMillis(i));
 			double[] D = read(Global.sdf.format(d));
-			if (D[0] != -1)
+			if (D[0] != 0)
 				cnt++;
 			if (cnt == lag_var)
 				break;
@@ -92,11 +92,10 @@ public class WriteExcel {
 
 	}
 
-
 	/*
 	 * add dummy days at end of sheet with no features
 	 */
-	
+
 	public void adddummyDaysAtEnd() throws Exception {
 		int size = getRowsCnt();
 		String lastDay = sheet.getCell(0, size - 1).getContents();
@@ -107,7 +106,7 @@ public class WriteExcel {
 		for (i = 1; i < 20; i++) {
 			Date d = new Date(date.getTime() + TimeUnit.DAYS.toMillis(i));
 			double[] D = read(Global.sdf.format(d));
-			if (D[0] != -1) {
+			if (D[0] != 0) {
 				if (addNewDay(Global.sdf.format(d), v))
 					cnt++;
 			}
@@ -118,12 +117,12 @@ public class WriteExcel {
 
 	public void initializeExcelSheet(int sheetNum) throws IOException,
 			WriteException, BiffException {
-		
+
 		File file = new File(path);
 		Workbook myWorkbook = Workbook.getWorkbook(file);
 		workbook = Workbook.createWorkbook(file, myWorkbook);
 		sheet = workbook.getSheet(sheetNum);
-		
+
 		int k = 0;
 		int pos = Global.price_start_col - lag_var;
 		for (int i = -lag_var; i <= lag_var; i++) {
@@ -164,7 +163,7 @@ public class WriteExcel {
 
 	boolean addNewDay(String day, double[] val) throws Exception {
 		double[] d = read(day);
-		if (d[0] == -1 && d[1] == -1)
+		if (d[0] == 0)
 			return false;
 
 		int row = getRowsCnt();

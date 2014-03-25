@@ -75,9 +75,9 @@ public class Main {
 								"Make sure companies directories contain only files.");
 					}
 				}
+				excel.adddummyDaysAtEnd();
 				System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 				excel.drawTables();
-				excel.adddummyDaysAtEnd();
 				excel.writeAndClose();
 			}
 
