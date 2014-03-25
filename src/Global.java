@@ -21,11 +21,15 @@ public class Global {
 	static String historyPath = "/home/mohamed/Dropbox/Stock Market Daily Data/historical prices/";
 
 	static int lag_var = 3;
-	static int volume_start_col = 50;
-	static int price_start_col = 30;
+	
+	static int volume_start_col = 30;
+	static int price_start_col = 20;
+	
 	static int specialCell = 60;
 	static int COLWIDTH = 12;
 	public static String[] companies;
+
+	static SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 
 	public final static int THREAD_COUNT = 50;
 	public final static int TWITTER_DATA = 0;
