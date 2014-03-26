@@ -12,6 +12,7 @@ import jxl.Workbook;
 import jxl.read.biff.BiffException;
 
 public class ExcelToWeka {
+	static int feature_num = 13;
 	static int lags = 3;
 
 	public static String inDir = "/home/mohamed/Dropbox/Stock Market Daily Data/statistics";
@@ -28,6 +29,7 @@ public class ExcelToWeka {
 		statusDir = new File(inDir);
 		File[] files = statusDir.listFiles();
 		for (File f : files) {
+
 			String st = f.getName();
 			String companyNam = st.substring(0, st.indexOf("."));
 			System.out.println("Read File : " + companyNam);
@@ -43,12 +45,15 @@ public class ExcelToWeka {
 			for (String s : excel.getFeatures())
 				bw.write("@attribute " + s + " real\n");
 
+			bw.write("@attribute class {0,1}\n");
+
 			// write tuples
 			bw.write("@data\n");
 			for (double[] tuple : excel.getTuples()) {
 				String s = "";
 				for (double d : tuple)
 					s += "," + d;
+				s += "," + 0;
 				s = s.substring(1);
 
 				bw.write(s + "\n");
@@ -90,19 +95,21 @@ public class ExcelToWeka {
 				int rawscnt = Integer.parseInt(raws);
 
 				int h = rawscnt - 2 * lags - 1;
-				Cell[] c = sheet.getRow(0);
-				int width = sheet.getRow(lags + 1).length;
-				features = new String[width - 1];
 
-				for (int j = 0; j < features.length; j++) {
+				Cell[] c = sheet.getRow(0);
+
+				features = new String[feature_num];
+
+				for (int j = 0; j < feature_num; j++) {
 					features[j] = c[j + 1].getContents();
 				}
 
-				tuples = new double[h][width - 1];
+				tuples = new double[h][feature_num];
+
 				int index = 0;
 				for (int i = lags + 1; i <= lags + h; i++) {
 					c = sheet.getRow(i);
-					for (int j = 1; j < tuples[0].length; j++) {
+					for (int j = 1; j <= feature_num; j++) {
 						String str = c[j].getContents();
 						tuples[index][j - 1] = Double.parseDouble(str);
 					}

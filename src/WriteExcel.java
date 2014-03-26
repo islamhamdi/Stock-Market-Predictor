@@ -105,11 +105,10 @@ public class WriteExcel {
 		int cnt = 0, i;
 		for (i = 1; i < 20; i++) {
 			Date d = new Date(date.getTime() + TimeUnit.DAYS.toMillis(i));
-			double[] D = read(Global.sdf.format(d));
-			if (D[0] != 0) {
-				if (addNewDay(Global.sdf.format(d), v))
-					cnt++;
-			}
+			String day = Global.sdf.format(d);
+			double[] D = read(day);
+			if (D[0] != 0 && addNewDay(day, v))
+				cnt++;
 			if (cnt == Global.lag_var)
 				break;
 		}
@@ -163,9 +162,11 @@ public class WriteExcel {
 
 	boolean addNewDay(String day, double[] val) throws Exception {
 		double[] d = read(day);
-		if (d[0] == 0)
+		System.out.println(d[0]);
+		if (d[0] == 0) {
+			System.out.println(day + " not valid");
 			return false;
-
+		}
 		int row = getRowsCnt();
 		addNumber(specialCol, 0, row + 1.0);
 		addCaption(0, row, day);
