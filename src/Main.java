@@ -24,12 +24,13 @@ public class Main {
 		// 0 mean Twitter- 1 mean StockTwits- Data
 		Global.files_to_run = Global.TWITTER_DATA;
 
-		if (Global.files_to_run == 0) {
-			path = Global.path1;
+		preprocessUrlExpansion();
+		if (Global.files_to_run == Global.TWITTER_DATA) {
+			path = Global.twitterDataExpandedPath;
 			sheetNum = 0;
 		} else {
 			sheetNum = 1;
-			path = Global.path2;
+			path = Global.stockTwitDataExpandedPath;
 		}
 
 		File statDir = new File(statPath);
@@ -75,12 +76,43 @@ public class Main {
 								"Make sure companies directories contain only files.");
 					}
 				}
-				excel.adddummyDaysAtEnd();
 				System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 				excel.drawTables();
+				excel.adddummyDaysAtEnd();
 				excel.writeAndClose();
 			}
 
+		}
+	}
+
+	private static void preprocessUrlExpansion() throws InterruptedException {
+		String sourcePath, destPath;
+
+		if (Global.files_to_run == Global.TWITTER_DATA) {
+			sourcePath = Global.twitterDataPath;
+			destPath = Global.twitterDataExpandedPath;
+		} else {
+			sourcePath = Global.stockTwitDataPath;
+			destPath = Global.stockTwitDataExpandedPath;
+		}
+
+		File statusDir = new File(sourcePath);
+		File[] folders = statusDir.listFiles();
+		URLExpander urlExpander;
+		for (int i = 0; i < folders.length; i++) {
+			String folderName = folders[i].getName();
+			if (folders[i].isDirectory()) {
+				String destinationPath = destPath + "/" + folderName;
+				File destDir = new File(destinationPath);
+				if (!destDir.exists())
+					destDir.mkdir();
+				urlExpander = new URLExpander(sourcePath + "/" + folderName,
+						destinationPath);
+				//				System.out.println(destinationPath);
+				urlExpander.startURLExpander();
+				while (!urlExpander.isTerminated())
+					;
+			}
 		}
 	}
 

@@ -212,8 +212,8 @@ public class StatisticsTool {
 			for (int i = 0; i < list.length; i++) {
 
 				// URL expansion, from t.co --> bit.ly --> original one
-				// TODO String curUrlText = URLExpander.expandUrl(list[i]);
 				String curUrlText = list[i];
+
 				NodeIdentifier urlNID;
 
 				if (urlsMap.containsKey(curUrlText)) {

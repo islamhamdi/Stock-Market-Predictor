@@ -8,6 +8,7 @@ import java.net.HttpURLConnection;
 import java.net.Proxy;
 import java.net.URL;
 import java.util.AbstractMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Map.Entry;
 import java.util.Queue;
@@ -15,10 +16,9 @@ import java.util.TreeMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import StockTwitsCreator.MyStatus;
 import twitter4j.Status;
 import twitter4j.URLEntity;
-import twitter4j.internal.http.HttpClient;
+import StockTwitsCreator.MyStatus;
 
 public class URLExpander {
 	private static Queue<Status> readQueue;
@@ -26,6 +26,8 @@ public class URLExpander {
 	private static LRU<String, String> urlMap;
 	private static File[] statusFiles;
 	private static String inDir, outDir;
+	private static HashSet<String> destSet;// contains files in the expanded
+											// folder
 
 	private static AtomicInteger finishedURLs;
 	private static AtomicInteger repeatedURLs;
@@ -52,6 +54,13 @@ public class URLExpander {
 		outDir = outputDir;
 		File dir = new File(inDir);
 		statusFiles = dir.listFiles();
+		destSet = new HashSet<String>();
+
+		File destDir = new File(outDir);
+		File[] destDirList = destDir.listFiles();
+		if (destDirList != null)
+			for (int i = 0; i < destDirList.length; i++)
+				destSet.add(destDirList[i].getName());
 
 		// initialize Atomic Variables
 		activeThreads = new AtomicInteger(Global.THREAD_COUNT + 3); // +reader,writer,printer
@@ -70,8 +79,8 @@ public class URLExpander {
 		// start reader thread to read files
 		new Thread(new ReaderThread()).start();
 
-		// wait 2 seconds to read data
-		Thread.sleep(1000 * 2);
+		// wait 5 seconds to read data
+		Thread.sleep(1000 * 5);
 
 		// start printer
 		new Thread(new PrintURLsCountThread()).start();
@@ -101,8 +110,8 @@ public class URLExpander {
 			try {
 				// sleep for 2 seconds till reading more status
 				if (enableDebug)
-					System.out.println("Sleep for 2 seconds\n");
-				Thread.sleep(1000 * 2);
+					System.out.println("Sleep for 5 seconds\n");
+				Thread.sleep(1000 * 5);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -129,10 +138,20 @@ public class URLExpander {
 				System.out.println("READER THREAD STARTS");
 			for (File f : statusFiles)
 				if (f.isFile()) {
+
+					// file already expnaded
+					if (destSet.contains(f.getName()))
+						continue;
+					// else
+					// System.out.println(f.getName() + " @@@@@@");
+
 					while (finishCurrentFile.get()) {
 						// wait 2 seconds for writer thread to finish writing
 						// last file
 						try {
+							if (enableDebug)
+								System.out
+										.println("Sleeping for 2 seconds in reader thread");
 							Thread.sleep(1000 * 2);
 						} catch (InterruptedException e) {
 							e.printStackTrace();
@@ -185,6 +204,9 @@ public class URLExpander {
 					// set finish current file = true (writer thread will start)
 					currentFileSize.set(statusCounter);
 					finishCurrentFile.set(true);
+					if (enableDebug)
+						System.out
+								.println("File finihsed = " + currentFileName);
 				}
 
 			if (enableDebug)
@@ -202,17 +224,17 @@ public class URLExpander {
 		}
 
 		public String expandUrl(String shortenedUrl) throws IOException {
+
 			URL url = new URL(shortenedUrl);
 			// open connection
 			HttpURLConnection httpURLConnection = (HttpURLConnection) url
 					.openConnection(Proxy.NO_PROXY);
-			httpURLConnection.setRequestMethod("GET");
+			httpURLConnection.setRequestMethod("HEAD");
 
 			// stop following browser redirect
 			// httpURLConnection.setInstanceFollowRedirects(true);
 			httpURLConnection.getHeaderFields();
 
-			// httpURLConnection.getResponseCode();
 			// extract location header containing the actual destination URL
 			// httpURLConnection.disconnect();
 
@@ -223,6 +245,7 @@ public class URLExpander {
 		public void run() {
 			if (enableDebug)
 				System.out.printf("Thread %d starts\n", threadIdx);
+
 			while (true) {
 				Status urlStatus = getReadyStatus();
 				if (urlStatus == null) { // finished "no more URLs"
@@ -250,9 +273,6 @@ public class URLExpander {
 							urlMap.add(url, source);
 							newURLs[i] = source;
 						} catch (IOException e) {
-							// newURLs[i] = url;
-							// System.out.println("__");
-							System.out.println(url);
 							e.printStackTrace();
 						}
 					}
@@ -328,7 +348,7 @@ public class URLExpander {
 				if (enableDebug)
 					System.out.println("\nWriter Thread : Write new File : "
 							+ currentFileName + "\n");
-				FileOutputStream fout = new FileOutputStream(outDir
+				FileOutputStream fout = new FileOutputStream(outDir + "/"
 						+ currentFileName);
 				ObjectOutputStream oos = new ObjectOutputStream(fout);
 
