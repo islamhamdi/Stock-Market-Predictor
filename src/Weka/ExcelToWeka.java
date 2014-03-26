@@ -29,8 +29,10 @@ public class ExcelToWeka {
 		statusDir = new File(inDir);
 		File[] files = statusDir.listFiles();
 		for (File f : files) {
-
+			if (f.isDirectory())
+				continue;
 			String st = f.getName();
+			System.out.println(st);
 			String companyNam = st.substring(0, st.indexOf("."));
 			System.out.println("Read File : " + companyNam);
 

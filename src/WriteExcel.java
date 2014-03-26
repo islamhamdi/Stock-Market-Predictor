@@ -2,8 +2,12 @@ import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
+
+import com.itextpdf.text.pdf.parser.Vector;
 
 import jxl.Cell;
 import jxl.Sheet;
@@ -132,6 +136,7 @@ public class WriteExcel {
 		for (int i = -lag_var; i <= lag_var; i++) {
 			volume_cols[k++] = convert(++pos);
 		}
+
 	}
 
 	public void writeFeatures() throws WriteException {
@@ -238,7 +243,7 @@ public class WriteExcel {
 	private void addCaption(int column, int row, String s)
 			throws RowsExceededException, WriteException {
 		WritableCellFormat cellFormat = new WritableCellFormat();
-
+		cellFormat.setWrap(true);
 		cellFormat.setBorder(Border.ALL, BorderLineStyle.THIN);
 		cellFormat.setBackground(Colour.GRAY_25);
 		sheet.addCell(new Label(column, row, s, cellFormat));
@@ -257,6 +262,7 @@ public class WriteExcel {
 			RowsExceededException {
 		WritableCellFormat cellFormat = new WritableCellFormat();
 		cellFormat.setBorder(Border.ALL, BorderLineStyle.THIN);
+		cellFormat.setWrap(true);
 		sheet.addCell(new Label(column, row, s, cellFormat));
 	}
 
@@ -315,10 +321,99 @@ public class WriteExcel {
 		}
 	}
 
-	public void drawTables() throws Exception {
+	public void drawTable3() throws Exception {
+		int frow = getRowsCnt() + 2 * features.length + 15, fcolumn = 1;
+		addLabel(fcolumn, frow, "Features\\Lag");
+		int r = frow + 1;
 
+		int t = 0;
+		for (int i = 0; i < features.length; i++) {
+			for (int j = i + 1; j < features.length; j++) {
+				addCaption(fcolumn, r++, features[i] + "+" + features[j]);
+				t++;
+			}
+		}
+		System.out.println("$$" + t);
+		int pos = fcolumn + 1;
+		for (int i = -lag_var; i <= lag_var; i++) {
+			addCaption(pos++, frow, "volume(" + i + ")");
+		}
+
+		int cnt = 1;
+		for (int c = 0; c < 78; c++) {
+			int a = Global.start_of_norm_table + Global.features_num + c + 3;
+			String ch2 = convert(a);
+			int index = 0;
+			pos = fcolumn + 1;
+			for (int i = -lag_var; i <= lag_var; i++) {
+				String ch1 = volume_cols[index++];
+				calcCorrel(pos++, frow + cnt, ch1, ch2 + "", lag_var + 2,
+						getRowsCnt());
+			}
+			cnt++;
+		}
+	}
+
+	public void drawTables() throws Exception {
 		drawTable1();
 		drawTable2();
+		drawTable3();
+	}
+
+	public void drawNormalizedTable() throws Exception {
+		int raw_n = getRowsCnt();
+		int width = Global.features_num + 1;
+
+		double[][] d = new double[raw_n][width];
+		double max[] = new double[width];
+		for (int col = 1; col < width; col++) {
+			for (int raw = lag_var + 1; raw < raw_n; raw++) {
+				String s = sheet.getCell(col, raw).getContents();
+				if (!s.equals(""))
+					d[raw][col] = Double.parseDouble(s);
+				else {
+					d[raw][col] = -1;
+				}
+				max[col] = Math.max(max[col], d[raw][col]);
+			}
+		}
+
+		for (int col = 1; col < width; col++) {
+			for (int raw = lag_var + 1; raw < raw_n; raw++) {
+				if (d[raw][col] != 0 && d[raw][col] != -1)
+					d[raw][col] /= max[col];
+			}
+		}
+
+		int start_col = Global.start_of_norm_table;
+
+		ArrayList<ArrayList<Double>> ar = new ArrayList<>();
+		for (int i = 0; i < d.length; i++) {
+			ar.add(new ArrayList<Double>());
+			for (int j = 1; j < d[0].length; j++) {
+				for (int j2 = j + 1; j2 < d[0].length; j2++) {
+					ar.get(i).add(d[i][j] + d[i][j2]);
+				}
+			}
+		}
+
+		for (int col = start_col; col < max.length + start_col; col++) {
+			for (int raw = lag_var + 1; raw < raw_n; raw++) {
+				if (col - start_col > 0 && d[raw][col - start_col] != -1)
+					addNumber(col, raw, d[raw][col - start_col]);
+			}
+		}
+
+		start_col = Global.start_of_norm_table + Global.features_num + 2;
+
+		int size = ar.get(1).size();
+		for (int col = start_col; col < size + start_col; col++) {
+			for (int raw = lag_var + 1; raw < raw_n; raw++) {
+				double a = ar.get(raw).get(col - start_col);
+				if (a >= 0)
+					addNumber(col, raw, a);
+			}
+		}
 
 	}
 
