@@ -212,8 +212,8 @@ public class StatisticsTool {
 			for (int i = 0; i < list.length; i++) {
 
 				// URL expansion, from t.co --> bit.ly --> original one
-				// TODO String curUrlText = URLExpander.expandUrl(list[i]);
 				String curUrlText = list[i];
+
 				NodeIdentifier urlNID;
 
 				if (urlsMap.containsKey(curUrlText)) {
@@ -252,8 +252,13 @@ public class StatisticsTool {
 				String tagText = tags[i];
 
 				// skip $company_name as a symbol
-				if (("$" + tagText).equals(this.curCompanyName))
-					continue;
+				if (Global.files_to_run == Global.TWITTER_DATA) {
+					if (("$" + tagText).equals(this.curCompanyName))
+						continue;
+				} else {
+					if (tagText.equals(this.curCompanyName))
+						continue;
+				}
 
 				NodeIdentifier tagNID;
 

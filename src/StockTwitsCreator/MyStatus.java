@@ -57,7 +57,8 @@ public class MyStatus implements Status, Serializable {
 	public MyStatus(Status status, String[] URLs) {
 		this.tweetID = status.getId();
 		this.source = status.getSource();
-		this.place = new myPlace(status.getPlace().getName());
+		if (status.getPlace() != null)
+			this.place = new myPlace(status.getPlace().getName());
 		this.text = status.getText();
 		this.date = status.getCreatedAt();
 		this.user = status.getUser();
