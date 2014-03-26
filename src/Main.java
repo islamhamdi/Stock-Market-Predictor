@@ -24,13 +24,13 @@ public class Main {
 		// 0 mean Twitter- 1 mean StockTwits- Data
 		Global.files_to_run = Global.TWITTER_DATA;
 
-		preprocessUrlExpansion();
+		// preprocessUrlExpansion();
 		if (Global.files_to_run == Global.TWITTER_DATA) {
 			path = Global.twitterDataExpandedPath;
 			sheetNum = 0;
 		} else {
-			sheetNum = 1;
 			path = Global.stockTwitDataExpandedPath;
+			sheetNum = 1;
 		}
 
 		File statDir = new File(statPath);
@@ -108,7 +108,7 @@ public class Main {
 					destDir.mkdir();
 				urlExpander = new URLExpander(sourcePath + "/" + folderName,
 						destinationPath);
-				//				System.out.println(destinationPath);
+				// System.out.println(destinationPath);
 				urlExpander.startURLExpander();
 				while (!urlExpander.isTerminated())
 					;

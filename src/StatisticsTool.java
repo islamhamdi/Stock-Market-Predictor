@@ -252,8 +252,13 @@ public class StatisticsTool {
 				String tagText = tags[i];
 
 				// skip $company_name as a symbol
-				if (("$" + tagText).equals(this.curCompanyName))
-					continue;
+				if (Global.files_to_run == Global.TWITTER_DATA) {
+					if (("$" + tagText).equals(this.curCompanyName))
+						continue;
+				} else {
+					if (tagText.equals(this.curCompanyName))
+						continue;
+				}
 
 				NodeIdentifier tagNID;
 
