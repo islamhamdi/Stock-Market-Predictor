@@ -39,6 +39,10 @@ public class Parser {
 	// return this.fileNames;
 	// }
 
+	public File getCurrentfile() {
+		return new File(this.filePath);
+	}
+
 	// public String getFileName() {
 	// return this.filesList[fileIndex].getName();
 	// }

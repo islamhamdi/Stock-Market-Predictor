@@ -16,6 +16,8 @@ import org.gephi.statistics.plugin.ConnectedComponents;
 import org.gephi.statistics.plugin.GraphDistance;
 import org.openide.util.Lookup;
 
+import SentimentAnalysis.SentimentAnalyzer;
+
 import twitter4j.HashtagEntity;
 import twitter4j.MediaEntity;
 import twitter4j.Status;
@@ -364,6 +366,14 @@ public class StatisticsTool {
 			activityFeatures.setUFLW(totalFollowersCounter / usersMap.size());
 			activityFeatures.setUFRN(totalFriendsCounter / usersMap.size());
 		}
+
+		int[] sentimentValues = SentimentAnalyzer.start(this.streamer
+				.getCurrentfile());
+		activityFeatures.setNEG(sentimentValues[0]);
+		activityFeatures.setNEUT(sentimentValues[1]);
+		activityFeatures.setPOS(sentimentValues[2]);
+		activityFeatures.setPOS_NEG(sentimentValues[3]);
+
 		activityFeatures.printActivityFeatures();
 	}
 

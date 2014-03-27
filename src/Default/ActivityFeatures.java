@@ -10,8 +10,10 @@ public class ActivityFeatures {
 	private int TURL; // number of tweets with URLs
 	private int UFLW; // avg number of followers for user
 	private int UID; // number diff users that posted a tweet
+	private int NEG, NEUT, POS, POS_NEG; // sentiment analysis statistics
 	private static String[] ACTIVITY_FEATURES_NAMES = new String[] { "RTID",
-			"RTU", "TID", "TSUM", "UFRN", "THTG", "TURL", "UFLW", "UID" };
+			"RTU", "TID", "TSUM", "UFRN", "THTG", "TURL", "UFLW", "UID", "NEG",
+			"NEUT", "POS", "POS_NEG" };
 
 	public ActivityFeatures() {
 		this.RTID = 0;
@@ -23,6 +25,42 @@ public class ActivityFeatures {
 		this.TURL = 0;
 		this.UFLW = 0;
 		this.UID = 0;
+		this.NEG = 0;
+		this.NEUT = 0;
+		this.POS = 0;
+		this.POS_NEG = 0;
+	}
+
+	public int getNEG() {
+		return NEG;
+	}
+
+	public void setNEG(int nEG) {
+		this.NEG = nEG;
+	}
+
+	public int getNEUT() {
+		return NEUT;
+	}
+
+	public void setNEUT(int nEUT) {
+		this.NEUT = nEUT;
+	}
+
+	public int getPOS() {
+		return POS;
+	}
+
+	public void setPOS(int pOS) {
+		this.POS = pOS;
+	}
+
+	public int getPOS_NEG() {
+		return POS_NEG;
+	}
+
+	public void setPOS_NEG(int pOS_NEG) {
+		this.POS_NEG = pOS_NEG;
 	}
 
 	public void setRTID(int rTID) {
@@ -101,7 +139,9 @@ public class ActivityFeatures {
 	public String toString() {
 		return "ActivityFeatures [RTID=" + RTID + ", RTU=" + RTU + ", TID="
 				+ TID + ", TUSM=" + TUSM + ", UFRN=" + UFRN + ", THTG=" + THTG
-				+ ", TURL=" + TURL + ", UFLW=" + UFLW + ", UID=" + UID + "]";
+				+ ", TURL=" + TURL + ", UFLW=" + UFLW + ", UID=" + UID
+				+ ", NEG=" + NEG + ", NEUT=" + NEUT + ", POS=" + POS
+				+ ", POS_NEG=" + POS_NEG + "]";
 	}
 
 	public static String[] getActivityFeaturesList() {
@@ -110,7 +150,8 @@ public class ActivityFeatures {
 
 	public double[] getValues() {
 		return new double[] { this.RTID, this.RTU, this.TID, this.TUSM,
-				this.UFRN, this.THTG, this.TURL, this.UFLW, this.UID };
+				this.UFRN, this.THTG, this.TURL, this.UFLW, this.UID, this.NEG,
+				this.NEUT, this.POS, this.POS_NEG };
 	}
 
 	public void printActivityFeatures() {

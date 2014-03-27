@@ -26,12 +26,13 @@ public class SentimentAnalyzer {
 
 	// res[0] negative, res[1] neutral, res[2] positive, res[3] positive - negative
 	public static int[] start(File f) throws IOException {
-		System.out.println(f.getName());
+		// System.out.println("Sentiment analyzer : " + f.getName());
 		FileInputStream fis;
 		DataInputStream dis = new DataInputStream(fis = new FileInputStream(f));
 		dis.read(bytes);
 
-		ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(bytes));
+		ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(
+				bytes));
 
 		int[] arr = new int[4];
 		try {
@@ -68,8 +69,10 @@ public class SentimentAnalyzer {
 		if (line != null && line.length() > 0) {
 			int longest = 0;
 			Annotation annotation = pipeline.process(line);
-			for (CoreMap sentence : annotation.get(CoreAnnotations.SentencesAnnotation.class)) {
-				Tree tree = sentence.get(SentimentCoreAnnotations.AnnotatedTree.class);
+			for (CoreMap sentence : annotation
+					.get(CoreAnnotations.SentencesAnnotation.class)) {
+				Tree tree = sentence
+						.get(SentimentCoreAnnotations.AnnotatedTree.class);
 				int sentiment = RNNCoreAnnotations.getPredictedClass(tree);
 				String partText = sentence.toString();
 				if (partText.length() > longest) {
