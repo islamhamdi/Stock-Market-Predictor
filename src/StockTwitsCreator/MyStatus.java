@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.StringTokenizer;
 import java.util.concurrent.TimeUnit;
 
+import Default.Global;
+
 import twitter4j.GeoLocation;
 import twitter4j.HashtagEntity;
 import twitter4j.MediaEntity;

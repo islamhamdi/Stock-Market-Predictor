@@ -1,3 +1,5 @@
+package Default;
+
 public class GraphFeatures {
 	private int NUM_NODES; // number of nodes
 	private int NUM_EDGES; // number of edges

@@ -1,3 +1,5 @@
+package Default;
+
 import it.uniroma1.dis.wsngroup.gexf4j.core.impl.viz.ColorImpl;
 import it.uniroma1.dis.wsngroup.gexf4j.core.viz.NodeShape;
 

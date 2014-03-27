@@ -14,6 +14,9 @@ import java.io.ObjectOutputStream;
 import java.util.HashSet;
 import java.util.HashMap;
 
+import Default.Global;
+
+
 public class CompanySeparator {
 	private HashMap<String, Integer> companySet;
 

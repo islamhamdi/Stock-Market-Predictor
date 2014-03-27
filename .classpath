@@ -160,5 +160,17 @@
 	<classpathentry kind="lib" path="jars/xalan-2.6.0.jar"/>
 	<classpathentry kind="lib" path="jars/xml-apis-ext-1.3.04.jar"/>
 	<classpathentry kind="lib" path="jars/xmlunit-1.3.jar"/>
+	<classpathentry kind="lib" path="/home/hanafy/workspace/github/gephi-twitter-visualization/core-nlp-jars/stanford-corenlp-3.3.0.jar" sourcepath="/home/hanafy/workspace/github/gephi-twitter-visualization/core-nlp-jars/stanford-corenlp-3.3.0-sources.jar"/>
+	<classpathentry kind="lib" path="/home/hanafy/workspace/github/gephi-twitter-visualization/core-nlp-jars/stanford-corenlp-3.3.0-javadoc.jar"/>
+	<classpathentry kind="lib" path="/home/hanafy/workspace/github/gephi-twitter-visualization/core-nlp-jars/stanford-corenlp-3.3.0-sources.jar"/>
+	<classpathentry kind="lib" path="/home/hanafy/workspace/github/gephi-twitter-visualization/core-nlp-jars/ejml-0.23.jar"/>
+	<classpathentry kind="lib" path="/home/hanafy/workspace/github/gephi-twitter-visualization/core-nlp-jars/ejml-0.23-src.zip"/>
+	<classpathentry kind="lib" path="/home/hanafy/workspace/github/gephi-twitter-visualization/core-nlp-jars/joda-time.jar"/>
+	<classpathentry kind="lib" path="/home/hanafy/workspace/github/gephi-twitter-visualization/core-nlp-jars/joda-time-2.1-sources.jar"/>
+	<classpathentry kind="lib" path="/home/hanafy/workspace/github/gephi-twitter-visualization/core-nlp-jars/jollyday.jar"/>
+	<classpathentry kind="lib" path="/home/hanafy/workspace/github/gephi-twitter-visualization/core-nlp-jars/jollyday-0.4.7-sources.jar"/>
+	<classpathentry kind="lib" path="/home/hanafy/workspace/github/gephi-twitter-visualization/core-nlp-jars/xom.jar"/>
+	<classpathentry kind="lib" path="/home/hanafy/workspace/github/gephi-twitter-visualization/core-nlp-jars/xom-src-1.2.8.zip"/>
+	<classpathentry kind="lib" path="/home/hanafy/workspace/github/gephi-twitter-visualization/core-nlp-jars/stanford-corenlp-3.3.0-models.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

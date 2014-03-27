@@ -1,10 +1,8 @@
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.Proxy;
-import java.net.URL;
+package Default;
 
-import twitter4j.internal.http.HttpClientFactory;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class URLExpanderTest {
 	// public static String expandUrl(String shortenedUrl) throws IOException {

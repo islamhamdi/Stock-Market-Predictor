@@ -1,3 +1,5 @@
+package Default;
+
 public class ActivityFeatures {
 	private int RTID; // number of re-tweets
 	private int RTU; // number of diff users that have re-tweeted

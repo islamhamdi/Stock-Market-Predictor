@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 
+import Default.Global;
+
 import twitter4j.Status;
 
 public class StatusWriter {
