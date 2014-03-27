@@ -28,7 +28,8 @@ public class Global {
 	// "/home/mohamed/Dropbox/Stock Market Daily Data/historical prices/";
 
 	static int lag_var = 3;
-	static int features_num = 13;
+	
+	static int features_num = 17;
 
 	static int start_of_norm_table = 70;
 
@@ -36,7 +37,7 @@ public class Global {
 	static int volume_start_col = price_start_col + 2 * lag_var + 1;
 
 	static int specialCell = 60;
-	static int COLWIDTH = 18;
+	static int COLWIDTH = 15;
 	public static String[] companies;
 
 	static SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
