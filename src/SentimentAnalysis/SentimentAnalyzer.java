@@ -1,9 +1,12 @@
 package SentimentAnalysis;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
+
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.util.Arrays;
 import java.util.Properties;
 
 import edu.stanford.nlp.ling.CoreAnnotations;
@@ -14,13 +17,53 @@ import edu.stanford.nlp.sentiment.SentimentCoreAnnotations;
 import edu.stanford.nlp.trees.Tree;
 import edu.stanford.nlp.util.CoreMap;
 
+import twitter4j.Status;
+
 public class SentimentAnalyzer {
+	private static StanfordCoreNLP pipeline;
 
-	public TweetWithSentiment findSentiment(String line) {
+	private static byte[] bytes = new byte[200000000];
 
+	// res[0] negative, res[1] neutral, res[2] positive, res[3] positive - negative
+	public static int[] start(File f) throws IOException {
+		System.out.println(f.getName());
+		FileInputStream fis;
+		DataInputStream dis = new DataInputStream(fis = new FileInputStream(f));
+		dis.read(bytes);
+
+		ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(bytes));
+
+		int[] arr = new int[4];
+		try {
+			while (true) {
+				Status status = (Status) ois.readObject();
+				int analysis = findSentiment(status.getText());
+				if (analysis == 0 || analysis == 1)
+					arr[0]++;
+				else if (analysis == 2)
+					arr[1]++;
+				else if (analysis == 3 || analysis == 4)
+					arr[2]++;
+			}
+		} catch (Exception e) {
+
+		}
+
+		arr[3] = arr[2] - arr[0];
+
+		fis.close();
+		dis.close();
+
+		return arr;
+	}
+
+	static {
 		Properties props = new Properties();
 		props.setProperty("annotators", "tokenize, ssplit, parse, sentiment");
-		StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
+		pipeline = new StanfordCoreNLP(props);
+	}
+
+	private static int findSentiment(String line) {
 		int mainSentiment = 0;
 		if (line != null && line.length() > 0) {
 			int longest = 0;
@@ -38,64 +81,14 @@ public class SentimentAnalyzer {
 		}
 
 		if (mainSentiment > 4 || mainSentiment < 0) {
-			return null;
+			return -1;
 		}
-		TweetWithSentiment tweetWithSentiment = new TweetWithSentiment(line, toCss(mainSentiment));
-		return tweetWithSentiment;
 
-	}
-
-	private String toCss(int sentiment) {
-		switch (sentiment) {
-		case 0:
-			return "very bad";
-		case 1:
-			return "bad";
-		case 2:
-			return "neutral";
-		case 3:
-			return "good";
-		case 4:
-			return "very good";
-		default:
-			return "";
-		}
+		return mainSentiment;
 	}
 
 	public static void main(String[] args) throws IOException {
-		SentimentAnalyzer sentimentAnalyzer = new SentimentAnalyzer();
-		BufferedReader br = new BufferedReader(new FileReader("hanafy4.txt"));
-
-		BufferedWriter bw = new BufferedWriter(new FileWriter("analysis.txt"));
-		String s;
-		while ((s = br.readLine()) != null) {
-			for (int i = 0; i < 8; i++)
-				br.readLine();																																																																			
-
-			String text = "";
-			while (!(s = br.readLine()).equals("=8=7=6=5="))
-				text += s;
-
-			TweetWithSentiment tweetWithSentiment = sentimentAnalyzer.findSentiment(text);
-			bw.write(tweetWithSentiment.toString());
-			bw.newLine();
-		}
-		
-		bw.close();
-		br.close();
-	}
-
-	private class TweetWithSentiment {
-		String ll, ss;
-
-		public TweetWithSentiment(String line, String css) {
-			ll = line;
-			ss = css;
-		}
-
-		public String toString() {
-			return ll + "\n" + ss + "\n";
-		}
-
+		int[] arr = start(new File("tweets180 @1395594263148"));
+		System.out.println(Arrays.toString(arr));
 	}
 }
