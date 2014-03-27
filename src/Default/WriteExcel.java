@@ -169,9 +169,7 @@ public class WriteExcel {
 
 	boolean addNewDay(String day, double[] val) throws Exception {
 		double[] d = read(day);
-		System.out.println(d[0]);
 		if (d[0] == 0) {
-			System.out.println(day + " not valid");
 			return false;
 		}
 		int row = getRowsCnt();
@@ -335,7 +333,6 @@ public class WriteExcel {
 				t++;
 			}
 		}
-		System.out.println("$$" + t);
 		int pos = fcolumn + 1;
 		for (int i = -lag_var; i <= lag_var; i++) {
 			addCaption(pos++, frow, "volume(" + i + ")");
