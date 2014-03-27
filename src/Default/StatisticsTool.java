@@ -215,9 +215,7 @@ public class StatisticsTool {
 		if (list != null && list.length > 0) {
 			for (int i = 0; i < list.length; i++) {
 
-				// URL expansion, from t.co --> bit.ly --> original one
 				String curUrlText = list[i];
-
 				NodeIdentifier urlNID;
 
 				if (urlsMap.containsKey(curUrlText)) {
@@ -254,15 +252,12 @@ public class StatisticsTool {
 		if (tags != null && tags.length > 0) {
 			for (int i = 0; i < tags.length; i++) {
 				String tagText = tags[i];
+				if (tagText.startsWith("$"))
+					tagText = tagText.substring(1);
 
 				// skip $company_name as a symbol
-				if (Global.files_to_run == Global.TWITTER_DATA) {
-					if (("$" + tagText).equals(this.curCompanyName))
-						continue;
-				} else {
-					if (tagText.equals(this.curCompanyName))
-						continue;
-				}
+				if (("$" + tagText).equals(this.curCompanyName))
+					continue;
 
 				NodeIdentifier tagNID;
 

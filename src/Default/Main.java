@@ -23,7 +23,7 @@ public class Main {
 	public static void main(String[] args) throws Exception, WriteException {
 
 		// 0 mean Twitter- 1 mean StockTwits- Data
-		Global.files_to_run = Global.STOCK_TWITS_DATA;
+		Global.files_to_run = Global.TWITTER_DATA;
 
 		// preprocessUrlExpansion();
 		if (Global.files_to_run == Global.TWITTER_DATA) {

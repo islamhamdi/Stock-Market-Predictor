@@ -24,7 +24,7 @@ import twitter4j.URLEntity;
 import twitter4j.User;
 import twitter4j.UserMentionEntity;
 
-public class MyStatus implements Status, Serializable {
+public class StockTwitStatus implements Status, Serializable {
 	/**
 	 * 
 	 */
@@ -41,7 +41,7 @@ public class MyStatus implements Status, Serializable {
 	private URLEntity[] URLEntities;
 	private UserMentionEntity[] UserMentionEntities;
 
-	public MyStatus(String userName, int followerCount, int friendCount,
+	public StockTwitStatus(String userName, int followerCount, int friendCount,
 			String date, long tweetID, String text, String sourceURL,
 			String placeName, HashMap<String, Long> map) {
 		this.tweetID = tweetID;
@@ -54,23 +54,6 @@ public class MyStatus implements Status, Serializable {
 		setHashTagEntities(text);
 		setURLEntities(text);
 		setUserMentionEntity(map);
-	}
-
-	public MyStatus(Status status, String[] URLs) {
-		this.tweetID = status.getId();
-		this.source = status.getSource();
-		if (status.getPlace() != null)
-			this.place = new myPlace(status.getPlace().getName());
-		this.text = status.getText();
-		this.date = status.getCreatedAt();
-		this.user = status.getUser();
-		this.hashtagEntities = status.getHashtagEntities();
-		this.UserMentionEntities = status.getUserMentionEntities();
-		this.symbolEntities = status.getSymbolEntities();
-
-		URLEntities = new myURLEntity[URLs.length];
-		for (int i = 0; i < URLs.length; i++)
-			URLEntities[i] = new myURLEntity(URLs[i]);
 	}
 
 	@Override
