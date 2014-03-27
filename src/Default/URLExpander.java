@@ -20,7 +20,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import twitter4j.Status;
 import twitter4j.URLEntity;
-import StockTwitsCreator.MyStatus;
 
 public class URLExpander {
 	private static Queue<Status> readQueue;
@@ -280,7 +279,7 @@ public class URLExpander {
 					}
 				}
 				try {
-					Status newStatus = new MyStatus(urlStatus, newURLs);
+					Status newStatus = new TwitterStatus(urlStatus, newURLs);
 					// add newStatus to finished queue
 					addFinishedStatus(newStatus);
 				} catch (Exception e) {
