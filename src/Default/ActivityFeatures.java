@@ -99,6 +99,26 @@ public class ActivityFeatures {
 		UID = uID;
 	}
 
+	public void incNEG() {
+		NEG++;
+	}
+
+	public void incNEUT() {
+		NEUT++;
+	}
+
+	public void incPOS() {
+		POS++;
+	}
+
+	public void incPOS_NEG() {
+		POS_NEG++;
+	}
+
+	public void decPOS_NEG() {
+		POS_NEG--;
+	}
+
 	public void incRTID() {
 		RTID++;
 	}
