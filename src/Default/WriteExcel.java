@@ -282,7 +282,7 @@ public class WriteExcel {
 		}
 
 		int cnt = 1;
-		for (char ch2 = 'B'; ch2 < 'O'; ch2++) {
+		for (char ch2 = 'B'; ch2 < 'S'; ch2++) {
 			int index = 0;
 			pos = fcolumn + 1;
 			for (int i = -lag_var; i <= lag_var; i++) {
@@ -309,7 +309,7 @@ public class WriteExcel {
 		}
 
 		int cnt = 1;
-		for (char ch2 = 'B'; ch2 < 'O'; ch2++) {
+		for (char ch2 = 'B'; ch2 < 'S'; ch2++) {
 			int index = 0;
 			pos = fcolumn + 1;
 			for (int i = -lag_var; i <= lag_var; i++) {
@@ -339,7 +339,7 @@ public class WriteExcel {
 		}
 
 		int cnt = 1;
-		for (int c = 0; c < 78; c++) {
+		for (int c = 0; c < 136; c++) {
 			int a = Global.start_of_norm_table + Global.features_num + c + 3;
 			String ch2 = convert(a);
 			int index = 0;
@@ -354,33 +354,44 @@ public class WriteExcel {
 	}
 
 	public void drawTables() throws Exception {
+		drawNormalizedTable();
 		drawTable1();
 		drawTable2();
 		drawTable3();
 	}
 
 	public void drawNormalizedTable() throws Exception {
-		int raw_n = getRowsCnt();
+
+		int INF = Integer.MAX_VALUE;
+		int raw_n = getRowsCnt() - lag_var;
+		System.out.println(">##" + raw_n);
 		int width = Global.features_num + 1;
 
 		double[][] d = new double[raw_n][width];
 		double max[] = new double[width];
+		double min[] = new double[width];
+
 		for (int col = 1; col < width; col++) {
 			for (int raw = lag_var + 1; raw < raw_n; raw++) {
 				String s = sheet.getCell(col, raw).getContents();
 				if (!s.equals(""))
 					d[raw][col] = Double.parseDouble(s);
 				else {
-					d[raw][col] = -1;
+					System.out.println("ERRORRR");
+					d[raw][col] = INF;
 				}
-				max[col] = Math.max(max[col], d[raw][col]);
+				if (d[raw][col] != INF) {
+					max[col] = Math.max(max[col], d[raw][col]);
+					min[col] = Math.min(min[col], d[raw][col]);
+				}
 			}
 		}
 
 		for (int col = 1; col < width; col++) {
 			for (int raw = lag_var + 1; raw < raw_n; raw++) {
-				if (d[raw][col] != 0 && d[raw][col] != -1)
-					d[raw][col] /= max[col];
+				if (d[raw][col] != INF)
+					d[raw][col] = (d[raw][col] - min[col])
+							/ (max[col] - min[col]);
 			}
 		}
 
@@ -398,7 +409,7 @@ public class WriteExcel {
 
 		for (int col = start_col; col < max.length + start_col; col++) {
 			for (int raw = lag_var + 1; raw < raw_n; raw++) {
-				if (col - start_col > 0 && d[raw][col - start_col] != -1)
+				if (col - start_col > 0 && d[raw][col - start_col] != INF)
 					addNumber(col, raw, d[raw][col - start_col]);
 			}
 		}
@@ -409,8 +420,7 @@ public class WriteExcel {
 		for (int col = start_col; col < size + start_col; col++) {
 			for (int raw = lag_var + 1; raw < raw_n; raw++) {
 				double a = ar.get(raw).get(col - start_col);
-				if (a >= 0)
-					addNumber(col, raw, a);
+				addNumber(col, raw, a);
 			}
 		}
 
