@@ -353,11 +353,39 @@ public class WriteExcel {
 		}
 	}
 
+	// feature = 0 then price else volume
+	public void drawTable4() throws Exception {
+		int frow = getRowsCnt() + 2 * features.length + 15, fcolumn = lag_var * 5;
+		addLabel(fcolumn, frow, "Features\\Lag");
+		int r = frow + 1;
+		for (int i = 0; i < features.length; i++) {
+			addCaption(fcolumn, r++, features[i]);
+		}
+		int pos = fcolumn + 1;
+		for (int i = -lag_var; i <= lag_var; i++) {
+			addCaption(pos++, frow, "price(" + i + ")");
+		}
+		int cnt = 1;
+		for (int c = 0; c < 136; c++) {
+			int a = Global.start_of_norm_table + Global.features_num + c + 3;
+			String ch2 = convert(a);
+			int index = 0;
+			pos = fcolumn + 1;
+			for (int i = -lag_var; i <= lag_var; i++) {
+				String ch1 = price_cols[index++];
+				calcCorrel(pos++, frow + cnt, ch1, ch2 + "", lag_var + 2,
+						getRowsCnt());
+			}
+			cnt++;
+		}
+	}
+
 	public void drawTables() throws Exception {
 		drawNormalizedTable();
 		drawTable1();
 		drawTable2();
 		drawTable3();
+		drawTable4();
 	}
 
 	public void drawNormalizedTable() throws Exception {
