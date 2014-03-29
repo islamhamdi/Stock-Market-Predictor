@@ -123,7 +123,7 @@ public class StatusWriter {
 				tweetText += s;
 			}
 
-			Status status = new StockTwitStatus(userName, followersCnt, friendsCnt,
+			Status status = new MyStatus(userName, followersCnt, friendsCnt,
 					date, tweetID, tweetText, sourceURL, location, map);
 			list.add(status);
 		}

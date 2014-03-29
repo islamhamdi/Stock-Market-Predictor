@@ -24,7 +24,7 @@ import twitter4j.URLEntity;
 import twitter4j.User;
 import twitter4j.UserMentionEntity;
 
-public class StockTwitStatus implements Status, Serializable {
+public class MyStatus implements Status, Serializable {
 	/**
 	 * 
 	 */
@@ -41,7 +41,7 @@ public class StockTwitStatus implements Status, Serializable {
 	private URLEntity[] URLEntities;
 	private UserMentionEntity[] UserMentionEntities;
 
-	public StockTwitStatus(String userName, int followerCount, int friendCount,
+	public MyStatus(String userName, int followerCount, int friendCount,
 			String date, long tweetID, String text, String sourceURL,
 			String placeName, HashMap<String, Long> map) {
 		this.tweetID = tweetID;

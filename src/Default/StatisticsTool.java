@@ -134,6 +134,24 @@ public class StatisticsTool {
 
 			// Handle created/mentioned users
 			handleUsers(curTweet, tweetNID.node);
+
+			// Handle sentiment analsyis of the tweet
+			handleSentimentAnalysis(curTweet.getText());
+		}
+	}
+
+	private void handleSentimentAnalysis(String text) {
+		// res[0] negative, res[1] neutral, res[2] positive, res[3] positive -
+		// negative
+		int sentiment = SentimentAnalyzer.findSentiment(text);
+		if (sentiment == 0 || sentiment == 1) {
+			activityFeatures.incNEG();
+			activityFeatures.decPOS_NEG();
+		} else if (sentiment == 2) {
+			activityFeatures.incNEUT();
+		} else if (sentiment == 3 || sentiment == 4) {
+			activityFeatures.incPOS();
+			activityFeatures.incPOS_NEG();
 		}
 	}
 
@@ -353,29 +371,15 @@ public class StatisticsTool {
 	}
 
 	void buildActivityFeatures() throws Exception {
-		if (activityFeatures == null)
-			throw new Exception("Activity features are not set !");
-
 		activityFeatures.setTHTG(hashtagsMap.size());
 		if (!usersMap.isEmpty()) {
 			activityFeatures.setUFLW(totalFollowersCounter / usersMap.size());
 			activityFeatures.setUFRN(totalFriendsCounter / usersMap.size());
 		}
-
-		int[] sentimentValues = SentimentAnalyzer.start(this.streamer
-				.getCurrentfile());
-		activityFeatures.setNEG(sentimentValues[0]);
-		activityFeatures.setNEUT(sentimentValues[1]);
-		activityFeatures.setPOS(sentimentValues[2]);
-		activityFeatures.setPOS_NEG(sentimentValues[3]);
-
 		activityFeatures.printActivityFeatures();
 	}
 
 	void buildGraphFeatures() throws Exception {
-		if (graphFeatures == null)
-			throw new Exception("Graph features are not set !");
-
 		graphFeatures.setNUM_NODES(nodeCounter);
 		graphFeatures.setNUM_EDGES(edgeCounter);
 

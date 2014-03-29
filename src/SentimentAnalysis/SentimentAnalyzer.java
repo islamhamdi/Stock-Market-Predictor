@@ -22,41 +22,43 @@ import twitter4j.Status;
 public class SentimentAnalyzer {
 	private static StanfordCoreNLP pipeline;
 
-	private static byte[] bytes = new byte[200000000];
+	// private static byte[] bytes = new byte[200000000];
 
-	// res[0] negative, res[1] neutral, res[2] positive, res[3] positive - negative
-	public static int[] start(File f) throws IOException {
-		// System.out.println("Sentiment analyzer : " + f.getName());
-		FileInputStream fis;
-		DataInputStream dis = new DataInputStream(fis = new FileInputStream(f));
-		dis.read(bytes);
-
-		ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(
-				bytes));
-
-		int[] arr = new int[4];
-		try {
-			while (true) {
-				Status status = (Status) ois.readObject();
-				int analysis = findSentiment(status.getText());
-				if (analysis == 0 || analysis == 1)
-					arr[0]++;
-				else if (analysis == 2)
-					arr[1]++;
-				else if (analysis == 3 || analysis == 4)
-					arr[2]++;
-			}
-		} catch (Exception e) {
-
-		}
-
-		arr[3] = arr[2] - arr[0];
-
-		fis.close();
-		dis.close();
-
-		return arr;
-	}
+	// res[0] negative, res[1] neutral, res[2] positive, res[3] positive -
+	// negative
+	// public static int[] getSentiment(Status status) throws IOException {
+	// System.out.println("Sentiment analyzer : " + f.getName());
+	// FileInputStream fis;
+	// DataInputStream dis = new DataInputStream(fis = new FileInputStream(f));
+	// dis.read(bytes);
+	//
+	// ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(
+	// bytes));
+	//
+	// int[] arr = new int[4];
+	// try {
+	// while (true) {
+	// Status status = (Status) ois.readObject();
+	// return findSentiment(status.getText());
+	// int analysis = findSentiment(status.getText());
+	// if (analysis == 0 || analysis == 1)
+	// arr[0]++;
+	// else if (analysis == 2)
+	// arr[1]++;
+	// else if (analysis == 3 || analysis == 4)
+	// arr[2]++;
+	// }
+	// } catch (Exception e) {
+	// System.out.println("Closing file .... ");
+	// }
+	//
+	// arr[3] = arr[2] - arr[0];
+	//
+	// fis.close();
+	// dis.close();
+	//
+	// return arr;
+	// }
 
 	static {
 		Properties props = new Properties();
@@ -64,7 +66,7 @@ public class SentimentAnalyzer {
 		pipeline = new StanfordCoreNLP(props);
 	}
 
-	private static int findSentiment(String line) {
+	public static int findSentiment(String line) {
 		int mainSentiment = 0;
 		if (line != null && line.length() > 0) {
 			int longest = 0;
@@ -91,7 +93,7 @@ public class SentimentAnalyzer {
 	}
 
 	public static void main(String[] args) throws IOException {
-		int[] arr = start(new File("tweets180 @1395594263148"));
-		System.out.println(Arrays.toString(arr));
+		// int[] arr = start(new File("tweets180 @1395594263148"));
+		// System.out.println(Arrays.toString(arr));
 	}
 }
