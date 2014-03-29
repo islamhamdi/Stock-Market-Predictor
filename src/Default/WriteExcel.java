@@ -333,13 +333,14 @@ public class WriteExcel {
 				t++;
 			}
 		}
+		
 		int pos = fcolumn + 1;
 		for (int i = -lag_var; i <= lag_var; i++) {
 			addCaption(pos++, frow, "volume(" + i + ")");
 		}
 
 		int cnt = 1;
-		for (int c = 0; c < 136; c++) {
+		for (int c = 0; c < t; c++) {
 			int a = Global.start_of_norm_table + Global.features_num + c + 3;
 			String ch2 = convert(a);
 			int index = 0;
@@ -358,15 +359,23 @@ public class WriteExcel {
 		int frow = getRowsCnt() + 2 * features.length + 15, fcolumn = lag_var * 5;
 		addLabel(fcolumn, frow, "Features\\Lag");
 		int r = frow + 1;
+		
+		int t = 0;
 		for (int i = 0; i < features.length; i++) {
-			addCaption(fcolumn, r++, features[i]);
+			for (int j = i + 1; j < features.length; j++) {
+				addCaption(fcolumn, r++, features[i] + "+" + features[j]);
+				t++;
+			}
 		}
+		
+		
 		int pos = fcolumn + 1;
 		for (int i = -lag_var; i <= lag_var; i++) {
 			addCaption(pos++, frow, "price(" + i + ")");
 		}
+		
 		int cnt = 1;
-		for (int c = 0; c < 136; c++) {
+		for (int c = 0; c < t; c++) {
 			int a = Global.start_of_norm_table + Global.features_num + c + 3;
 			String ch2 = convert(a);
 			int index = 0;
