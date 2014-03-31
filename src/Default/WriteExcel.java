@@ -9,6 +9,8 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+import org.gephi.datalab.plugin.manipulators.values.ClearAttributeValue;
+
 import com.itextpdf.text.pdf.parser.Vector;
 
 import jxl.Cell;
@@ -138,7 +140,6 @@ public class WriteExcel {
 		for (int i = -lag_var; i <= lag_var; i++) {
 			volume_cols[k++] = convert(++pos);
 		}
-
 	}
 
 	public void writeFeatures() throws WriteException {
@@ -229,6 +230,9 @@ public class WriteExcel {
 
 	void calcCorrel(int col, int row, String ch1, String ch2, int start, int end)
 			throws WriteException {
+		// TODO
+
+		end -= (lag_var + 1);
 		WritableCellFormat cellFormat = new WritableCellFormat();
 
 		cellFormat.setBorder(Border.ALL, BorderLineStyle.THIN);
@@ -296,7 +300,8 @@ public class WriteExcel {
 	}
 
 	public void drawTable2() throws Exception {
-		int frow = getRowsCnt() + features.length + 10, fcolumn = 1;
+
+		int frow = getRowsCnt() + 5, fcolumn = lag_var * 4;
 		addLabel(fcolumn, frow, "Features\\Lag");
 		int r = frow + 1;
 		for (int i = 0; i < features.length; i++) {
@@ -322,7 +327,7 @@ public class WriteExcel {
 	}
 
 	public void drawTable3() throws Exception {
-		int frow = getRowsCnt() + 2 * features.length + 15, fcolumn = 1;
+		int frow = getRowsCnt() + features.length + 10, fcolumn = 1;
 		addLabel(fcolumn, frow, "Features\\Lag");
 		int r = frow + 1;
 
@@ -333,7 +338,7 @@ public class WriteExcel {
 				t++;
 			}
 		}
-		
+
 		int pos = fcolumn + 1;
 		for (int i = -lag_var; i <= lag_var; i++) {
 			addCaption(pos++, frow, "volume(" + i + ")");
@@ -356,10 +361,10 @@ public class WriteExcel {
 
 	// feature = 0 then price else volume
 	public void drawTable4() throws Exception {
-		int frow = getRowsCnt() + 2 * features.length + 15, fcolumn = lag_var * 5;
+		int frow = getRowsCnt() + features.length + 10, fcolumn = lag_var * 4;
 		addLabel(fcolumn, frow, "Features\\Lag");
 		int r = frow + 1;
-		
+
 		int t = 0;
 		for (int i = 0; i < features.length; i++) {
 			for (int j = i + 1; j < features.length; j++) {
@@ -367,13 +372,12 @@ public class WriteExcel {
 				t++;
 			}
 		}
-		
-		
+
 		int pos = fcolumn + 1;
 		for (int i = -lag_var; i <= lag_var; i++) {
 			addCaption(pos++, frow, "price(" + i + ")");
 		}
-		
+
 		int cnt = 1;
 		for (int c = 0; c < t; c++) {
 			int a = Global.start_of_norm_table + Global.features_num + c + 3;
@@ -391,10 +395,21 @@ public class WriteExcel {
 
 	public void drawTables() throws Exception {
 		drawNormalizedTable();
+		clear();
 		drawTable1();
 		drawTable2();
 		drawTable3();
 		drawTable4();
+		
+	}
+
+	private void clear() throws Exception {
+		int raws = getRowsCnt();
+		for (int column = 0; column < 100; column++) {
+			for (int r = raws + 1; r < raws + 200; r++) {
+				addLabel(column, r, "");
+			}
+		}
 	}
 
 	public void drawNormalizedTable() throws Exception {
@@ -414,7 +429,7 @@ public class WriteExcel {
 				if (!s.equals(""))
 					d[raw][col] = Double.parseDouble(s);
 				else {
-					System.out.println("ERRORRR");
+					System.out.println("Warninng");
 					d[raw][col] = INF;
 				}
 				if (d[raw][col] != INF) {
