@@ -17,6 +17,7 @@ import org.gephi.statistics.plugin.GraphDistance;
 import org.openide.util.Lookup;
 
 import SentimentAnalysis.SentimentAnalyzer;
+import StockTwitsCreator.MyStatus;
 
 import twitter4j.HashtagEntity;
 import twitter4j.MediaEntity;
@@ -54,6 +55,7 @@ public class StatisticsTool {
 	private ArrayList<NodeIdentifier> nodesList;
 	private double[] featureValues;
 	private String curCompanyName;
+	private int curStatusSource;
 
 	private Parser streamer;
 	private Graph graph;
@@ -95,6 +97,12 @@ public class StatisticsTool {
 		Status curTweet;
 		while ((curTweet = streamer.getNextStatus()) != null) {
 
+			if (curTweet.getClass().equals(MyStatus.class)) {
+				curStatusSource = Global.STOCK_TWITS_DATA;
+			} else {
+				curStatusSource = Global.TWITTER_DATA;
+			}
+
 			// TWEET Node
 			Long tweetID = curTweet.getId();
 			NodeIdentifier tweetNID = new NodeIdentifier(graphModel.factory()
@@ -108,7 +116,7 @@ public class StatisticsTool {
 			if (curTweet.isRetweet()) {
 
 				// Perform original tweets check on twitter data only
-				if (Global.files_to_run == Global.TWITTER_DATA) {
+				if (curStatusSource == Global.TWITTER_DATA) {
 					// Check for original Retweeted Status
 					Long originalTweetId = curTweet.getRetweetedStatus()
 							.getId();
@@ -304,7 +312,7 @@ public class StatisticsTool {
 	void addSimilarityNodes() {
 
 		// No need to add similarity nodes for twitter data
-		if (Global.files_to_run == Global.TWITTER_DATA)
+		if (curStatusSource == Global.TWITTER_DATA)
 			return;
 
 		boolean[] visited = new boolean[nodesList.size()];

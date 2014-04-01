@@ -10,12 +10,13 @@ public class Global {
 	static String stockTwitDataPath = "/home/islamhamdi/Desktop/StockTwitsData";
 	static String twitterDataExpandedPath = "/home/islamhamdi/Desktop/TwitterStockDataExpanded";
 	static String stockTwitDataExpandedPath = "/home/islamhamdi/Desktop/StockTwitsDataExpanded";
+	static String combinedDataPath = "/home/islamhamdi/Desktop/CombinedData";
 	static String StatFolderPath = "Statistics";
 	static String historyPath = "/home/islamhamdi/Dropbox/Stock Market Daily Data/historical prices/";
 
 	// set 0 for twitter 1 for stockTwits
 	static int files_to_run;
-
+	
 	static String startDate = "20-2-2014";
 
 	// static String twitterDataPath =
@@ -28,7 +29,6 @@ public class Global {
 	// "/home/mohamed/Dropbox/Stock Market Daily Data/historical prices/";
 
 	static int lag_var = 3;
-	
 	static int features_num = 17;
 
 	static int start_of_norm_table = 70;
@@ -42,7 +42,7 @@ public class Global {
 
 	static SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 
-	public final static int THREAD_COUNT = 100;
+	public final static int THREAD_COUNT = 500;
 	public final static int TWITTER_DATA = 0;
 	public final static int STOCK_TWITS_DATA = 1;
 
