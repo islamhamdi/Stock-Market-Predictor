@@ -6,8 +6,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Date;
 
 import twitter4j.Status;
 
@@ -15,8 +18,21 @@ public class DataCombiner {
 	private static String TwitterDir = "./Twitter Data/";
 	private static String StockTwitsDir = "./Stocktwits Data/";
 	private static String CombinedDir = "./Combined Data/";
+	private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+	private static Date startDate;
 
-	public static void main(String[] args) throws IOException {
+	private static boolean areAfter(String day1) {
+		try {
+			Date from = dateFormat.parse(day1);
+			return from.after(startDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public static void main(String[] args) throws IOException, ParseException {
+		startDate = dateFormat.parse("25-12-2014");
 		run();
 	}
 
@@ -102,7 +118,8 @@ public class DataCombiner {
 	private static HashSet<String> getFileList(String dir) {
 		HashSet<String> set = new HashSet<String>();
 		for (File f : new File(dir).listFiles())
-			set.add(f.getName());
+			if (f.isDirectory() || areAfter(f.getName()))
+				set.add(f.getName());
 
 		return set;
 	}
