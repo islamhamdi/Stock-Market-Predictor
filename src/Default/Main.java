@@ -22,17 +22,20 @@ public class Main {
 
 	public static void main(String[] args) throws Exception, WriteException {
 
-		// 0 mean Twitter- 1 mean StockTwits- Data
-		Global.files_to_run = Global.sheet_num[0];
+		// 0 mean Twitter- 1 mean StockTwits- Data -2 Combined
+		Global.files_to_run = Global.sheet_num[2];
 
 		// preprocessUrlExpansion();
 		if (Global.files_to_run == Global.sheet_num[0]) {
 			// path = Global.twitterDataExpandedPath;
 			path = Global.twitterDataPath;
 			sheetNum = 0;
-		} else {
+		} else if (Global.files_to_run == Global.sheet_num[1]) {
 			path = Global.stockTwitDataPath;
 			sheetNum = 1;
+		} else {// combined
+			path = Global.combinedDataPath;
+			sheetNum = 2;
 		}
 
 		File statDir = new File(statPath);

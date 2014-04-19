@@ -90,6 +90,18 @@ public class ActivityFeatures {
 		UID = uID;
 	}
 
+	public void addToNEG(int val) {
+		NEG += val;
+	}
+
+	public void addToPOS(int val) {
+		POS += val;
+	}
+
+	public void addToPOS_NEG(int val) {
+		POS_NEG += val;
+	}
+
 	public void incNEG() {
 		NEG++;
 	}

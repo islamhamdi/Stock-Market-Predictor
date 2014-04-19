@@ -97,13 +97,8 @@ public class StatisticsTool {
 	void parseData() throws IOException {
 
 		Status curTweet;
+		curStatusSource = Global.files_to_run;
 		while ((curTweet = streamer.getNextStatus()) != null) {
-
-			if (curTweet.getClass().equals(MyStatus.class)) {
-				curStatusSource = Global.sheet_num[1];
-			} else {
-				curStatusSource = Global.sheet_num[0];
-			}
 
 			// TWEET Node
 			Long tweetID = curTweet.getId();
@@ -311,8 +306,8 @@ public class StatisticsTool {
 
 	void addSimilarityNodes() {
 
-		// No need to add similarity nodes for twitter data
-		if (curStatusSource == Global.sheet_num[0])
+		// add similarity nodes only for stockTwits data
+		if (curStatusSource != Global.sheet_num[1])
 			return;
 
 		boolean[] visited = new boolean[nodesList.size()];
@@ -389,29 +384,42 @@ public class StatisticsTool {
 	}
 
 	private void setSentimentFeatures() throws Exception {
-		String posPath, negPath;
-		if (curStatusSource == Global.sheet_num[0]) {// twitter
-			posPath = negPath = Global.sentimentTwitterPath;
-		} else if (curStatusSource == Global.sheet_num[1]) {// stockTwit
-			posPath = negPath = Global.sentimentStockTwitPath;
+		String posPath = null, negPath = null;
+		String[] paths = new String[] { Global.sentimentTwitterPath,
+				Global.sentimentStockTwitPath };
+
+		int startIndex = 0, loopCounter = 0;
+		if (curStatusSource == Global.sheet_num[0]) {// TWITTER
+			startIndex = 0;
+			loopCounter = 1;
+		} else if (curStatusSource == Global.sheet_num[1]) {// STOCK TWITS
+			startIndex = 1;
+			loopCounter = 2;
+		} else if (curStatusSource == Global.sheet_num[2]) {// COMBINED
+			startIndex = 0;
+			loopCounter = 2;
 		} else {
 			throw new Exception(
-					"Sentiment Analysis only available for either Twitter or StockTwits data");
+					"Twitter/StockTwits/Combined data are only supported!");
 		}
-		posPath += "/positive/" + curCompanyName + "/" + curFileName;
-		negPath += "/negative/" + curCompanyName + "/" + curFileName;
 
-		Parser posParser = new Parser(posPath);
-		posParser.initializeParser();
-		int posTweets = posParser.countNumberOfStatus();
+		for (int i = startIndex; i < loopCounter; i++) {
+			posPath = negPath = paths[i];
+			posPath += "/positive/" + curCompanyName + "/" + curFileName;
+			negPath += "/negative/" + curCompanyName + "/" + curFileName;
 
-		Parser negParser = new Parser(negPath);
-		negParser.initializeParser();
-		int negTweets = negParser.countNumberOfStatus();
+			Parser posParser = new Parser(posPath);
+			posParser.initializeParser();
+			int posTweets = posParser.countNumberOfStatus();
 
-		activityFeatures.setPOS(posTweets);
-		activityFeatures.setNEG(negTweets);
-		activityFeatures.setPOS_NEG(posTweets - negTweets);
+			Parser negParser = new Parser(negPath);
+			negParser.initializeParser();
+			int negTweets = negParser.countNumberOfStatus();
+
+			activityFeatures.addToPOS(posTweets);
+			activityFeatures.addToNEG(negTweets);
+			activityFeatures.addToPOS_NEG(posTweets - negTweets);
+		}
 	}
 
 	void buildGraphFeatures() throws Exception {
