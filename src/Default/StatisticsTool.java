@@ -55,6 +55,7 @@ public class StatisticsTool {
 	private ArrayList<NodeIdentifier> nodesList;
 	private double[] featureValues;
 	private String curCompanyName;
+	private String curFileName;
 	private int curStatusSource;
 
 	private Parser streamer;
@@ -64,8 +65,8 @@ public class StatisticsTool {
 	private GraphFeatures graphFeatures;
 	private AttributeModel attributeModel;
 
-	public StatisticsTool(String curCompanyName, String path)
-			throws IOException {
+	public StatisticsTool(String curCompanyName, String curFileName,
+			String filePath) throws IOException {
 		this.nodeMap = new TreeMap<Long, NodeIdentifier>();
 		this.hashtagsMap = new TreeMap<String, NodeIdentifier>();
 		this.urlsMap = new TreeMap<String, NodeIdentifier>();
@@ -76,9 +77,10 @@ public class StatisticsTool {
 		this.nodeCounter = this.edgeCounter = this.totalFollowersCounter = this.totalFriendsCounter = 0;
 		this.featureValues = null;
 		this.curCompanyName = curCompanyName;
+		this.curFileName = curFileName;
 
 		// initialize parser
-		this.streamer = new Parser(path);
+		this.streamer = new Parser(filePath);
 		this.streamer.initializeParser();
 
 		ProjectController pc = Lookup.getDefault().lookup(
@@ -144,7 +146,7 @@ public class StatisticsTool {
 			handleUsers(curTweet, tweetNID.node);
 
 			// Handle sentiment analsyis of the tweet
-			handleSentimentAnalysis(curTweet.getText());
+			// handleSentimentAnalysis(curTweet.getText());
 		}
 	}
 
@@ -384,7 +386,34 @@ public class StatisticsTool {
 			activityFeatures.setUFLW(totalFollowersCounter / usersMap.size());
 			activityFeatures.setUFRN(totalFriendsCounter / usersMap.size());
 		}
+		setSentimentFeatures();
 		activityFeatures.printActivityFeatures();
+	}
+
+	private void setSentimentFeatures() throws Exception {
+		String posPath, negPath;
+		if (curStatusSource == Global.sheet_num[0]) {// twitter
+			posPath = negPath = Global.sentimentTwitterPath;
+		} else if (curStatusSource == Global.sheet_num[1]) {// stockTwit
+			posPath = negPath = Global.sentimentStockTwitPath;
+		} else {
+			throw new Exception(
+					"Sentiment Analysis only available for either Twitter or StockTwits data");
+		}
+		posPath += "/positive/" + curCompanyName + "/" + curFileName;
+		negPath += "/negative/" + curCompanyName + "/" + curFileName;
+
+		Parser posParser = new Parser(posPath);
+		posParser.initializeParser();
+		int posTweets = posParser.countNumberOfStatus();
+
+		Parser negParser = new Parser(negPath);
+		negParser.initializeParser();
+		int negTweets = negParser.countNumberOfStatus();
+
+		activityFeatures.setPOS(posTweets);
+		activityFeatures.setNEG(negTweets);
+		activityFeatures.setPOS_NEG(posTweets - negTweets);
 	}
 
 	void buildGraphFeatures() throws Exception {

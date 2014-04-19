@@ -16,11 +16,13 @@ public class Parser {
 	// private int fileIndex;
 	private FileInputStream fin;
 	private ObjectInputStream ois;
+	private int numOfStatus;
 
 	// private String[] fileNames;
 
 	public Parser(String filePath) {
 		this.filePath = filePath;
+		this.numOfStatus = 0;
 		// this.directory = new File(this.filePath);
 		// this.filesList = this.directory.listFiles();
 		// this.fileIndex = 0;
@@ -46,6 +48,21 @@ public class Parser {
 	// public String getFileName() {
 	// return this.filesList[fileIndex].getName();
 	// }
+
+	public int countNumberOfStatus() throws IOException {
+		try {
+			while (true) {
+				ois.readObject();
+				this.numOfStatus++;
+			}
+		} catch (Exception e) {
+			fin.close();
+			ois.close();
+			// System.out.println("Number of status read = " +
+			// this.numOfStatus);
+		}
+		return numOfStatus;
+	}
 
 	public Status getNextStatus() throws IOException {
 		try {

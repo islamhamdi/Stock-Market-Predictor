@@ -8,8 +8,6 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 
-import SentimentAnalysis.SentimentAnalyzer;
-
 import jxl.Cell;
 import jxl.Sheet;
 import jxl.Workbook;
@@ -33,7 +31,7 @@ public class Main {
 			path = Global.twitterDataPath;
 			sheetNum = 0;
 		} else {
-			path = Global.stockTwitDataExpandedPath;
+			path = Global.stockTwitDataPath;
 			sheetNum = 1;
 		}
 
@@ -68,6 +66,7 @@ public class Main {
 					if (f[j].file.isFile()) {
 						System.out.println(f[j].file.getName());
 						tool = new StatisticsTool(folderName,
+								f[j].file.getName(),
 								f[j].file.getAbsolutePath());
 						tool.parseData();
 						tool.addSimilarityNodes();
