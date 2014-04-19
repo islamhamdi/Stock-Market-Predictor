@@ -157,9 +157,7 @@ public class StatisticsTool {
 		if (sentiment == 0 || sentiment == 1) {
 			activityFeatures.incNEG();
 			activityFeatures.decPOS_NEG();
-		} else if (sentiment == 2) {
-			activityFeatures.incNEUT();
-		} else if (sentiment == 3 || sentiment == 4) {
+		} else if (sentiment == 2 || sentiment == 3 || sentiment == 4) {
 			activityFeatures.incPOS();
 			activityFeatures.incPOS_NEG();
 		}
