@@ -12,7 +12,7 @@ public class Global {
 	static String stockTwitDataExpandedPath = "/home/islamhamdi/Desktop/StockTwitsDataExpanded";
 	static String combinedDataPath = "/home/islamhamdi/Desktop/CombinedData";
 	static String StatFolderPath = "Statistics";
-	static String historyPath = "/home/islamhamdi/Dropbox/Stock Market Daily Data/historical prices/";
+	public static String historyPath = "/home/islamhamdi/Dropbox/Stock Market Daily Data/historical prices/";
 
 	// set 0 for twitter 1 for stockTwits
 	static int files_to_run;
