@@ -98,9 +98,9 @@ public class StatisticsTool {
 		while ((curTweet = streamer.getNextStatus()) != null) {
 
 			if (curTweet.getClass().equals(MyStatus.class)) {
-				curStatusSource = Global.STOCK_TWITS_DATA;
+				curStatusSource = Global.sheet_num[1];
 			} else {
-				curStatusSource = Global.TWITTER_DATA;
+				curStatusSource = Global.sheet_num[0];
 			}
 
 			// TWEET Node
@@ -116,7 +116,7 @@ public class StatisticsTool {
 			if (curTweet.isRetweet()) {
 
 				// Perform original tweets check on twitter data only
-				if (curStatusSource == Global.TWITTER_DATA) {
+				if (curStatusSource == Global.sheet_num[0]) {
 					// Check for original Retweeted Status
 					Long originalTweetId = curTweet.getRetweetedStatus()
 							.getId();
@@ -312,7 +312,7 @@ public class StatisticsTool {
 	void addSimilarityNodes() {
 
 		// No need to add similarity nodes for twitter data
-		if (curStatusSource == Global.TWITTER_DATA)
+		if (curStatusSource == Global.sheet_num[0])
 			return;
 
 		boolean[] visited = new boolean[nodesList.size()];

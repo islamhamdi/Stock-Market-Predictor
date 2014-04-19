@@ -64,17 +64,15 @@ public class WriteExcel {
 		File file = new File(path);
 		workbook = Workbook.createWorkbook(file);
 
-		workbook.createSheet("Twitter", 0);
-		workbook.createSheet("StockTwits", 1);
-		workbook.createSheet("Combined Data", 2);
+		for (int i = 0; i < Global.sheets.length; i++)
+			workbook.createSheet(Global.sheets[i], i);
 
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < Global.sheets.length; i++) {
 			sheet = workbook.getSheet(i);
 			sheet.getSettings().setDefaultColumnWidth(Global.COLWIDTH);
 			writeFeatures();
 			adddummyDays();
 		}
-
 		writeAndClose();
 	}
 

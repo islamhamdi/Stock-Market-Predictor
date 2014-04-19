@@ -6,6 +6,12 @@ import java.util.Date;
 
 public class Global {
 
+	public static String[] sheets = { "Twitter", "StockTwits", "Combined Data",
+			"Positive-Twitter", "Negative-Twitter", "Positive-StockTwits",
+			"Negative-StockTwits" };
+
+	public static int[] sheet_num = { 0, 1, 2, 3, 4, 5, 6 };
+
 	static String twitterDataPath = "/home/islamhamdi/Desktop/TwitterStockData";
 	static String stockTwitDataPath = "/home/islamhamdi/Desktop/StockTwitsData";
 	static String twitterDataExpandedPath = "/home/islamhamdi/Desktop/TwitterStockDataExpanded";
@@ -43,8 +49,6 @@ public class Global {
 	static SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 
 	public final static int THREAD_COUNT = 500;
-	public final static int TWITTER_DATA = 0;
-	public final static int STOCK_TWITS_DATA = 1;
 
 	static boolean areEquals(String price_day, String day2)
 			throws ParseException {

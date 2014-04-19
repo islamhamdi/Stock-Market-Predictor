@@ -25,10 +25,10 @@ public class Main {
 	public static void main(String[] args) throws Exception, WriteException {
 
 		// 0 mean Twitter- 1 mean StockTwits- Data
-		Global.files_to_run = Global.TWITTER_DATA;
+		Global.files_to_run = Global.sheet_num[0];
 
 		// preprocessUrlExpansion();
-		if (Global.files_to_run == Global.TWITTER_DATA) {
+		if (Global.files_to_run == Global.sheet_num[0]) {
 			// path = Global.twitterDataExpandedPath;
 			path = Global.twitterDataPath;
 			sheetNum = 0;
@@ -92,7 +92,7 @@ public class Main {
 	private static void preprocessUrlExpansion() throws InterruptedException {
 		String sourcePath, destPath;
 
-		if (Global.files_to_run == Global.TWITTER_DATA) {
+		if (Global.files_to_run == Global.sheet_num[0]) {
 			sourcePath = Global.twitterDataPath;
 			destPath = Global.twitterDataExpandedPath;
 		} else {
