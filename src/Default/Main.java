@@ -23,7 +23,7 @@ public class Main {
 	public static void main(String[] args) throws Exception, WriteException {
 
 		// 0 mean Twitter- 1 mean StockTwits- Data -2 Combined
-		Global.files_to_run = Global.sheet_num[2];
+		Global.files_to_run = Global.sheet_num[1];
 
 		// preprocessUrlExpansion();
 		if (Global.files_to_run == Global.sheet_num[0]) {
@@ -41,6 +41,7 @@ public class Main {
 		File statDir = new File(statPath);
 		if (!statDir.exists())
 			statDir.mkdir();
+		
 
 		File statusDir = new File(path);
 		File[] folders = statusDir.listFiles();
@@ -75,8 +76,19 @@ public class Main {
 						tool.addSimilarityNodes();
 						tool.buildActivityFeatures();
 						tool.buildGraphFeatures();
-						excel.addNewDay(f[j].file.getName(),
-								tool.getFeaturesValues());
+
+						double[] a = tool.getFeaturesValues();
+						
+						double sum = 0;
+						
+						for (int k = 0; k < a.length; k++) {
+							sum += a[k];
+						}
+						
+						if (a != null || sum > 1)
+							excel.addNewDay(f[j].file.getName(), a);
+						
+						
 					} else {
 						throw new Exception(
 								"Make sure companies directories contain only files.");
@@ -96,10 +108,10 @@ public class Main {
 
 		if (Global.files_to_run == Global.sheet_num[0]) {
 			sourcePath = Global.twitterDataPath;
-//			destPath = Global.twitterDataExpandedPath;
+			// destPath = Global.twitterDataExpandedPath;
 		} else {
 			sourcePath = Global.stockTwitDataPath;
-//			destPath = Global.stockTwitDataExpandedPath;
+			// destPath = Global.stockTwitDataExpandedPath;
 		}
 
 		File statusDir = new File(sourcePath);

@@ -274,7 +274,7 @@ public class WriteExcel {
 	// feature = 0 then price else volume
 	public void drawTable1(int frow, int fcolumn, String tname, String[] a)
 			throws Exception {
-
+		
 		addLabel(fcolumn, frow, "Features\\Lag");
 		int r = frow + 1;
 		for (int i = 0; i < features.length; i++) {
@@ -287,7 +287,7 @@ public class WriteExcel {
 		}
 
 		int cnt = 1;
-		for (char ch2 = 'B'; ch2 < 'S'; ch2++) {
+		for (char ch2 = 'B'; ch2 <= 'Q'; ch2++) {
 			int index = 0;
 			pos = fcolumn + 1;
 			for (int i = -lag_var; i <= lag_var; i++) {
@@ -335,22 +335,20 @@ public class WriteExcel {
 
 	public void drawTables() throws Exception {
 
-		int r = getRowsCnt(), f = features.length;
-
-		int frow = r + f + 10, fcolumn = 1;
-		int frow1 = r + f + 10, fcolumn1 = lag_var * 4;
-
-		int frow2 = r + 5, fcolumn2 = 1;
-		int frow3 = r + 5, fcolumn3 = lag_var * 4;
-
 		drawNormalizedTable();
 		clear();
 
-		drawTable1(frow2, fcolumn2, "volume", volume_cols);
-		drawTable1(frow3, fcolumn3, "price", price_cols);
+		drawTable1(Global.start_row_t1, Global.start_col_t1, "volume",
+				volume_cols);
 
-		drawTable3(frow, fcolumn, "volume", volume_cols);
-		drawTable3(frow1, fcolumn1, "price", price_cols);
+		drawTable1(Global.start_row_t1, Global.start_col_t2, "price",
+				price_cols);
+
+		drawTable3(Global.start_row_t2, Global.start_col_t1, "volume",
+				volume_cols);
+		
+		drawTable3(Global.start_row_t2, Global.start_col_t2, "price",
+				price_cols);
 
 	}
 
