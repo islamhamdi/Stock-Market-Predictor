@@ -92,14 +92,14 @@ public class Main {
 	}
 
 	private static void preprocessUrlExpansion() throws InterruptedException {
-		String sourcePath, destPath;
+		String sourcePath, destPath = null;
 
 		if (Global.files_to_run == Global.sheet_num[0]) {
 			sourcePath = Global.twitterDataPath;
-			destPath = Global.twitterDataExpandedPath;
+//			destPath = Global.twitterDataExpandedPath;
 		} else {
 			sourcePath = Global.stockTwitDataPath;
-			destPath = Global.stockTwitDataExpandedPath;
+//			destPath = Global.stockTwitDataExpandedPath;
 		}
 
 		File statusDir = new File(sourcePath);

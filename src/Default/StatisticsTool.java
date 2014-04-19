@@ -1,5 +1,6 @@
 package Default;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.TreeMap;
@@ -408,14 +409,22 @@ public class StatisticsTool {
 			posPath += "/positive/" + curCompanyName + "/" + curFileName;
 			negPath += "/negative/" + curCompanyName + "/" + curFileName;
 
-			Parser posParser = new Parser(posPath);
-			posParser.initializeParser();
-			int posTweets = posParser.countNumberOfStatus();
+			File statusDir = new File(posPath);
+			int posTweets = 0;
+			if (statusDir.exists()) {
+				Parser posParser = new Parser(posPath);
+				posParser.initializeParser();
+				posTweets = posParser.countNumberOfStatus();
+			}
+			statusDir = new File(negPath);
 
-			Parser negParser = new Parser(negPath);
-			negParser.initializeParser();
-			int negTweets = negParser.countNumberOfStatus();
-
+			int negTweets = 0;
+			if (statusDir.exists()) {
+				Parser negParser = new Parser(negPath);
+				negParser.initializeParser();
+				negTweets = negParser.countNumberOfStatus();
+			}
+			
 			activityFeatures.addToPOS(posTweets);
 			activityFeatures.addToNEG(negTweets);
 			activityFeatures.addToPOS_NEG(posTweets - negTweets);
