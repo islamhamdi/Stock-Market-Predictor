@@ -14,6 +14,7 @@ import org.gephi.datalab.plugin.manipulators.values.ClearAttributeValue;
 import com.itextpdf.text.pdf.parser.Vector;
 
 import jxl.Cell;
+import jxl.NumberFormulaCell;
 import jxl.Sheet;
 import jxl.Workbook;
 import jxl.format.BorderLineStyle;
@@ -240,7 +241,9 @@ public class WriteExcel {
 		String s1 = ch1 + "" + start + ":" + ch1 + "" + end;
 		String s2 = ch2 + "" + start + ":" + ch2 + "" + end;
 		buf.append("CORREL(" + s1 + "," + s2 + ")");
+
 		Formula f = new Formula(col, row, buf.toString(), cellFormat);
+
 		sheet.addCell(f);
 	}
 
@@ -271,8 +274,8 @@ public class WriteExcel {
 	}
 
 	// feature = 0 then price else volume
-	public void drawTable1() throws Exception {
-		int frow = getRowsCnt() + 5, fcolumn = 1;
+	public void drawTable1(int frow, int fcolumn, String tname, String[] a)
+			throws Exception {
 
 		addLabel(fcolumn, frow, "Features\\Lag");
 		int r = frow + 1;
@@ -282,7 +285,7 @@ public class WriteExcel {
 
 		int pos = fcolumn + 1;
 		for (int i = -lag_var; i <= lag_var; i++) {
-			addCaption(pos++, frow, "price(" + i + ")");
+			addCaption(pos++, frow, tname + "(" + i + ")");
 		}
 
 		int cnt = 1;
@@ -290,7 +293,7 @@ public class WriteExcel {
 			int index = 0;
 			pos = fcolumn + 1;
 			for (int i = -lag_var; i <= lag_var; i++) {
-				String ch1 = price_cols[index++];
+				String ch1 = a[index++];
 				calcCorrel(pos++, frow + cnt, ch1, ch2 + "", lag_var + 2,
 						getRowsCnt());
 
@@ -299,35 +302,8 @@ public class WriteExcel {
 		}
 	}
 
-	public void drawTable2() throws Exception {
-
-		int frow = getRowsCnt() + 5, fcolumn = lag_var * 4;
-		addLabel(fcolumn, frow, "Features\\Lag");
-		int r = frow + 1;
-		for (int i = 0; i < features.length; i++) {
-			addCaption(fcolumn, r++, features[i]);
-		}
-
-		int pos = fcolumn + 1;
-		for (int i = -lag_var; i <= lag_var; i++) {
-			addCaption(pos++, frow, "volume(" + i + ")");
-		}
-
-		int cnt = 1;
-		for (char ch2 = 'B'; ch2 < 'S'; ch2++) {
-			int index = 0;
-			pos = fcolumn + 1;
-			for (int i = -lag_var; i <= lag_var; i++) {
-				String ch1 = volume_cols[index++];
-				calcCorrel(pos++, frow + cnt, ch1, ch2 + "", lag_var + 2,
-						getRowsCnt());
-			}
-			cnt++;
-		}
-	}
-
-	public void drawTable3() throws Exception {
-		int frow = getRowsCnt() + features.length + 10, fcolumn = 1;
+	public void drawTable3(int frow, int fcolumn, String tname, String[] f)
+			throws Exception {
 		addLabel(fcolumn, frow, "Features\\Lag");
 		int r = frow + 1;
 
@@ -341,7 +317,7 @@ public class WriteExcel {
 
 		int pos = fcolumn + 1;
 		for (int i = -lag_var; i <= lag_var; i++) {
-			addCaption(pos++, frow, "volume(" + i + ")");
+			addCaption(pos++, frow, tname + "(" + i + ")");
 		}
 
 		int cnt = 1;
@@ -351,41 +327,7 @@ public class WriteExcel {
 			int index = 0;
 			pos = fcolumn + 1;
 			for (int i = -lag_var; i <= lag_var; i++) {
-				String ch1 = volume_cols[index++];
-				calcCorrel(pos++, frow + cnt, ch1, ch2 + "", lag_var + 2,
-						getRowsCnt());
-			}
-			cnt++;
-		}
-	}
-
-	// feature = 0 then price else volume
-	public void drawTable4() throws Exception {
-		int frow = getRowsCnt() + features.length + 10, fcolumn = lag_var * 4;
-		addLabel(fcolumn, frow, "Features\\Lag");
-		int r = frow + 1;
-
-		int t = 0;
-		for (int i = 0; i < features.length; i++) {
-			for (int j = i + 1; j < features.length; j++) {
-				addCaption(fcolumn, r++, features[i] + "+" + features[j]);
-				t++;
-			}
-		}
-
-		int pos = fcolumn + 1;
-		for (int i = -lag_var; i <= lag_var; i++) {
-			addCaption(pos++, frow, "price(" + i + ")");
-		}
-
-		int cnt = 1;
-		for (int c = 0; c < t; c++) {
-			int a = Global.start_of_norm_table + Global.features_num + c + 3;
-			String ch2 = convert(a);
-			int index = 0;
-			pos = fcolumn + 1;
-			for (int i = -lag_var; i <= lag_var; i++) {
-				String ch1 = price_cols[index++];
+				String ch1 = f[index++];
 				calcCorrel(pos++, frow + cnt, ch1, ch2 + "", lag_var + 2,
 						getRowsCnt());
 			}
@@ -394,29 +336,37 @@ public class WriteExcel {
 	}
 
 	public void drawTables() throws Exception {
+
+		int r = getRowsCnt(), f = features.length;
+
+		int frow = r + f + 10, fcolumn = 1;
+		int frow1 = r + f + 10, fcolumn1 = lag_var * 4;
+
+		int frow2 = r + 5, fcolumn2 = 1;
+		int frow3 = r + 5, fcolumn3 = lag_var * 4;
+
 		drawNormalizedTable();
 		clear();
-		drawTable1();
-		drawTable2();
-		drawTable3();
-		drawTable4();
-		
+
+		drawTable1(frow2, fcolumn2, "volume", volume_cols);
+		drawTable1(frow3, fcolumn3, "price", price_cols);
+
+		drawTable3(frow, fcolumn, "volume", volume_cols);
+		drawTable3(frow1, fcolumn1, "price", price_cols);
+
 	}
 
 	private void clear() throws Exception {
 		int raws = getRowsCnt();
-		for (int column = 0; column < 100; column++) {
-			for (int r = raws + 1; r < raws + 200; r++) {
+		for (int column = 0; column < 100; column++)
+			for (int r = raws + 1; r < raws + 200; r++)
 				addLabel(column, r, "");
-			}
-		}
 	}
 
 	public void drawNormalizedTable() throws Exception {
 
 		int INF = Integer.MAX_VALUE;
 		int raw_n = getRowsCnt() - lag_var;
-		System.out.println(">##" + raw_n);
 		int width = Global.features_num + 1;
 
 		double[][] d = new double[raw_n][width];
@@ -439,32 +389,27 @@ public class WriteExcel {
 			}
 		}
 
-		for (int col = 1; col < width; col++) {
+		for (int col = 1; col < width; col++)
 			for (int raw = lag_var + 1; raw < raw_n; raw++) {
 				if (d[raw][col] != INF)
 					d[raw][col] = (d[raw][col] - min[col])
 							/ (max[col] - min[col]);
 			}
-		}
 
 		int start_col = Global.start_of_norm_table;
 
 		ArrayList<ArrayList<Double>> ar = new ArrayList<>();
 		for (int i = 0; i < d.length; i++) {
 			ar.add(new ArrayList<Double>());
-			for (int j = 1; j < d[0].length; j++) {
-				for (int j2 = j + 1; j2 < d[0].length; j2++) {
+			for (int j = 1; j < d[0].length; j++)
+				for (int j2 = j + 1; j2 < d[0].length; j2++)
 					ar.get(i).add(d[i][j] + d[i][j2]);
-				}
-			}
 		}
 
-		for (int col = start_col; col < max.length + start_col; col++) {
-			for (int raw = lag_var + 1; raw < raw_n; raw++) {
+		for (int col = start_col; col < max.length + start_col; col++)
+			for (int raw = lag_var + 1; raw < raw_n; raw++)
 				if (col - start_col > 0 && d[raw][col - start_col] != INF)
 					addNumber(col, raw, d[raw][col - start_col]);
-			}
-		}
 
 		start_col = Global.start_of_norm_table + Global.features_num + 2;
 
