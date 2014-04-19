@@ -12,11 +12,12 @@ public class Global {
 	static String stockTwitDataExpandedPath = "/home/islamhamdi/Desktop/StockTwitsDataExpanded";
 	static String combinedDataPath = "/home/islamhamdi/Desktop/CombinedData";
 	static String StatFolderPath = "Statistics";
-	public static String historyPath = "/home/islamhamdi/Dropbox/Stock Market Daily Data/historical prices/";
+	// public static String historyPath =
+	// "/home/islamhamdi/Dropbox/Stock Market Daily Data/historical prices/";
 
 	// set 0 for twitter 1 for stockTwits
 	static int files_to_run;
-	
+
 	static String startDate = "20-2-2014";
 
 	// static String twitterDataPath =
@@ -25,8 +26,7 @@ public class Global {
 	// "/home/mohamed/Dropbox/Stock Market Daily Data/StockTwits";
 	// static String StatFolderPath =
 	// "/home/mohamed/Dropbox/Stock Market Daily Data/statistics";
-	// static String historyPath =
-	// "/home/mohamed/Dropbox/Stock Market Daily Data/historical prices/";
+	public static String historyPath = "/home/mohamed/Dropbox/Stock Market Daily Data/historical prices/";
 
 	static int lag_var = 3;
 	static int features_num = 17;

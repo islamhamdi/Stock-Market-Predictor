@@ -33,12 +33,15 @@ public class YahooFinanceDownloader {
 						+ symbol
 						+ "&a=01&b=01&c=2014&d=03&e=.csv%2bHistorical%2bPrices&f=sl1d1t1c1ohgv&g=d&ignore=.csv");
 		ReadableByteChannel rbc = Channels.newChannel(website.openStream());
+		
+		
 		FileOutputStream fos = new FileOutputStream("YahooData/" + symbol
 				+ ".csv");
+		
 		fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
 		fos.close();
 
-		File file = new File(history+symbol+".xls");
+		File file = new File(history + symbol + ".xls");
 		WritableWorkbook workbook = Workbook.createWorkbook(file);
 		workbook.createSheet("Twitter", 0);
 		sheet = workbook.getSheet(0);
@@ -52,7 +55,9 @@ public class YahooFinanceDownloader {
 		}
 		while (scanner.hasNext()) {
 			row++;
-			s = scanner.nextLine().split(",");
+			String in = scanner.nextLine();
+			System.out.println(in);
+			s = in.split(",");
 			addLabel(0, row, s[0]);
 			for (int i = 1; i < s.length; i++) {
 				addNumber(i, row, Double.parseDouble(s[i]));
