@@ -33,6 +33,7 @@ import jxl.write.biff.RowsExceededException;
 public class WriteExcel {
 
 	// company path and name
+	int temp_var = 0;
 	private String path, CompanyName;
 
 	// each feature represented by a column
@@ -94,7 +95,7 @@ public class WriteExcel {
 		}
 		for (; i > 0; i--) {
 			Date d = new Date(date.getTime() - TimeUnit.DAYS.toMillis(i));
-			addNewDay(Global.sdf.format(d), v);
+			addNewDay(Global.sdf.format(d), v, true);
 		}
 
 	}
@@ -104,6 +105,7 @@ public class WriteExcel {
 	 */
 
 	public void adddummyDaysAtEnd() throws Exception {
+		temp_var = 0;
 		int size = getRowsCnt();
 		String lastDay = sheet.getCell(0, size - 1).getContents();
 		Date date = Global.sdf.parse(lastDay);
@@ -114,7 +116,7 @@ public class WriteExcel {
 			Date d = new Date(date.getTime() + TimeUnit.DAYS.toMillis(i));
 			String day = Global.sdf.format(d);
 			double[] D = read(day);
-			if (D[0] != 0 && addNewDay(day, v))
+			if (D[0] != 0 && addNewDay(day, v, false))
 				cnt++;
 			if (cnt == Global.lag_var)
 				break;
@@ -167,13 +169,18 @@ public class WriteExcel {
 		return (int) Double.parseDouble(cell.getContents());
 	}
 
-	boolean addNewDay(String day, double[] val) throws Exception {
+	boolean addNewDay(String day, double[] val, boolean add) throws Exception {
 		double[] d = read(day);
 		if (d[0] == 0) {
 			return false;
 		}
 		int row = getRowsCnt();
-		addNumber(specialCol, 0, row + 1.0);
+		if (!add) {
+			row += temp_var++;
+		} else {
+			addNumber(specialCol, 0, row + 1.0);
+
+		}
 		addCaption(0, row, day);
 		int n = val.length;
 		for (int j = 0; j < n; j++)
@@ -229,11 +236,7 @@ public class WriteExcel {
 
 	void calcCorrel(int col, int row, String ch1, String ch2, int start, int end)
 			throws WriteException {
-		// TODO
-
-		end -= (lag_var + 1);
 		WritableCellFormat cellFormat = new WritableCellFormat();
-
 		cellFormat.setBorder(Border.ALL, BorderLineStyle.THIN);
 		StringBuffer buf = new StringBuffer();
 		String s1 = ch1 + "" + start + ":" + ch1 + "" + end;
@@ -274,7 +277,7 @@ public class WriteExcel {
 	// feature = 0 then price else volume
 	public void drawTable1(int frow, int fcolumn, String tname, String[] a)
 			throws Exception {
-		
+
 		addLabel(fcolumn, frow, "Features\\Lag");
 		int r = frow + 1;
 		for (int i = 0; i < features.length; i++) {
@@ -346,7 +349,7 @@ public class WriteExcel {
 
 		drawTable3(Global.start_row_t2, Global.start_col_t1, "volume",
 				volume_cols);
-		
+
 		drawTable3(Global.start_row_t2, Global.start_col_t2, "price",
 				price_cols);
 

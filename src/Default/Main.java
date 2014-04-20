@@ -19,8 +19,11 @@ public class Main {
 	static int sheetNum;
 	static String statPath = Global.StatFolderPath;
 	static WriteExcel excel;
+	static HashSet<String> currAvailableDays;
 
 	public static void main(String[] args) throws Exception, WriteException {
+
+		currAvailableDays = getAvailableDays("$AAPL");
 
 		// 0 mean Twitter- 1 mean StockTwits- Data -2 Combined
 		Global.files_to_run = Global.sheet_num[1];
@@ -41,18 +44,17 @@ public class Main {
 		File statDir = new File(statPath);
 		if (!statDir.exists())
 			statDir.mkdir();
-		
 
 		File statusDir = new File(path);
 		File[] folders = statusDir.listFiles();
 		String[] featuresList = Helper.getFeaturesList();
 		StatisticsTool tool;
 		excel = new WriteExcel();
-
+		System.out.println("Start ");
 		excel.passFeatures(featuresList);
 		HashSet<String> avCompanies = getAvailableCompanies();
 		for (int i = 0; i < folders.length; i++) {
-
+			System.out.println("Step #1 OPEN COMP ");
 			String folderName = folders[i].getName();
 
 			if (folders[i].isDirectory() && avCompanies.contains(folderName)) {
@@ -61,12 +63,16 @@ public class Main {
 				openExcelWriter(folderName);
 				myComp[] f = getFileList(folderName);
 
-				int start = excel.getRowsCnt() - Global.lag_var - 1;
-				// System.out.println("cnt=" + excel.getRowsCnt());
-				// System.out.println("cnt=" + Global.lag_var);
+				System.out.println("get file list");
 
-				// System.out.println(start);
+				int start = excel.getRowsCnt() - Global.lag_var - 1;
+				System.out.println("raws#cnt = "+excel.getRowsCnt());
+
+				System.out.println("START FROM = " + start);
+				System.out.println("get into");
+
 				for (int j = start; j < f.length; j++) {
+
 					if (f[j].file.isFile()) {
 						System.out.println(f[j].file.getName());
 						tool = new StatisticsTool(folderName,
@@ -78,17 +84,16 @@ public class Main {
 						tool.buildGraphFeatures();
 
 						double[] a = tool.getFeaturesValues();
-						
+
 						double sum = 0;
-						
+
 						for (int k = 0; k < a.length; k++) {
 							sum += a[k];
 						}
-						
+
 						if (a != null || sum > 1)
-							excel.addNewDay(f[j].file.getName(), a);
-						
-						
+							excel.addNewDay(f[j].file.getName(), a, true);
+
 					} else {
 						throw new Exception(
 								"Make sure companies directories contain only files.");
@@ -150,13 +155,12 @@ public class Main {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 		Date start = sdf.parse(Global.startDate);
 
-		HashSet<String> hs = getAvailableDays(folderName);
-
 		int n = 0;
 		for (int j = 0; j < files.length; j++) {
 			Date cur = sdf.parse(files[j].getName());
 
-			if (hs.contains(files[j].getName()) && cur.after(start))
+			if (currAvailableDays.contains(files[j].getName())
+					&& cur.after(start))
 				n++;
 		}
 
@@ -165,7 +169,8 @@ public class Main {
 		for (int j = 0; j < files.length; j++) {
 			Date cur = sdf.parse(files[j].getName());
 
-			if (hs.contains(files[j].getName()) && cur.after(start))
+			if (currAvailableDays.contains(files[j].getName())
+					&& cur.after(start))
 				f[index++] = new myComp(files[j]);
 		}
 		Arrays.sort(f);
