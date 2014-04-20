@@ -61,6 +61,7 @@ public class Global {
 	public static String[] companies;
 
 	static SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+	static SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
 
 	public final static int THREAD_COUNT = 500;
 

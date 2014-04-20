@@ -1,16 +1,19 @@
 package Default;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 
 import jxl.Cell;
 import jxl.Sheet;
 import jxl.Workbook;
+import jxl.read.biff.BiffException;
 import jxl.write.WriteException;
 
 public class Main {
@@ -54,23 +57,19 @@ public class Main {
 		excel.passFeatures(featuresList);
 		HashSet<String> avCompanies = getAvailableCompanies();
 		for (int i = 0; i < folders.length; i++) {
-			System.out.println("Step #1 OPEN COMP ");
 			String folderName = folders[i].getName();
 
 			if (folders[i].isDirectory() && avCompanies.contains(folderName)) {
-
 				System.out.println("____" + folderName + "_____");
+
 				openExcelWriter(folderName);
 				myComp[] f = getFileList(folderName);
 
-				System.out.println("get file list");
-
 				int start = excel.getRowsCnt() - Global.lag_var - 1;
-				System.out.println("raws#cnt = "+excel.getRowsCnt());
 
-				System.out.println("START FROM = " + start);
-				System.out.println("get into");
+				System.out.println("ROWS CNT = " + excel.getRowsCnt());
 
+				boolean someThingNew = false;
 				for (int j = start; j < f.length; j++) {
 
 					if (f[j].file.isFile()) {
@@ -91,17 +90,19 @@ public class Main {
 							sum += a[k];
 						}
 
-						if (a != null || sum > 1)
+						if (a != null || sum > 1) {
+							someThingNew = true;
 							excel.addNewDay(f[j].file.getName(), a, true);
-
+						}
 					} else {
 						throw new Exception(
 								"Make sure companies directories contain only files.");
 					}
 				}
 				System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-				excel.drawTables();
 				excel.adddummyDaysAtEnd();
+				if (someThingNew)
+					excel.drawTables();
 				excel.writeAndClose();
 			}
 
@@ -140,13 +141,24 @@ public class Main {
 	}
 
 	private static void openExcelWriter(String folderName) throws Exception {
+		long a = System.currentTimeMillis();
 		String statfilePath = statPath + "/" + folderName + ".xls";
 		excel.setOutputFile(statfilePath, folderName);
 		File statDir = new File(statfilePath);
+		System.out.println("LETS CREATTT");
+
+		HashMap<String, VOL_PR> hs = price_volume_table(folderName);
+
+		excel.set_price_vol_table(hs);
+
 		if (!statDir.exists()) {
 			excel.createExcel();
 		}
+		System.out.println("Created");
 		excel.initializeExcelSheet(sheetNum);
+		long b = System.currentTimeMillis();
+
+		System.out.println("TIME>>>>>>>>>>> = " + (b - a));
 	}
 
 	private static myComp[] getFileList(String folderName) throws Exception {
@@ -225,6 +237,43 @@ public class Main {
 			hs.add(files[i].getName().replace(".xls", ""));
 		}
 		return hs;
+	}
+
+	public static HashMap<String, VOL_PR> price_volume_table(String CompanyName)
+			throws IOException, ParseException {
+		HashMap<String, VOL_PR> output = new HashMap<>();
+		File inputWorkbook = new File(Global.historyPath + CompanyName + ".xls");
+		Workbook w;
+		try {
+			w = Workbook.getWorkbook(inputWorkbook);
+			// Get the first sheet
+			Sheet sheet = w.getSheet(0);
+			// Loop over first 10 column and lines
+			for (int i = 1; i < sheet.getRows(); i++) {
+				Cell cell = sheet.getCell(0, i);
+				String day = cell.getContents();
+				Date date = Global.sdf2.parse(day);
+				day = Global.sdf.format(date);
+				String volume = sheet.getCell(5, i).getContents();
+				String price = sheet.getCell(6, i).getContents();
+				double v = Double.parseDouble(volume);
+				double p = Double.parseDouble(price);
+				output.put(day, new VOL_PR(v, p));
+			}
+		} catch (BiffException e) {
+			e.printStackTrace();
+		}
+		return output;
+	}
+
+	static class VOL_PR {
+		double vol;
+		double price;
+
+		public VOL_PR(double v, double p) {
+			vol = v;
+			price = p;
+		}
 	}
 
 }

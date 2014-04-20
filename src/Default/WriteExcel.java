@@ -7,9 +7,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.concurrent.TimeUnit;
 
 import org.gephi.datalab.plugin.manipulators.values.ClearAttributeValue;
+
+import Default.Main.VOL_PR;
 
 import com.itextpdf.text.pdf.parser.Vector;
 
@@ -51,6 +55,8 @@ public class WriteExcel {
 	private String[] price_cols = new String[2 * lag_var + 1];
 	private String[] volume_cols = new String[2 * lag_var + 1];
 
+	HashMap<String, VOL_PR> volume_price_table;
+
 	public void passFeatures(String[] features) throws IOException {
 		this.features = features;
 	}
@@ -67,7 +73,6 @@ public class WriteExcel {
 
 		for (int i = 0; i < Global.sheets.length; i++)
 			workbook.createSheet(Global.sheets[i], i);
-
 		for (int i = 0; i < Global.sheets.length; i++) {
 			sheet = workbook.getSheet(i);
 			sheet.getSettings().setDefaultColumnWidth(Global.COLWIDTH);
@@ -87,15 +92,16 @@ public class WriteExcel {
 		int cnt = 0, i;
 		for (i = 1; i < 20; i++) {
 			Date d = new Date(date.getTime() - TimeUnit.DAYS.toMillis(i));
-			double[] D = read(Global.sdf.format(d));
-			if (D[0] != 0)
+			if (volume_price_table.containsKey(Global.sdf.format(d))) {
 				cnt++;
-			if (cnt == lag_var)
-				break;
+				if (cnt == lag_var)
+					break;
+			}
 		}
 		for (; i > 0; i--) {
 			Date d = new Date(date.getTime() - TimeUnit.DAYS.toMillis(i));
-			addNewDay(Global.sdf.format(d), v, true);
+			if (volume_price_table.containsKey(Global.sdf.format(d)))
+				addNewDay(Global.sdf.format(d), v, true);
 		}
 
 	}
@@ -115,11 +121,12 @@ public class WriteExcel {
 		for (i = 1; i < 20; i++) {
 			Date d = new Date(date.getTime() + TimeUnit.DAYS.toMillis(i));
 			String day = Global.sdf.format(d);
-			double[] D = read(day);
-			if (D[0] != 0 && addNewDay(day, v, false))
+			if (volume_price_table.containsKey(day)) {
+				addNewDay(day, v, false);
 				cnt++;
-			if (cnt == Global.lag_var)
-				break;
+				if (cnt == Global.lag_var)
+					break;
+			}
 		}
 	}
 
@@ -169,11 +176,9 @@ public class WriteExcel {
 		return (int) Double.parseDouble(cell.getContents());
 	}
 
-	boolean addNewDay(String day, double[] val, boolean add) throws Exception {
-		double[] d = read(day);
-		if (d[0] == 0) {
-			return false;
-		}
+	void addNewDay(String day, double[] val, boolean add) throws Exception {
+		VOL_PR ob = volume_price_table.get(day);
+
 		int row = getRowsCnt();
 		if (!add) {
 			row += temp_var++;
@@ -189,44 +194,15 @@ public class WriteExcel {
 		int start_price = Global.price_start_col;
 		for (int i = -lag_var; i <= lag_var; i++) {
 			if (row + i > 0)
-				addNumber(start_price + i, row + i, d[0]);
+				addNumber(start_price + i, row + i, ob.price);
 
 		}
 		int start_Volume = Global.volume_start_col;
 		for (int i = -lag_var; i <= lag_var; i++) {
 			if (row + i > 0)
-				addNumber(start_Volume + i, row + i, d[1]);
+				addNumber(start_Volume + i, row + i, ob.vol);
 
 		}
-		return true;
-	}
-
-	public double[] read(String dayx) throws IOException, ParseException {
-		File inputWorkbook = new File(Global.historyPath + CompanyName + ".xls");
-		Workbook w;
-		String volume = "0", price = "0";
-		try {
-
-			w = Workbook.getWorkbook(inputWorkbook);
-			// Get the first sheet
-			Sheet sheet = w.getSheet(0);
-			// Loop over first 10 column and lines
-			for (int i = 1; i < sheet.getRows(); i++) {
-				Cell cell = sheet.getCell(0, i);
-				String day2 = cell.getContents();
-				if (Global.areEquals(day2, dayx)) {
-					volume = sheet.getCell(5, i).getContents();
-					price = sheet.getCell(6, i).getContents();
-				}
-			}
-		} catch (BiffException e) {
-			e.printStackTrace();
-		}
-
-		double a = Double.parseDouble(price);
-		double b = Double.parseDouble(volume);
-
-		return new double[] { a, b };
 	}
 
 	void writeAndClose() throws WriteException, IOException {
@@ -437,6 +413,10 @@ public class WriteExcel {
 			k /= 26;
 		}
 		return s;
+	}
+
+	public void set_price_vol_table(HashMap<String, VOL_PR> hs) {
+		volume_price_table = hs;
 	}
 
 }
