@@ -52,9 +52,6 @@ public class WriteExcel {
 	private int specialCol = Global.specialCell;
 	private int lag_var = Global.lag_var;
 
-	private String[] price_cols = new String[2 * lag_var + 1];
-	private String[] volume_cols = new String[2 * lag_var + 1];
-
 	HashMap<String, VOL_PR> volume_price_table;
 
 	public void passFeatures(String[] features) throws IOException {
@@ -132,22 +129,10 @@ public class WriteExcel {
 
 	public void initializeExcelSheet(int sheetNum) throws IOException,
 			WriteException, BiffException {
-
 		File file = new File(path);
 		Workbook myWorkbook = Workbook.getWorkbook(file);
 		workbook = Workbook.createWorkbook(file, myWorkbook);
 		sheet = workbook.getSheet(sheetNum);
-
-		int k = 0;
-		int pos = Global.price_start_col - lag_var;
-		for (int i = -lag_var; i <= lag_var; i++) {
-			price_cols[k++] = convert(++pos);
-		}
-		k = 0;
-		pos = Global.volume_start_col - lag_var;
-		for (int i = -lag_var; i <= lag_var; i++) {
-			volume_cols[k++] = convert(++pos);
-		}
 	}
 
 	public void writeFeatures() throws WriteException {
@@ -155,19 +140,14 @@ public class WriteExcel {
 		for (int i = 0; i < features.length; i++) {
 			addCaption(i + 1, 0, features[i]);
 		}
-		int k = 0;
 		int pos = Global.price_start_col - lag_var;
 		for (int i = -lag_var; i <= lag_var; i++) {
 			addCaption(pos++, 0, "price(" + i + ")");
-			price_cols[k++] = convert(pos);
 		}
-		k = 0;
 		pos = Global.volume_start_col - lag_var;
 		for (int i = -lag_var; i <= lag_var; i++) {
 			addCaption(pos++, 0, "volume(" + i + ")");
-			volume_cols[k++] = convert(pos);
 		}
-
 		addNumber(specialCol, 0, 1.0);
 	}
 
@@ -300,7 +280,7 @@ public class WriteExcel {
 		int cnt = 1;
 		for (int c = 0; c < t; c++) {
 			int a = Global.start_of_norm_table + Global.features_num + c + 3;
-			String ch2 = convert(a);
+			String ch2 = Global.convert(a);
 			int index = 0;
 			pos = fcolumn + 1;
 			for (int i = -lag_var; i <= lag_var; i++) {
@@ -318,21 +298,21 @@ public class WriteExcel {
 		clear();
 
 		drawTable1(Global.start_row_t1, Global.start_col_t1, "volume",
-				volume_cols);
+				Global.volume_cols);
 
 		drawTable1(Global.start_row_t1, Global.start_col_t2, "price",
-				price_cols);
+				Global.price_cols);
 
 		drawTable3(Global.start_row_t2, Global.start_col_t1, "volume",
-				volume_cols);
+				Global.volume_cols);
 
 		drawTable3(Global.start_row_t2, Global.start_col_t2, "price",
-				price_cols);
+				Global.price_cols);
 
 	}
 
 	private void clear() throws Exception {
-		int raws = getRowsCnt();
+		int raws = getRowsCnt() + 5;
 		for (int column = 0; column < 100; column++)
 			for (int r = raws + 1; r < raws + 200; r++)
 				addLabel(column, r, "");
@@ -396,23 +376,6 @@ public class WriteExcel {
 			}
 		}
 
-	}
-
-	String convert(int a) {
-		int k = 1;
-		while (a >= k) {
-			a -= k;
-			k *= 26;
-		}
-		k /= 26;
-		String s = "";
-
-		while (k > 0) {
-			s += ((char) ('A' + (a / k)));
-			a %= k;
-			k /= 26;
-		}
-		return s;
 	}
 
 	public void set_price_vol_table(HashMap<String, VOL_PR> hs) {

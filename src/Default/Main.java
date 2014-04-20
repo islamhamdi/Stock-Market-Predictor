@@ -56,6 +56,8 @@ public class Main {
 		System.out.println("Start ");
 		excel.passFeatures(featuresList);
 		HashSet<String> avCompanies = getAvailableCompanies();
+
+		set_price_vol_columns();
 		for (int i = 0; i < folders.length; i++) {
 			String folderName = folders[i].getName();
 
@@ -109,6 +111,20 @@ public class Main {
 		}
 	}
 
+	private static void set_price_vol_columns() {
+		int lag_var = Global.lag_var;
+		int k = 0;
+		int pos = Global.price_start_col - lag_var;
+		for (int i = -lag_var; i <= lag_var; i++) {
+			Global.price_cols[k++] = Global.convert(++pos);
+		}
+		k = 0;
+		pos = Global.volume_start_col - lag_var;
+		for (int i = -lag_var; i <= lag_var; i++) {
+			Global.volume_cols[k++] = Global.convert(++pos);
+		}
+	}
+
 	private static void preprocessUrlExpansion() throws InterruptedException {
 		String sourcePath, destPath = null;
 
@@ -146,7 +162,6 @@ public class Main {
 		excel.setOutputFile(statfilePath, folderName);
 		File statDir = new File(statfilePath);
 		System.out.println("LETS CREATTT");
-
 		HashMap<String, VOL_PR> hs = price_volume_table(folderName);
 
 		excel.set_price_vol_table(hs);

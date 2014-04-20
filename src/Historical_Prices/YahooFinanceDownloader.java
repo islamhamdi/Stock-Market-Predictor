@@ -31,13 +31,12 @@ public class YahooFinanceDownloader {
 		URL website = new URL(
 				"http://ichart.finance.yahoo.com/table.csv?s="
 						+ symbol
-						+ "&a=01&b=01&c=2014&d=03&e=.csv%2bHistorical%2bPrices&f=sl1d1t1c1ohgv&g=d&ignore=.csv");
+						+ "&a=01&b=01&c=2013&d=03&e=.csv%2bHistorical%2bPrices&f=sl1d1t1c1ohgv&g=d&ignore=.csv");
 		ReadableByteChannel rbc = Channels.newChannel(website.openStream());
-		
-		
+
 		FileOutputStream fos = new FileOutputStream("YahooData/" + symbol
 				+ ".csv");
-		
+
 		fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
 		fos.close();
 
@@ -80,13 +79,13 @@ public class YahooFinanceDownloader {
 	}
 
 	public static void main(String[] args) throws Exception {
-		Scanner sc = new Scanner(new File("candidates.txt"));
+		// Scanner sc = new Scanner(new File("candidates.txt"));
 
-		while (sc.hasNext()) {
-			String Company = sc.nextLine();
-			downloadFile(Company.substring(1));
-		}
-
-		sc.close();
+		// while (sc.hasNext()) {
+		// String Company = sc.nextLine();
+		// downloadFile(Company.substring(1));
+		// }
+		downloadFile("GOOG");
+		// sc.close();
 	}
 }
