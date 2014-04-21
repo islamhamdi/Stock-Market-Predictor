@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Global {
-	public static String userName = "islamhamdi";
+	public static String userName = "mohamed";
 
 	public static int start_row_t1 = 55;
 	public static int start_row_t2 = 75;
@@ -76,21 +76,12 @@ public class Global {
 	public static String[] companies;
 
 	static SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-	static SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
 
 	static String[] price_cols = new String[2 * lag_var + 1];
 	static String[] volume_cols = new String[2 * lag_var + 1];
 
 	public final static int THREAD_COUNT = 500;
 
-	static boolean areEquals(String price_day, String day2)
-			throws ParseException {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		Date from = sdf.parse(price_day);
-		SimpleDateFormat sdf2 = new SimpleDateFormat("dd-MM-yyy");
-		Date to = sdf2.parse(day2);
-		return from.equals(to);
-	}
 
 	public static String seperated = "SeparatedData";
 	public static String idMap = "@ user-id-map";

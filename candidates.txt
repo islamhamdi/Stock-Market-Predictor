@@ -24,7 +24,6 @@ $GE
 $GILD
 $GLD
 $GLUU
-$GOOG
 $GRPN
 $GS
 $GTAT
@@ -60,7 +59,6 @@ $RNN
 $RXII
 $SCTY
 $SLW
-$SPX
 $SPY
 $TSLA
 $TWTR

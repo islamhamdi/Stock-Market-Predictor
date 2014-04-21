@@ -228,14 +228,9 @@ public class Main {
 		Workbook w;
 		w = Workbook.getWorkbook(inputWorkbook);
 		Sheet sheet = w.getSheet(0);
-		for (int i = 1; i < sheet.getRows(); i++) {
-			Cell cell = sheet.getCell(0, i);
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			String s = cell.getContents();
-			Date from = sdf.parse(s);
-			SimpleDateFormat sdf2 = new SimpleDateFormat("dd-MM-yyyy");
-			hs.add(sdf2.format(from));
-		}
+		for (int i = 1; i < sheet.getRows(); i++)
+			hs.add(sheet.getCell(0, i).getContents());
+		w.close();
 		return hs;
 	}
 
@@ -250,7 +245,9 @@ public class Main {
 	}
 
 	public static HashMap<String, VOL_PR> price_volume_table(String CompanyName)
-			throws IOException, ParseException {
+
+	throws IOException, ParseException {
+
 		HashMap<String, VOL_PR> output = new HashMap<>();
 		File inputWorkbook = new File(Global.historyPath + CompanyName + ".xls");
 		Workbook w;
@@ -262,18 +259,17 @@ public class Main {
 			for (int i = 1; i < sheet.getRows(); i++) {
 				Cell cell = sheet.getCell(0, i);
 				String day = cell.getContents();
-				Date date = Global.sdf2.parse(day);
-				day = Global.sdf.format(date);
 				String volume = sheet.getCell(5, i).getContents();
 				String price = sheet.getCell(6, i).getContents();
 				double v = Double.parseDouble(volume);
 				double p = Double.parseDouble(price);
 				output.put(day, new VOL_PR(v, p));
 			}
+			w.close();
+
 		} catch (BiffException e) {
 			e.printStackTrace();
 		}
-
 		return output;
 	}
 

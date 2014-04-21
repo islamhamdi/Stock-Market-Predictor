@@ -40,7 +40,7 @@ public class YahooFinanceDownloader {
 		fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
 		fos.close();
 
-		File file = new File(history + symbol + ".xls");
+		File file = new File(history + "$" + symbol + ".xls");
 		WritableWorkbook workbook = Workbook.createWorkbook(file);
 		workbook.createSheet("Twitter", 0);
 		sheet = workbook.getSheet(0);
@@ -55,9 +55,11 @@ public class YahooFinanceDownloader {
 		while (scanner.hasNext()) {
 			row++;
 			String in = scanner.nextLine();
-			System.out.println(in);
 			s = in.split(",");
-			addLabel(0, row, s[0]);
+			String[] day = s[0].split("-");
+			String cur = day[2] + "-" + day[1] + "-" + day[0];
+			System.out.println("cur= " + cur + " , " + in);
+			addLabel(0, row, cur);
 			for (int i = 1; i < s.length; i++) {
 				addNumber(i, row, Double.parseDouble(s[i]));
 			}
@@ -79,13 +81,12 @@ public class YahooFinanceDownloader {
 	}
 
 	public static void main(String[] args) throws Exception {
-		// Scanner sc = new Scanner(new File("candidates.txt"));
+		Scanner sc = new Scanner(new File("candidates.txt"));
 
-		// while (sc.hasNext()) {
-		// String Company = sc.nextLine();
-		// downloadFile(Company.substring(1));
-		// }
-		downloadFile("GOOG");
-		// sc.close();
+		while (sc.hasNext()) {
+			String Company = sc.nextLine();
+			downloadFile(Company.substring(1));
+		}
+		sc.close();
 	}
 }
