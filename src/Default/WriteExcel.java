@@ -53,7 +53,7 @@ public class WriteExcel {
 	private int lag_var = Global.lag_var;
 
 	HashMap<String, VOL_PR> volume_price_table;
-
+	
 	public void passFeatures(String[] features) throws IOException {
 		this.features = features;
 	}
@@ -64,8 +64,10 @@ public class WriteExcel {
 		this.CompanyName = CompanyName;
 	}
 
+	File file;
+
 	public void createExcel() throws Exception {
-		File file = new File(path);
+		file = new File(path);
 		workbook = Workbook.createWorkbook(file);
 
 		for (int i = 0; i < Global.sheets.length; i++)
@@ -82,23 +84,25 @@ public class WriteExcel {
 	/*
 	 * add dummy days at start of sheet with no features
 	 */
+	double v[] = new double[0];
+	Date temp;
+
 	private void adddummyDays() throws Exception {
 		String Start = Global.startDate;
 		Date date = Global.sdf.parse(Start);
-		double v[] = new double[0];
 		int cnt = 0, i;
 		for (i = 1; i < 20; i++) {
-			Date d = new Date(date.getTime() - TimeUnit.DAYS.toMillis(i));
-			if (volume_price_table.containsKey(Global.sdf.format(d))) {
+			temp = new Date(date.getTime() - TimeUnit.DAYS.toMillis(i));
+			if (volume_price_table.containsKey(Global.sdf.format(temp))) {
 				cnt++;
 				if (cnt == lag_var)
 					break;
 			}
 		}
 		for (; i > 0; i--) {
-			Date d = new Date(date.getTime() - TimeUnit.DAYS.toMillis(i));
-			if (volume_price_table.containsKey(Global.sdf.format(d)))
-				addNewDay(Global.sdf.format(d), v, true);
+			temp = new Date(date.getTime() - TimeUnit.DAYS.toMillis(i));
+			if (volume_price_table.containsKey(Global.sdf.format(temp)))
+				addNewDay(Global.sdf.format(temp), v, true);
 		}
 
 	}
@@ -112,8 +116,6 @@ public class WriteExcel {
 		int size = getRowsCnt();
 		String lastDay = sheet.getCell(0, size - 1).getContents();
 		Date date = Global.sdf.parse(lastDay);
-		double v[] = new double[0];
-
 		int cnt = 0, i;
 		for (i = 1; i < 20; i++) {
 			Date d = new Date(date.getTime() + TimeUnit.DAYS.toMillis(i));
@@ -129,7 +131,7 @@ public class WriteExcel {
 
 	public void initializeExcelSheet(int sheetNum) throws IOException,
 			WriteException, BiffException {
-		File file = new File(path);
+		file = new File(path);
 		Workbook myWorkbook = Workbook.getWorkbook(file);
 		workbook = Workbook.createWorkbook(file, myWorkbook);
 		sheet = workbook.getSheet(sheetNum);
@@ -190,23 +192,29 @@ public class WriteExcel {
 		workbook.close();
 	}
 
+	StringBuffer buf = new StringBuffer();
+	Formula formula;
+
 	void calcCorrel(int col, int row, String ch1, String ch2, int start, int end)
 			throws WriteException {
+		buf.setLength(0);
 		WritableCellFormat cellFormat = new WritableCellFormat();
+
 		cellFormat.setBorder(Border.ALL, BorderLineStyle.THIN);
-		StringBuffer buf = new StringBuffer();
 		String s1 = ch1 + "" + start + ":" + ch1 + "" + end;
 		String s2 = ch2 + "" + start + ":" + ch2 + "" + end;
 		buf.append("CORREL(" + s1 + "," + s2 + ")");
 
-		Formula f = new Formula(col, row, buf.toString(), cellFormat);
+		formula = new Formula(col, row, buf.toString(), cellFormat);
 
-		sheet.addCell(f);
+		sheet.addCell(formula);
 	}
+
 
 	private void addCaption(int column, int row, String s)
 			throws RowsExceededException, WriteException {
 		WritableCellFormat cellFormat = new WritableCellFormat();
+
 		cellFormat.setWrap(true);
 		cellFormat.setBorder(Border.ALL, BorderLineStyle.THIN);
 		cellFormat.setBackground(Colour.GRAY_25);
@@ -225,6 +233,7 @@ public class WriteExcel {
 	private void addLabel(int column, int row, String s) throws WriteException,
 			RowsExceededException {
 		WritableCellFormat cellFormat = new WritableCellFormat();
+
 		cellFormat.setBorder(Border.ALL, BorderLineStyle.THIN);
 		cellFormat.setWrap(true);
 		sheet.addCell(new Label(column, row, s, cellFormat));
@@ -318,51 +327,55 @@ public class WriteExcel {
 				addLabel(column, r, "");
 	}
 
+	double[][] normTable;
+	double max[];
+	double min[];
+
 	public void drawNormalizedTable() throws Exception {
 
 		int raw_n = getRowsCnt() - lag_var;
 		int width = Global.features_num + 1;
 
-		double[][] d = new double[raw_n][width];
-		double max[] = new double[width];
-		double min[] = new double[width];
+		normTable = new double[raw_n][width];
+		max = new double[width];
+		min = new double[width];
 
 		for (int col = 1; col < width; col++) {
 			for (int raw = lag_var + 1; raw < raw_n; raw++) {
 				String s = sheet.getCell(col, raw).getContents();
-				d[raw][col] = Double.parseDouble(s);
-
-				max[col] = Math.max(max[col], d[raw][col]);
-				min[col] = Math.min(min[col], d[raw][col]);
+				normTable[raw][col] = Double.parseDouble(s);
+				max[col] = Math.max(max[col], normTable[raw][col]);
+				min[col] = Math.min(min[col], normTable[raw][col]);
 			}
 		}
 
 		for (int col = 1; col < width; col++)
 			for (int raw = lag_var + 1; raw < raw_n; raw++) {
-				d[raw][col] = (d[raw][col] - min[col]) / (max[col] - min[col]);
+				normTable[raw][col] = (normTable[raw][col] - min[col])
+						/ (max[col] - min[col]);
 			}
 
 		int start_col = Global.start_of_norm_table;
-
-		ArrayList<ArrayList<Double>> ar = new ArrayList<>();
-		for (int i = 0; i < d.length; i++) {
-			ar.add(new ArrayList<Double>());
-			for (int j = 1; j < d[0].length; j++)
-				for (int j2 = j + 1; j2 < d[0].length; j2++)
-					ar.get(i).add(d[i][j] + d[i][j2]);
+		
+		ArrayList<ArrayList<Double>> temp = new ArrayList<>();
+		for (int i = 0; i < normTable.length; i++) {
+			temp.add(new ArrayList<Double>());
+			for (int j = 1; j < normTable[0].length; j++)
+				for (int j2 = j + 1; j2 < normTable[0].length; j2++)
+					temp.get(i).add(normTable[i][j] + normTable[i][j2]);
 		}
 
 		for (int col = start_col; col < max.length + start_col; col++)
 			for (int raw = lag_var + 1; raw < raw_n; raw++)
 				if (col - start_col > 0)
-					addNumber(col, raw, d[raw][col - start_col]);
+					addNumber(col, raw, normTable[raw][col - start_col]);
 
 		start_col = Global.start_of_norm_table + Global.features_num + 2;
 
-		int size = ar.get(1).size();
+		int size = temp.get(1).size();
 		for (int col = start_col; col < size + start_col; col++) {
 			for (int raw = lag_var + 1; raw < raw_n; raw++) {
-				double a = ar.get(raw).get(col - start_col);
+				double a = temp.get(raw).get(col - start_col);
 				addNumber(col, raw, a);
 			}
 		}

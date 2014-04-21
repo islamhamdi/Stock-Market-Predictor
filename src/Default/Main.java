@@ -29,7 +29,7 @@ public class Main {
 		currAvailableDays = getAvailableDays("$AAPL");
 
 		// 0 mean Twitter- 1 mean StockTwits- Data -2 Combined
-		Global.files_to_run = Global.sheet_num[0];
+		Global.files_to_run = Global.sheet_num[2];
 
 		// preprocessUrlExpansion();
 		if (Global.files_to_run == Global.sheet_num[0]) {
@@ -58,6 +58,7 @@ public class Main {
 		HashSet<String> avCompanies = getAvailableCompanies();
 
 		set_price_vol_columns();
+		myComp[] f;
 		for (int i = 0; i < folders.length; i++) {
 			String folderName = folders[i].getName();
 
@@ -65,7 +66,7 @@ public class Main {
 				System.out.println("____" + folderName + "_____");
 
 				openExcelWriter(folderName);
-				myComp[] f = getFileList(folderName);
+				f = getFileList(folderName);
 
 				int start = excel.getRowsCnt() - Global.lag_var - 1;
 
