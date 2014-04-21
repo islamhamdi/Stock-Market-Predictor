@@ -62,6 +62,10 @@ public class ActivityFeatures {
 		RTU = rTU;
 	}
 
+	public int getTID() {
+		return TID;
+	}
+
 	public void setTID(int tID) {
 		TID = tID;
 	}

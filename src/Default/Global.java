@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Global {
+	public static String userName = "islamhamdi";
 
 	public static int start_row_t1 = 55;
 	public static int start_row_t2 = 75;
@@ -12,41 +13,55 @@ public class Global {
 	public static int start_col_t1 = 1;
 	public static int start_col_t2 = 12;
 
+	public static int[] sheet_num = { 0, 1, 2, 3, 4, 5, 6 };
+
 	public static String[] sheets = { "Twitter", "StockTwits", "Combined Data",
 			"Positive-Twitter", "Negative-Twitter", "Positive-StockTwits",
 			"Negative-StockTwits" };
 
-	public static int[] sheet_num = { 0, 1, 2, 3, 4, 5, 6 };
+	public static String[] dataPaths = {
+			// Twitter Data Path
+			"/home/" + userName + "/Dropbox/Stock Market Daily Data/Twitter",
+			// StockTwits Data Path
+			"/home/" + userName + "/Dropbox/Stock Market Daily Data/StockTwits",
+			// Combined Data Path
+			"/home/" + userName + "/Dropbox/Stock Market Daily Data/combined",
+			// Twitter Positive Data Path
+			"/home/"
+					+ userName
+					+ "/Dropbox/Stock Market Daily Data/Sentiment-Twits/Twitter/positive",
+			// Twitter Negative Data Path
+			"/home/"
+					+ userName
+					+ "/Dropbox/Stock Market Daily Data/Sentiment-Twits/Twitter/negative",
+			// StockTwits Positive Data Path
+			"/home/"
+					+ userName
+					+ "/Dropbox/Stock Market Daily Data/Sentiment-Twits/StockTwits/positive",
+			// StockTwits Negative Data Path
+			"/home/"
+					+ userName
+					+ "/Dropbox/Stock Market Daily Data/Sentiment-Twits/StockTwits/negative", };
 
-	// static String twitterDataPath =
-	// "/home/islamhamdi/Desktop/TwitterStockData";
-	// static String stockTwitDataPath =
-	// "/home/islamhamdi/Desktop/StockTwitsData";
-	// static String twitterDataExpandedPath =
-	// "/home/islamhamdi/Desktop/TwitterStockDataExpanded";
-	// static String stockTwitDataExpandedPath =
-	// "/home/islamhamdi/Desktop/StockTwitsDataExpanded";
-	// static String combinedDataPath = "/home/islamhamdi/Desktop/CombinedData";
+	// Statistics + history prices paths
+	static String StatFolderPath = "/home/" + userName
+			+ "/Dropbox/Stock Market Daily Data/statistics";
 	// static String StatFolderPath = "Statistics";
+	public static String historyPath = "/home/" + userName
+			+ "/Dropbox/Stock Market Daily Data/historical prices/";
 	// public static String historyPath =
-	// "/home/islamhamdi/Dropbox/Stock Market Daily Data/historical prices/";
-	// static String sentimentTwitterPath =
-	// "/home/islamhamdi/Dropbox/Stock Market Daily Data/Sentiment-Twits/Twitter";
-	// static String sentimentStockTwitPath =
-	// "/home/islamhamdi/Dropbox/Stock Market Daily Data/Sentiment-Twits/StockTwits";
+	// "/home/islamhamdi/Desktop/HistoryPath/";
+
+	// Sentiment Paths
+	static String sentimentTwitterPath = "/home/" + userName
+			+ "/Dropbox/Stock Market Daily Data/Sentiment-Twits/Twitter";
+	static String sentimentStockTwitPath = "/home/" + userName
+			+ "/Dropbox/Stock Market Daily Data/Sentiment-Twits/StockTwits";
 
 	// set 0 for twitter 1 for stockTwits
 	static int files_to_run;
 
 	static String startDate = "20-2-2014";
-
-	static String combinedDataPath = "/home/mohamed/Dropbox/Stock Market Daily Data/Combined";
-	static String twitterDataPath = "/home/mohamed/Dropbox/Stock Market Daily Data/Twitter";
-	static String stockTwitDataPath = "/home/mohamed/Dropbox/Stock Market Daily Data/StockTwits";
-	static String StatFolderPath = "/home/mohamed/Dropbox/Stock Market Daily Data/statistics";
-	public static String historyPath = "/home/mohamed/Dropbox/Stock Market Daily Data/historical prices/";
-	static String sentimentTwitterPath = "/home/mohamed/Dropbox/Stock Market Daily Data/Sentiment-Twits/Twitter";
-	static String sentimentStockTwitPath = "/home/mohamed/Dropbox/Stock Market Daily Data/Sentiment-Twits/StockTwits";
 
 	static int lag_var = 3;
 	static int features_num = 16;
@@ -66,7 +81,6 @@ public class Global {
 	static String[] price_cols = new String[2 * lag_var + 1];
 	static String[] volume_cols = new String[2 * lag_var + 1];
 
-	
 	public final static int THREAD_COUNT = 500;
 
 	static boolean areEquals(String price_day, String day2)
@@ -85,7 +99,7 @@ public class Global {
 	public static String companiesFolder = "Serialized Data";
 	public static String data = "data";
 	public static String status = "Tweet";
-	
+
 	static String convert(int a) {
 		int k = 1;
 		while (a >= k) {

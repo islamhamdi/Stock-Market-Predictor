@@ -26,23 +26,15 @@ public class Main {
 
 	public static void main(String[] args) throws Exception, WriteException {
 
-		currAvailableDays = getAvailableDays("$AAPL");
+		currAvailableDays = getAvailableDays("$BBRY");
 
-		// 0 mean Twitter- 1 mean StockTwits- Data -2 Combined
-		Global.files_to_run = Global.sheet_num[2];
+		// 0 Twitter - 1 StockTwits - 2 Combined - 3 PosTwitter - 4 NegTwitter -
+		// 5 PosStockTwit - 6 NegStockTwit
+		Global.files_to_run = Global.sheet_num[5];
 
 		// preprocessUrlExpansion();
-		if (Global.files_to_run == Global.sheet_num[0]) {
-			// path = Global.twitterDataExpandedPath;
-			path = Global.twitterDataPath;
-			sheetNum = 0;
-		} else if (Global.files_to_run == Global.sheet_num[1]) {
-			path = Global.stockTwitDataPath;
-			sheetNum = 1;
-		} else {// combined
-			path = Global.combinedDataPath;
-			sheetNum = 2;
-		}
+		path = Global.dataPaths[Global.files_to_run];
+		sheetNum = Global.files_to_run;
 
 		File statDir = new File(statPath);
 		if (!statDir.exists())
@@ -129,13 +121,13 @@ public class Main {
 	}
 
 	private static void preprocessUrlExpansion() throws InterruptedException {
-		String sourcePath, destPath = null;
+		String sourcePath = null, destPath = null;
 
 		if (Global.files_to_run == Global.sheet_num[0]) {
-			sourcePath = Global.twitterDataPath;
+			// sourcePath = Global.twitterDataPath;
 			// destPath = Global.twitterDataExpandedPath;
 		} else {
-			sourcePath = Global.stockTwitDataPath;
+			// sourcePath = Global.stockTwitDataPath;
 			// destPath = Global.stockTwitDataExpandedPath;
 		}
 

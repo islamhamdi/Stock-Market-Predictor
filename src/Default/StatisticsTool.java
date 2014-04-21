@@ -57,7 +57,6 @@ public class StatisticsTool {
 	private double[] featureValues;
 	private String curCompanyName;
 	private String curFileName;
-	private int curStatusSource;
 
 	private Parser streamer;
 	private Graph graph;
@@ -98,7 +97,6 @@ public class StatisticsTool {
 	void parseData() throws IOException {
 
 		Status curTweet;
-		curStatusSource = Global.files_to_run;
 		while ((curTweet = streamer.getNextStatus()) != null) {
 
 			// TWEET Node
@@ -114,7 +112,7 @@ public class StatisticsTool {
 			if (curTweet.isRetweet()) {
 
 				// Perform original tweets check on twitter data only
-				if (curStatusSource == Global.sheet_num[0]) {
+				if (Global.files_to_run == Global.sheet_num[0]) {
 					// Check for original Retweeted Status
 					Long originalTweetId = curTweet.getRetweetedStatus()
 							.getId();
@@ -308,7 +306,8 @@ public class StatisticsTool {
 	void addSimilarityNodes() {
 
 		// add similarity nodes only for stockTwits data
-		if (curStatusSource != Global.sheet_num[1])
+		if (!(Global.files_to_run == Global.sheet_num[1]
+				|| Global.files_to_run == Global.sheet_num[5] || Global.files_to_run == Global.sheet_num[6]))
 			return;
 
 		boolean[] visited = new boolean[nodesList.size()];
@@ -390,18 +389,24 @@ public class StatisticsTool {
 				Global.sentimentStockTwitPath };
 
 		int startIndex = 0, loopCounter = 0;
-		if (curStatusSource == Global.sheet_num[0]) {// TWITTER
+		if (Global.files_to_run == Global.sheet_num[0]) {// TWITTER
 			startIndex = 0;
 			loopCounter = 1;
-		} else if (curStatusSource == Global.sheet_num[1]) {// STOCK TWITS
+		} else if (Global.files_to_run == Global.sheet_num[1]) {// STOCK TWITS
 			startIndex = 1;
 			loopCounter = 2;
-		} else if (curStatusSource == Global.sheet_num[2]) {// COMBINED
+		} else if (Global.files_to_run == Global.sheet_num[2]) {// COMBINED
 			startIndex = 0;
 			loopCounter = 2;
 		} else {
-			throw new Exception(
-					"Twitter/StockTwits/Combined data are only supported!");
+			// System.err
+			// .println("Twitter/StockTwits/Combined data are only sentiment supported!");
+			// System.err
+			// .println("Setting sentiment features to number of tweets");
+			activityFeatures.setPOS(activityFeatures.getTID());
+			activityFeatures.setNEG(activityFeatures.getTID());
+			activityFeatures.setPOS_NEG(activityFeatures.getTID());
+			return;
 		}
 
 		for (int i = startIndex; i < loopCounter; i++) {
@@ -424,7 +429,7 @@ public class StatisticsTool {
 				negParser.initializeParser();
 				negTweets = negParser.countNumberOfStatus();
 			}
-			
+
 			activityFeatures.addToPOS(posTweets);
 			activityFeatures.addToNEG(negTweets);
 			activityFeatures.addToPOS_NEG(posTweets - negTweets);
