@@ -56,8 +56,6 @@ public class Parser {
 				this.numOfStatus++;
 			}
 		} catch (Exception e) {
-			ois.reset();
-			fin.reset();
 			fin.close();
 			ois.close();
 			// System.out.println("Number of status read = " +
@@ -70,8 +68,6 @@ public class Parser {
 		try {
 			return currentStatus = (Status) ois.readObject();
 		} catch (Exception e) {
-			ois.reset();
-			fin.reset();
 			fin.close();
 			ois.close();
 
