@@ -163,7 +163,6 @@ public class Main {
 		String statfilePath = statPath + "/" + folderName + ".xls";
 		excel.setOutputFile(statfilePath, folderName);
 		File statDir = new File(statfilePath);
-		System.out.println("LETS CREATTT");
 		HashMap<String, VOL_PR> hs = price_volume_table(folderName);
 
 		excel.set_price_vol_table(hs);
@@ -173,6 +172,7 @@ public class Main {
 		}
 		System.out.println("Created");
 		excel.initializeExcelSheet(sheetNum);
+		System.out.println("initialized");
 		long b = System.currentTimeMillis();
 
 		System.out.println("TIME>>>>>>>>>>> = " + (b - a));
@@ -280,6 +280,7 @@ public class Main {
 		} catch (BiffException e) {
 			e.printStackTrace();
 		}
+
 		return output;
 	}
 

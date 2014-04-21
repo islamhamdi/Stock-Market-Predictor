@@ -158,7 +158,6 @@ public class WriteExcel {
 
 	void addNewDay(String day, double[] val, boolean add) throws Exception {
 		VOL_PR ob = volume_price_table.get(day);
-		System.out.println(day+" "+ ob);
 
 		int row = getRowsCnt();
 		if (!add) {
@@ -321,7 +320,6 @@ public class WriteExcel {
 
 	public void drawNormalizedTable() throws Exception {
 
-		int INF = Integer.MAX_VALUE;
 		int raw_n = getRowsCnt() - lag_var;
 		int width = Global.features_num + 1;
 
@@ -332,24 +330,16 @@ public class WriteExcel {
 		for (int col = 1; col < width; col++) {
 			for (int raw = lag_var + 1; raw < raw_n; raw++) {
 				String s = sheet.getCell(col, raw).getContents();
-				if (!s.equals(""))
-					d[raw][col] = Double.parseDouble(s);
-				else {
-					System.out.println("Warninng");
-					d[raw][col] = INF;
-				}
-				if (d[raw][col] != INF) {
-					max[col] = Math.max(max[col], d[raw][col]);
-					min[col] = Math.min(min[col], d[raw][col]);
-				}
+				d[raw][col] = Double.parseDouble(s);
+
+				max[col] = Math.max(max[col], d[raw][col]);
+				min[col] = Math.min(min[col], d[raw][col]);
 			}
 		}
 
 		for (int col = 1; col < width; col++)
 			for (int raw = lag_var + 1; raw < raw_n; raw++) {
-				if (d[raw][col] != INF)
-					d[raw][col] = (d[raw][col] - min[col])
-							/ (max[col] - min[col]);
+				d[raw][col] = (d[raw][col] - min[col]) / (max[col] - min[col]);
 			}
 
 		int start_col = Global.start_of_norm_table;
@@ -364,7 +354,7 @@ public class WriteExcel {
 
 		for (int col = start_col; col < max.length + start_col; col++)
 			for (int raw = lag_var + 1; raw < raw_n; raw++)
-				if (col - start_col > 0 && d[raw][col - start_col] != INF)
+				if (col - start_col > 0)
 					addNumber(col, raw, d[raw][col - start_col]);
 
 		start_col = Global.start_of_norm_table + Global.features_num + 2;
