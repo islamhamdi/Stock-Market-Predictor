@@ -29,7 +29,7 @@ public class Main {
 		currAvailableDays = getAvailableDays("$AAPL");
 
 		// 0 mean Twitter- 1 mean StockTwits- Data -2 Combined
-		Global.files_to_run = Global.sheet_num[1];
+		Global.files_to_run = Global.sheet_num[0];
 
 		// preprocessUrlExpansion();
 		if (Global.files_to_run == Global.sheet_num[0]) {
@@ -85,6 +85,8 @@ public class Main {
 						tool.buildGraphFeatures();
 
 						double[] a = tool.getFeaturesValues();
+						if (a == null)
+							continue;
 
 						double sum = 0;
 
@@ -92,7 +94,7 @@ public class Main {
 							sum += a[k];
 						}
 
-						if (a != null || sum > 1) {
+						if (sum > 1) {
 							someThingNew = true;
 							excel.addNewDay(f[j].file.getName(), a, true);
 						}
@@ -101,7 +103,7 @@ public class Main {
 								"Make sure companies directories contain only files.");
 					}
 				}
-				System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+				System.out.println(">>>>>>>>>>>>>>>>>>>>>ms7>>>>>>>>>>>>>>");
 				excel.adddummyDaysAtEnd();
 				if (someThingNew)
 					excel.drawTables();

@@ -158,6 +158,7 @@ public class WriteExcel {
 
 	void addNewDay(String day, double[] val, boolean add) throws Exception {
 		VOL_PR ob = volume_price_table.get(day);
+		System.out.println(day+" "+ ob);
 
 		int row = getRowsCnt();
 		if (!add) {
