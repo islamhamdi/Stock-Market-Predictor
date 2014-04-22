@@ -30,7 +30,7 @@ public class Main {
 
 		// 0 Twitter - 1 StockTwits - 2 Combined - 3 PosTwitter - 4 NegTwitter -
 		// 5 PosStockTwit - 6 NegStockTwit
-		Global.files_to_run = Global.sheet_num[5];
+		Global.files_to_run = Global.sheet_num[4];
 
 		// preprocessUrlExpansion();
 		path = Global.dataPaths[Global.files_to_run];

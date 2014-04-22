@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
 
+import Default.Global;
+
 import edu.stanford.nlp.util.logging.Color;
 
 import jxl.Cell;
@@ -24,17 +26,18 @@ import jxl.write.biff.RowsExceededException;
 
 public class AVR {
 	String[] f = { "RTID", "RTU", "TID", "TSUM", "UFRN", "THTG", "TURL",
-			"UFLW", "UID", "NEG", "NEUT", "POS", "POS_NEG", "NUM_NODES",
-			"NUM_EDGES", "NUM_CMP", "MAX_DIST" };
+			"UFLW", "UID", "NEG", "POS", "POS_NEG", "NUM_NODES", "NUM_EDGES",
+			"NUM_CMP", "MAX_DIST" };
+
 	int width = 7;
-	int hight1 = 17;
-	int hight2 = 136;
+	int hight1 = f.length;
+	int hight2 = 120;
 
-	int start_raw1 = 35;
-	int start_raw2 = 57;
+	int start_raw1 = Global.start_row_t1 + 1;
+	int start_raw2 = Global.start_row_t2 + 1;
 
-	int start_col1 = 2;
-	int start_col2 = 13;
+	int start_col1 = Global.start_col_t1 + 1;
+	int start_col2 = Global.start_col_t2 + 1;
 
 	double buff_price[][] = new double[hight1][width];
 	double buff_volume[][] = new double[hight1][width];
@@ -45,18 +48,22 @@ public class AVR {
 	WritableWorkbook workbook;
 	WritableSheet excelSheet;
 
-	String inputFolder = "/home/mohamed/Dropbox/Stock Market Daily Data/statistics/PlainStatistics";
+	String inputFolder = "/home/mohamed/Dropbox/Stock Market Daily Data/statistics/plain";
 
 	public static void main(String[] args) throws Exception {
-		AVR avr = new AVR("avr.xls");
 
-		for (int i = 0; i < 2; i++)
+		AVR avr = new AVR("avr.xls");
+		for (int i = 0; i < 7; i++)
 			avr.read(i);
 
 		avr.close();
 	}
 
 	public void read(int sheetNum) throws Exception {
+		// for (int i = 0; i < hight1; i++)
+		// for (int j = i + 1; j < hight1; j++)
+		// hight2++;
+
 		excelSheet = workbook.getSheet(sheetNum);
 		excelSheet.getSettings().setDefaultColumnWidth(15);
 
@@ -74,19 +81,22 @@ public class AVR {
 				// Get the first sheet
 				Sheet sheet = w.getSheet(sheetNum);
 
-				add_to_buff(sheet, buff_price, start_raw1, start_col1, width,
+				// vol
+				add_to_buff(sheet, buff_volume, start_raw1, start_col1, width,
 						hight1, files.length);
 
-				add_to_buff(sheet, buff_volume, start_raw1, start_col2, width,
+				// price
+				add_to_buff(sheet, buff_price, start_raw1, start_col2, width,
 						hight1, files.length);
 
 				// vol
 				add_to_buff(sheet, buff_comb_volume, start_raw2, start_col1,
 						width, hight2, files.length);
-				// price
+
+				// // price
 				add_to_buff(sheet, buff_comb_price, start_raw2, start_col2,
 						width, hight2, files.length);
-
+				w.close();
 			} catch (BiffException e) {
 				e.printStackTrace();
 			}
@@ -121,9 +131,14 @@ public class AVR {
 				Cell cell = sheet.getCell(col, row);
 				if (cell.getType() == CellType.NUMBER) {
 					double v = Double.parseDouble(cell.getContents());
-					buff[row - start_raw][col - start_col] += v;
+					int r = row - start_raw;
+					int c = col - start_col;
+					buff[r][c] += v;
 				} else {
-					throw new Exception("INVALID");
+					System.err.println(sheet.getName());
+					System.out.println(row + " ," + col);
+					System.out.println(cell.getContents());
+					// throw new Exception("INVALID");
 				}
 			}
 		}
@@ -150,18 +165,14 @@ public class AVR {
 
 		} else {
 			int index = 1;
-			for (int i = 0; i < f.length; i++) {
-				for (int j = i + 1; j < f.length; j++) {
+			for (int i = 0; i < f.length; i++)
+				for (int j = i + 1; j < f.length; j++)
 					addLabel(k, index++, f[i] + "+" + f[j]);
-				}
-			}
 
 		}
-		for (int i = 0; i < buff.length; i++) {
-			for (int j = 0; j < buff[0].length; j++) {
+		for (int i = 0; i < buff.length; i++)
+			for (int j = 0; j < buff[0].length; j++)
 				addNumber(j + k + 1, i + 1, buff[i][j]);
-			}
-		}
 
 	}
 
@@ -176,9 +187,13 @@ public class AVR {
 		wbSettings.setLocale(new Locale("en", "EN"));
 		workbook = Workbook.createWorkbook(file, wbSettings);
 
-		workbook.createSheet("Twitter", 0);
-		workbook.createSheet("StockTwits", 1);
-		// workbook.createSheet("Combined", 2);
+		String[] sheetname = { "Twitter", "StockTwits", "Combined",
+				"Positive-Twitter", "Negative-Twitter", "Positive-StockTwits",
+				"Negative-StockTwits" };
+
+		for (int i = 0; i < sheetname.length; i++)
+			workbook.createSheet(sheetname[i], i);
+
 	}
 
 	private void addNumber(int column, int row, double v)
