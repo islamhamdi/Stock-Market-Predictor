@@ -48,61 +48,35 @@ public class AVR {
 	WritableWorkbook workbook;
 	WritableSheet excelSheet;
 
-	String inputFolder = "/home/mohamed/Dropbox/Stock Market Daily Data/statistics/plain";
-
-	public static void main(String[] args) throws Exception {
-
-		AVR avr = new AVR("avr.xls");
-		for (int i = 0; i < 7; i++)
-			avr.read(i);
-
-		avr.close();
-	}
+	Workbook[] input_workbooks;
 
 	public void read(int sheetNum) throws Exception {
-		// for (int i = 0; i < hight1; i++)
-		// for (int j = i + 1; j < hight1; j++)
-		// hight2++;
 
 		excelSheet = workbook.getSheet(sheetNum);
 		excelSheet.getSettings().setDefaultColumnWidth(15);
+		int n = input_workbooks.length;
 
-		File statusDir = new File(inputFolder);
-		if (!statusDir.exists())
-			throw new Exception("input folder doesnt exist");
+		for (int k = 0; k < n; k++) {
+			// Get the first sheet
+			Sheet sheet = input_workbooks[k].getSheet(sheetNum);
 
-		File[] files = statusDir.listFiles();
-		for (int k = 0; k < files.length; k++) {
-			File inputWorkbook = new File(files[k].getAbsolutePath());
-			System.out.println(files[k].getName());
-			Workbook w;
-			try {
-				w = Workbook.getWorkbook(inputWorkbook);
-				// Get the first sheet
-				Sheet sheet = w.getSheet(sheetNum);
+			// vol
+			add_to_buff(sheet, buff_volume, start_raw1, start_col1, width,
+					hight1, n);
 
-				// vol
-				add_to_buff(sheet, buff_volume, start_raw1, start_col1, width,
-						hight1, files.length);
+			// price
+			add_to_buff(sheet, buff_price, start_raw1, start_col2, width,
+					hight1, n);
 
-				// price
-				add_to_buff(sheet, buff_price, start_raw1, start_col2, width,
-						hight1, files.length);
+			// vol
+			add_to_buff(sheet, buff_comb_volume, start_raw2, start_col1, width,
+					hight2, n);
 
-				// vol
-				add_to_buff(sheet, buff_comb_volume, start_raw2, start_col1,
-						width, hight2, files.length);
-
-				// // price
-				add_to_buff(sheet, buff_comb_price, start_raw2, start_col2,
-						width, hight2, files.length);
-				w.close();
-			} catch (BiffException e) {
-				e.printStackTrace();
-			}
+			// // price
+			add_to_buff(sheet, buff_comb_price, start_raw2, start_col2, width,
+					hight2, n);
 		}
 
-		int n = files.length;
 		norm(buff_comb_price, n);
 		norm(buff_comb_volume, n);
 		norm(buff_price, n);
@@ -116,7 +90,6 @@ public class AVR {
 	}
 
 	private void norm(double[][] buff, int n) {
-
 		for (int i = 0; i < buff.length; i++) {
 			for (int j = 0; j < buff[0].length; j++) {
 				buff[i][j] /= n;
@@ -176,12 +149,13 @@ public class AVR {
 
 	}
 
-	private void close() throws IOException, WriteException {
+	public void close() throws IOException, WriteException {
 		workbook.write();
 		workbook.close();
 	}
 
-	public AVR(String name) throws WriteException, IOException {
+	public AVR(Workbook[] workbooks, String name) throws WriteException,
+			IOException {
 		File file = new File(name);
 		WorkbookSettings wbSettings = new WorkbookSettings();
 		wbSettings.setLocale(new Locale("en", "EN"));
@@ -193,6 +167,8 @@ public class AVR {
 
 		for (int i = 0; i < sheetname.length; i++)
 			workbook.createSheet(sheetname[i], i);
+
+		input_workbooks = workbooks;
 
 	}
 
