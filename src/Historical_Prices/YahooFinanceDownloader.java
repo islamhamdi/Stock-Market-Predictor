@@ -24,7 +24,9 @@ import Default.Global;
 
 public class YahooFinanceDownloader {
 
-	static String history = Global.historyPath;
+	//TODO
+	static String history = Global.historyPath1;
+	
 	static WritableSheet sheet;
 
 	public static void downloadFile(String symbol) throws Exception {

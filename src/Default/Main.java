@@ -24,9 +24,11 @@ public class Main {
 	static WriteExcel excel;
 	static HashSet<String> currAvailableDays;
 
+	static String historyPath = Global.historyPath1;
+
 	public static void main(String[] args) throws Exception, WriteException {
 
-		currAvailableDays = getAvailableDays("$BBRY");
+		currAvailableDays = getAvailableDays("$AAPL");
 
 		// 0 Twitter - 1 StockTwits - 2 Combined - 3 PosTwitter - 4 NegTwitter -
 		// 5 PosStockTwit - 6 NegStockTwit
@@ -215,7 +217,7 @@ public class Main {
 	public static HashSet<String> getAvailableDays(String CompanyName)
 			throws Exception {
 		HashSet<String> hs = new HashSet<String>();
-		File inputWorkbook = new File(Global.historyPath + CompanyName + ".xls");
+		File inputWorkbook = new File(historyPath + CompanyName + ".xls");
 		Workbook w;
 		w = Workbook.getWorkbook(inputWorkbook);
 		Sheet sheet = w.getSheet(0);
@@ -226,7 +228,7 @@ public class Main {
 	}
 
 	static HashSet<String> getAvailableCompanies() {
-		File dir = new File(Global.historyPath);
+		File dir = new File(historyPath);
 		File[] files = dir.listFiles();
 		HashSet<String> hs = new HashSet<>();
 		for (int i = 0; i < files.length; i++) {
@@ -240,7 +242,7 @@ public class Main {
 	throws IOException, ParseException {
 
 		HashMap<String, VOL_PR> output = new HashMap<>();
-		File inputWorkbook = new File(Global.historyPath + CompanyName + ".xls");
+		File inputWorkbook = new File(historyPath + CompanyName + ".xls");
 		Workbook w;
 		try {
 			w = Workbook.getWorkbook(inputWorkbook);

@@ -58,11 +58,12 @@ public class Global {
 	public static String StatFolderPath = "/home/" + userName
 			+ "/Dropbox/Stock Market Daily Data/statistics";
 	// static String StatFolderPath = "Statistics";
-	public static String historyPath = "/home/" + userName
-			+ "/Dropbox/Stock Market Daily Data/historical prices/";
-	// public static String historyPath =
-	// "/home/islamhamdi/Desktop/HistoryPath/";
-
+	public static String historyPath1 = "/home/" + userName
+			+ "/Dropbox/Stock Market Daily Data/historical prices1/";
+	
+	public static String historyPath2 = "/home/" + userName
+			+ "/Dropbox/Stock Market Daily Data/historical prices2/";
+	
 	static String sentimentTwitterPath = "/home/" + userName
 			+ "/Dropbox/Stock Market Daily Data/Sentiment-Twits/Twitter";
 	static String sentimentStockTwitPath = "/home/" + userName
