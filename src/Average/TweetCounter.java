@@ -59,7 +59,7 @@ public class TweetCounter {
 				is.close();
 			}
 			
-			System.out.println(folders[i].getName() + " " + counter);
+			System.out.println( counter);
 			// if (counter > 2000)
 //			strings.add(folders[i].getName() + " " + counter);
 

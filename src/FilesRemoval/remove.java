@@ -8,14 +8,15 @@ import java.util.Arrays;
 
 import twitter4j.Status;
 import Default.Global;
+import StockTwitsCreator.MyStatus;
 
 public class remove {
 	public static void main(String[] args) throws IOException,
 			ClassNotFoundException {
 		// 0 Twitter - 1 StockTwits - 2 Combined - 3 PosTwitter - 4 NegTwitter -
 		// 5 PosStockTwit - 6 NegStockTwit
-		for (int v = 0; v <= 6; v++) {
-			File folder = new File(Global.dataPaths[v]);
+//		for (int v = 0; v <= 6; v++) {
+			File folder = new File(Global.dataPaths[6]);
 			File[] folders = folder.listFiles();
 			// Arrays.sort(folders);
 
@@ -30,9 +31,9 @@ public class remove {
 					FileInputStream fr = new FileInputStream(files[c]);
 					ObjectInputStream is = new ObjectInputStream(fr);
 
-					Status s = null;
+					MyStatus s = null;
 					try {
-						s = (Status) is.readObject();
+						s = (MyStatus) is.readObject();
 					} catch (Exception e) {
 						// continue;
 					}
@@ -40,12 +41,13 @@ public class remove {
 					while (s != null) {
 						k++;
 						try {
-							s = (Status) is.readObject();
+							s = (MyStatus) is.readObject();
 						} catch (Exception e) {
 							break;
 						}
 					}
 
+//					System.out.println(k);
 					counter += k;
 					fr.close();
 					is.close();
@@ -55,7 +57,7 @@ public class remove {
 						files[c].delete();
 					}
 
-				}
+//				}
 
 //				System.out.println(folders[i].getName() + " " + counter);
 				// if (counter > 2000)

@@ -53,7 +53,7 @@ public class WriteExcel {
 	private int lag_var = Global.lag_var;
 
 	HashMap<String, VOL_PR> volume_price_table;
-	
+
 	public void passFeatures(String[] features) throws IOException {
 		this.features = features;
 	}
@@ -66,7 +66,7 @@ public class WriteExcel {
 
 	File file;
 
-	public void createExcel() throws Exception {
+	public void createExcel(String start) throws Exception {
 		file = new File(path);
 		workbook = Workbook.createWorkbook(file);
 
@@ -76,7 +76,7 @@ public class WriteExcel {
 			sheet = workbook.getSheet(i);
 			sheet.getSettings().setDefaultColumnWidth(Global.COLWIDTH);
 			writeFeatures();
-			adddummyDays();
+			// adddummyDays(start);
 		}
 		writeAndClose();
 	}
@@ -87,9 +87,8 @@ public class WriteExcel {
 	double v[] = new double[0];
 	Date temp;
 
-	private void adddummyDays() throws Exception {
-		String Start = Global.startDate;
-		Date date = Global.sdf.parse(Start);
+	private void adddummyDays(String start) throws Exception {
+		Date date = Global.sdf.parse(start);
 		int cnt = 0, i;
 		for (i = 1; i < 20; i++) {
 			temp = new Date(date.getTime() - TimeUnit.DAYS.toMillis(i));
@@ -129,12 +128,17 @@ public class WriteExcel {
 		}
 	}
 
-	public void initializeExcelSheet(int sheetNum) throws IOException,
-			WriteException, BiffException {
+	public void initializeExcelSheet(int sheetNum, String start)
+			throws Exception {
 		file = new File(path);
 		Workbook myWorkbook = Workbook.getWorkbook(file);
 		workbook = Workbook.createWorkbook(file, myWorkbook);
 		sheet = workbook.getSheet(sheetNum);
+
+		int r = sheet.getRows();
+		if (r < lag_var)
+			adddummyDays(start);
+
 		myWorkbook.close();
 	}
 
@@ -210,7 +214,6 @@ public class WriteExcel {
 
 		sheet.addCell(formula);
 	}
-
 
 	private void addCaption(int column, int row, String s)
 			throws RowsExceededException, WriteException {
@@ -357,7 +360,7 @@ public class WriteExcel {
 			}
 
 		int start_col = Global.start_of_norm_table;
-		
+
 		ArrayList<ArrayList<Double>> temp = new ArrayList<>();
 		for (int i = 0; i < normTable.length; i++) {
 			temp.add(new ArrayList<Double>());

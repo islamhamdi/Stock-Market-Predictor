@@ -30,7 +30,7 @@ public class Main {
 
 		// 0 Twitter - 1 StockTwits - 2 Combined - 3 PosTwitter - 4 NegTwitter -
 		// 5 PosStockTwit - 6 NegStockTwit
-		Global.files_to_run = Global.sheet_num[6];
+		Global.files_to_run = Global.sheet_num[5];
 
 		// preprocessUrlExpansion();
 		path = Global.dataPaths[Global.files_to_run];
@@ -57,8 +57,12 @@ public class Main {
 			if (folders[i].isDirectory() && avCompanies.contains(folderName)) {
 				System.out.println("____" + folderName + "_____");
 
-				openExcelWriter(folderName);
 				f = getFileList(folderName);
+
+				if (f.length < 2)
+					continue;
+
+				openExcelWriter(folderName, f[0].file.getName());
 
 				int start = excel.getRowsCnt() - Global.lag_var - 1;
 
@@ -142,8 +146,8 @@ public class Main {
 		}
 	}
 
-	private static void openExcelWriter(String folderName) throws Exception {
-		long a = System.currentTimeMillis();
+	private static void openExcelWriter(String folderName, String start)
+			throws Exception {
 		String statfilePath = statPath + "/" + folderName + ".xls";
 		excel.setOutputFile(statfilePath, folderName);
 		File statDir = new File(statfilePath);
@@ -152,9 +156,9 @@ public class Main {
 		excel.set_price_vol_table(hs);
 
 		if (!statDir.exists()) {
-			excel.createExcel();
+			excel.createExcel(start);
 		}
-		excel.initializeExcelSheet(sheetNum);
+		excel.initializeExcelSheet(sheetNum, start);
 
 	}
 
