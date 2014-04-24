@@ -32,13 +32,15 @@ public class Main {
 
 		// 0 Twitter - 1 StockTwits - 2 Combined - 3 PosTwitter - 4 NegTwitter -
 		// 5 PosStockTwit - 6 NegStockTwit
-		Global.files_to_run = Global.sheet_num[Global.stocktwits];
+
+		Global.files_to_run = Global.sheet_num[Global.postwitter];
 
 		// preprocessUrlExpansion();
 		path = Global.dataPaths[Global.files_to_run];
 		sheetNum = Global.files_to_run;
 
 		File statDir = new File(statPath);
+		
 		if (!statDir.exists())
 			statDir.mkdir();
 
@@ -55,7 +57,6 @@ public class Main {
 		myComp[] f;
 		for (int i = 0; i < folders.length; i++) {
 			String folderName = folders[i].getName();
-
 			if (folders[i].isDirectory() && avCompanies.contains(folderName)) {
 				System.out.println("____" + folderName + "_____");
 
@@ -237,7 +238,7 @@ public class Main {
 		return hs;
 	}
 
-	public static HashMap<String, VOL_PR> price_volume_table(String CompanyName)
+	public static HashMap <String, VOL_PR> price_volume_table(String CompanyName)
 
 	throws IOException, ParseException {
 

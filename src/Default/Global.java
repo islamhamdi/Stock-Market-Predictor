@@ -29,45 +29,36 @@ public class Global {
 	public static String[] sheets = { "Twitter", "StockTwits", "Combined Data",
 			"Positive-Twitter", "Negative-Twitter", "Positive-StockTwits",
 			"Negative-StockTwits" };
+	
+	public static String globalPath = "/home/" + userName
+			+ "/Dropbox/Stock Market Daily Data";
 
 	public static String[] dataPaths = {
 			// Twitter Data Path
-			"/home/" + userName + "/Dropbox/Stock Market Daily Data/Twitter",
+			globalPath + "/Twitter",
 			// StockTwits Data Path
-			"/home/" + userName + "/Dropbox/Stock Market Daily Data/StockTwits",
+			globalPath + "/StockTwits",
 			// Combined Data Path
-			"/home/" + userName + "/Dropbox/Stock Market Daily Data/Combined",
+			globalPath + "/Combined",
 			// Twitter Positive Data Path
-			"/home/"
-					+ userName
-					+ "/Dropbox/Stock Market Daily Data/Sentiment-Twits/Twitter/positive",
+			globalPath + "/Sentiment-Twits/Twitter/positive",
 			// Twitter Negative Data Path
-			"/home/"
-					+ userName
-					+ "/Dropbox/Stock Market Daily Data/Sentiment-Twits/Twitter/negative",
+			globalPath + "/Sentiment-Twits/Twitter/negative",
 			// StockTwits Positive Data Path
-			"/home/"
-					+ userName
-					+ "/Dropbox/Stock Market Daily Data/Sentiment-Twits/StockTwits/positive",
+			globalPath + "/Sentiment-Twits/StockTwits/positive",
 			// StockTwits Negative Data Path
-			"/home/"
-					+ userName
-					+ "/Dropbox/Stock Market Daily Data/Sentiment-Twits/StockTwits/negative", };
+			globalPath + "/Sentiment-Twits/StockTwits/negative", };
 
 	// Statistics + history prices paths
-	public static String StatFolderPath = "/home/" + userName
-			+ "/Dropbox/Stock Market Daily Data/statistics";
+	public static String StatFolderPath = globalPath + "/statistics";
 	// static String StatFolderPath = "Statistics";
-	public static String historyPath1 = "/home/" + userName
-			+ "/Dropbox/Stock Market Daily Data/historical prices1/";
-	
-	public static String historyPath2 = "/home/" + userName
-			+ "/Dropbox/Stock Market Daily Data/historical prices2/";
-	
-	static String sentimentTwitterPath = "/home/" + userName
-			+ "/Dropbox/Stock Market Daily Data/Sentiment-Twits/Twitter";
-	static String sentimentStockTwitPath = "/home/" + userName
-			+ "/Dropbox/Stock Market Daily Data/Sentiment-Twits/StockTwits";
+	public static String historyPath1 = globalPath + "/historical prices1/";
+
+	public static String historyPath2 = globalPath + "/historical prices2/";
+
+	static String sentimentTwitterPath = globalPath + "/Sentiment-Twits/Twitter";
+	static String sentimentStockTwitPath = globalPath
+			+ "/Sentiment-Twits/StockTwits";
 
 	// set 0 for twitter 1 for stockTwits
 	static int files_to_run;
