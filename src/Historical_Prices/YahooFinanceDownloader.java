@@ -31,7 +31,7 @@ public class YahooFinanceDownloader {
 		URL website = new URL(
 				"http://ichart.finance.yahoo.com/table.csv?s="
 						+ symbol
-						+ "&a=01&b=01&c=2013&d=03&e=.csv%2bHistorical%2bPrices&f=sl1d1t1c1ohgv&g=d&ignore=.csv");
+						+ "&a=01&b=01&c=2014&d=03&e=.csv%2bHistorical%2bPrices&f=sl1d1t1c1ohgv&g=d&ignore=.csv");
 		ReadableByteChannel rbc = Channels.newChannel(website.openStream());
 
 		FileOutputStream fos = new FileOutputStream("YahooData/" + symbol
@@ -58,16 +58,20 @@ public class YahooFinanceDownloader {
 			s = in.split(",");
 			String[] day = s[0].split("-");
 			String cur = day[2] + "-" + day[1] + "-" + day[0];
-			System.out.println("cur= " + cur + " , " + in);
+//			System.out.println("cur= " + cur + " , " + in);
 			addLabel(0, row, cur);
 			for (int i = 1; i < s.length; i++) {
 				addNumber(i, row, Double.parseDouble(s[i]));
 			}
 		}
+
+		if (row < 20)
+			System.out.println(symbol);
+		
 		scanner.close();
 		workbook.write();
 		workbook.close();
-		System.out.println("Finish Company : " + symbol);
+//		System.out.println("Finish Company : " + symbol);
 	}
 
 	private static void addNumber(int column, int row, Double d)
@@ -81,7 +85,7 @@ public class YahooFinanceDownloader {
 	}
 
 	public static void main(String[] args) throws Exception {
-		Scanner sc = new Scanner(new File("candidates.txt"));
+		Scanner sc = new Scanner(new File("TrackingCompanies.txt"));
 
 		while (sc.hasNext()) {
 			String Company = sc.nextLine();

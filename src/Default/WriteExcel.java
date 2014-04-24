@@ -135,6 +135,7 @@ public class WriteExcel {
 		Workbook myWorkbook = Workbook.getWorkbook(file);
 		workbook = Workbook.createWorkbook(file, myWorkbook);
 		sheet = workbook.getSheet(sheetNum);
+		myWorkbook.close();
 	}
 
 	public void writeFeatures() throws WriteException {

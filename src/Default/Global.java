@@ -5,6 +5,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Global {
+
+	public static int min_tweets_perFile = 3;
+
 	public static String userName = "mohamed";
 
 	public static int start_row_t1 = 55;
@@ -25,7 +28,7 @@ public class Global {
 			// StockTwits Data Path
 			"/home/" + userName + "/Dropbox/Stock Market Daily Data/StockTwits",
 			// Combined Data Path
-			"/home/" + userName + "/Dropbox/Stock Market Daily Data/combined",
+			"/home/" + userName + "/Dropbox/Stock Market Daily Data/Combined",
 			// Twitter Positive Data Path
 			"/home/"
 					+ userName
@@ -81,7 +84,6 @@ public class Global {
 	static String[] volume_cols = new String[2 * lag_var + 1];
 
 	public final static int THREAD_COUNT = 500;
-
 
 	public static String seperated = "SeparatedData";
 	public static String idMap = "@ user-id-map";

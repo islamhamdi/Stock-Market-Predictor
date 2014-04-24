@@ -30,7 +30,7 @@ public class Main {
 
 		// 0 Twitter - 1 StockTwits - 2 Combined - 3 PosTwitter - 4 NegTwitter -
 		// 5 PosStockTwit - 6 NegStockTwit
-		Global.files_to_run = Global.sheet_num[4];
+		Global.files_to_run = Global.sheet_num[6];
 
 		// preprocessUrlExpansion();
 		path = Global.dataPaths[Global.files_to_run];
@@ -80,23 +80,14 @@ public class Main {
 						double[] a = tool.getFeaturesValues();
 						if (a == null)
 							continue;
-
-						double sum = 0;
-
-						for (int k = 0; k < a.length; k++) {
-							sum += a[k];
-						}
-
-						if (sum > 1) {
-							someThingNew = true;
-							excel.addNewDay(f[j].file.getName(), a, true);
-						}
+						someThingNew = true;
+						excel.addNewDay(f[j].file.getName(), a, true);
 					} else {
 						throw new Exception(
 								"Make sure companies directories contain only files.");
 					}
 				}
-				System.out.println(">>>>>>>>>>>>>>>>>>>>>ms7>>>>>>>>>>>>>>");
+				System.out.println(">>>>>>>>>>>>>>>>>>>>>next>>>>>>>>>>>>>>");
 				excel.adddummyDaysAtEnd();
 				if (someThingNew)
 					excel.drawTables();
@@ -163,12 +154,8 @@ public class Main {
 		if (!statDir.exists()) {
 			excel.createExcel();
 		}
-		System.out.println("Created");
 		excel.initializeExcelSheet(sheetNum);
-		System.out.println("initialized");
-		long b = System.currentTimeMillis();
 
-		System.out.println("TIME>>>>>>>>>>> = " + (b - a));
 	}
 
 	private static myComp[] getFileList(String folderName) throws Exception {
