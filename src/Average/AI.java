@@ -14,7 +14,7 @@ import jxl.Workbook;
 import jxl.read.biff.BiffException;
 
 public class AI {
-	static String inputFolder = "/media/MyData/DropBox/Dropbox/Stock Market Daily Data/statistics/plain/";
+
 	String[] sheetname = { "Twitter", "StockTwits", "Combined", "Positive-Twitter", "Negative-Twitter",
 			"Positive-StockTwits", "Negative-StockTwits" };
 	static String[] features = { "RTID", "RTU", "TID", "TSUM", "UFRN", "THTG", "TURL", "UFLW", "UID", "NEG", "POS", "POS_NEG",
@@ -36,7 +36,7 @@ public class AI {
 	}
 
 	private Company[][] readData() throws BiffException, IOException {
-		File statusDir = new File(inputFolder);
+		File statusDir = new File(Global.StatFolderPath);
 		File[] files = statusDir.listFiles();
 
 		Company[][] data = new Company[features.length][files.length];

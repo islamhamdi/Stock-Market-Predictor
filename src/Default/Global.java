@@ -6,6 +6,14 @@ import java.util.Date;
 
 public class Global {
 
+	public static final int twitter = 0;
+	public static final int stocktwits = 1;
+	public static final int combined = 2;
+	public static final int postwitter = 3;
+	public static final int negtwitter = 4;
+	public static final int posstocktwits = 5;
+	public static final int negstocktwits = 6;
+
 	public static int min_tweets_perFile = 3;
 
 	public static String userName = "mohamed";
@@ -47,7 +55,7 @@ public class Global {
 					+ "/Dropbox/Stock Market Daily Data/Sentiment-Twits/StockTwits/negative", };
 
 	// Statistics + history prices paths
-	static String StatFolderPath = "/home/" + userName
+	public static String StatFolderPath = "/home/" + userName
 			+ "/Dropbox/Stock Market Daily Data/statistics";
 	// static String StatFolderPath = "Statistics";
 	public static String historyPath = "/home/" + userName
@@ -55,7 +63,6 @@ public class Global {
 	// public static String historyPath =
 	// "/home/islamhamdi/Desktop/HistoryPath/";
 
-	// Sentiment Paths
 	static String sentimentTwitterPath = "/home/" + userName
 			+ "/Dropbox/Stock Market Daily Data/Sentiment-Twits/Twitter";
 	static String sentimentStockTwitPath = "/home/" + userName
@@ -66,7 +73,7 @@ public class Global {
 
 	static String startDate = "20-2-2014";
 
-	static int lag_var = 3;
+	public static int lag_var = 3;
 	static int features_num = 16;
 
 	static int start_of_norm_table = 45;
