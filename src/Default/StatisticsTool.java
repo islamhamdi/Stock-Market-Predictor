@@ -94,7 +94,7 @@ public class StatisticsTool {
 		graph = graphModel.getUndirectedGraph();
 	}
 
-	void parseData() throws IOException {
+	void parseData() throws Throwable {
 
 		Status curTweet;
 		while ((curTweet = streamer.getNextStatus()) != null) {
@@ -142,6 +142,7 @@ public class StatisticsTool {
 			// Handle sentiment analsyis of the tweet
 			// handleSentimentAnalysis(curTweet.getText());
 		}
+		finalize();
 	}
 
 	private void handleSentimentAnalysis(String text) {

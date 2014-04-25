@@ -26,7 +26,7 @@ public class Main {
 
 	static String historyPath = Global.historyPath1;
 
-	public static void main(String[] args) throws Exception, WriteException {
+	public static void main(String[] args) throws Throwable {
 
 		currAvailableDays = getAvailableDays("$AAPL");
 
@@ -40,7 +40,7 @@ public class Main {
 		sheetNum = Global.files_to_run;
 
 		File statDir = new File(statPath);
-		
+
 		if (!statDir.exists())
 			statDir.mkdir();
 
@@ -238,7 +238,7 @@ public class Main {
 		return hs;
 	}
 
-	public static HashMap <String, VOL_PR> price_volume_table(String CompanyName)
+	public static HashMap<String, VOL_PR> price_volume_table(String CompanyName)
 
 	throws IOException, ParseException {
 
