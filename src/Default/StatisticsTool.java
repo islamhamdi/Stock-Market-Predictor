@@ -65,8 +65,10 @@ public class StatisticsTool {
 	private GraphFeatures graphFeatures;
 	private AttributeModel attributeModel;
 
-	public StatisticsTool(String curCompanyName, String curFileName,
-			String filePath) throws IOException {
+	public StatisticsTool() throws IOException {
+		this.nodeCounter = this.edgeCounter = this.totalFollowersCounter = this.totalFriendsCounter = 0;
+		this.featureValues = null;
+
 		this.nodeMap = new TreeMap<Long, NodeIdentifier>();
 		this.hashtagsMap = new TreeMap<String, NodeIdentifier>();
 		this.urlsMap = new TreeMap<String, NodeIdentifier>();
@@ -74,14 +76,6 @@ public class StatisticsTool {
 		this.nodesList = new ArrayList<NodeIdentifier>();
 		this.graphFeatures = new GraphFeatures();
 		this.activityFeatures = new ActivityFeatures();
-		this.nodeCounter = this.edgeCounter = this.totalFollowersCounter = this.totalFriendsCounter = 0;
-		this.featureValues = null;
-		this.curCompanyName = curCompanyName;
-		this.curFileName = curFileName;
-
-		// initialize parser
-		this.streamer = new Parser(filePath);
-		this.streamer.initializeParser();
 
 		ProjectController pc = Lookup.getDefault().lookup(
 				ProjectController.class);
@@ -92,6 +86,32 @@ public class StatisticsTool {
 				.getModel();
 		graphModel = graphController.getModel();
 		graph = graphModel.getUndirectedGraph();
+	}
+
+	void resetTool(String curCompanyName, String curFileName, String filePath)
+			throws IOException {
+		this.curCompanyName = curCompanyName;
+		this.curFileName = curFileName;
+
+		// initialize parser
+		this.streamer = new Parser(filePath);
+		this.streamer.initializeParser();
+
+		this.nodeCounter = this.edgeCounter = this.totalFollowersCounter = this.totalFriendsCounter = 0;
+		this.featureValues = null;
+
+		this.nodeMap.clear();
+		this.hashtagsMap.clear();
+		this.urlsMap.clear();
+		this.usersMap.clear();
+		this.nodesList.clear();
+		this.graphFeatures = new GraphFeatures();
+		this.activityFeatures = new ActivityFeatures();
+
+		attributeModel = Lookup.getDefault().lookup(AttributeController.class)
+				.getModel();
+		graphModel.clear();
+		graph.clear();
 	}
 
 	void parseData() throws Throwable {

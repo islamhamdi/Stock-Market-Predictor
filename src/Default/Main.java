@@ -47,7 +47,7 @@ public class Main {
 		File statusDir = new File(path);
 		File[] folders = statusDir.listFiles();
 		String[] featuresList = Helper.getFeaturesList();
-		StatisticsTool tool;
+		StatisticsTool tool = new StatisticsTool();
 		excel = new WriteExcel();
 		System.out.println("Start ");
 		excel.passFeatures(featuresList);
@@ -76,8 +76,7 @@ public class Main {
 
 					if (f[j].file.isFile()) {
 						System.out.println(f[j].file.getName());
-						tool = new StatisticsTool(folderName,
-								f[j].file.getName(),
+						tool.resetTool(folderName, f[j].file.getName(),
 								f[j].file.getAbsolutePath());
 						tool.parseData();
 						tool.addSimilarityNodes();
