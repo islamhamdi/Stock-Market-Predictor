@@ -16,7 +16,7 @@ public class Global {
 
 	public static int min_tweets_perFile = 3;
 
-	public static String userName = "mohamed";
+	public static String userName = "islamhamdi";
 
 	public static int start_row_t1 = 55;
 	public static int start_row_t2 = 75;
@@ -29,7 +29,7 @@ public class Global {
 	public static String[] sheets = { "Twitter", "StockTwits", "Combined Data",
 			"Positive-Twitter", "Negative-Twitter", "Positive-StockTwits",
 			"Negative-StockTwits" };
-	
+
 	public static String globalPath = "/home/" + userName
 			+ "/Dropbox/Stock Market Daily Data";
 
@@ -56,7 +56,8 @@ public class Global {
 
 	public static String historyPath2 = globalPath + "/historical prices2/";
 
-	static String sentimentTwitterPath = globalPath + "/Sentiment-Twits/Twitter";
+	static String sentimentTwitterPath = globalPath
+			+ "/Sentiment-Twits/Twitter";
 	static String sentimentStockTwitPath = globalPath
 			+ "/Sentiment-Twits/StockTwits";
 

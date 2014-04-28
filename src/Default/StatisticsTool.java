@@ -111,7 +111,7 @@ public class StatisticsTool {
 		attributeModel = Lookup.getDefault().lookup(AttributeController.class)
 				.getModel();
 		graphModel.clear();
-		graph.clear();
+		graph = graphModel.getUndirectedGraph();
 	}
 
 	void parseData() throws Throwable {
