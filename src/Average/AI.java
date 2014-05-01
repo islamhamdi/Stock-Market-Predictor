@@ -90,7 +90,7 @@ public class AI {
 				data[row - start_raw1][k] = new Company(k, val);
 			}
 
-			companyWeight[k] = new com(inputWorkbook.getName());
+			companyWeight[k] = new com(inputWorkbook.getName(), k);
 			workbooks.close();
 		}
 
@@ -118,11 +118,12 @@ public class AI {
 	}
 
 	static class com implements Comparable<com> {
-		int val;
+		int val, index;
 		String name;
 
-		public com(String nn) {
+		public com(String nn, int idx) {
 			name = nn;
+			index = idx;
 		}
 
 		@Override
