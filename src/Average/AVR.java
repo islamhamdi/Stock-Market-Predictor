@@ -48,7 +48,10 @@ public class AVR {
 	WritableWorkbook workbook;
 	WritableSheet excelSheet;
 
-	String inputFolder = "/home/mohamed/Dropbox/Stock Market Daily Data/statistics/plain";
+	// String inputFolder =
+	// "/home/mohamed/Dropbox/Stock Market Daily Data/statistics/plain";
+
+	String inputFolder = "/home/mohamed/Desktop/plain";
 
 	public static void main(String[] args) throws Exception {
 

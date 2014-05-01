@@ -38,21 +38,27 @@ public class AI {
 
 	private Company[][] readData() throws BiffException, IOException {
 		File statusDir = new File(
-				"/home/mohamed/Dropbox/Stock Market Daily Data/statistics/input");
+				"/home/mohamed/Dropbox/Stock Market Daily Data/statistics/plain");
 		File[] files = statusDir.listFiles();
 
 		Company[][] data = new Company[features.length][files.length];
 		File inputWorkbook;
+
 		for (int k = 0; k < files.length; k++) {
 			inputWorkbook = new File(files[k].getAbsolutePath());
-
+			System.out.println(files[k].getName());
 			Workbook workbooks = Workbook.getWorkbook(inputWorkbook);
 			Sheet sh = workbooks.getSheet(5);
 			int col = start_col2 + Global.lag_var;
 
 			for (int row = start_raw1; row < start_raw1 + hight1; row++) {
 				Cell cell = sh.getCell(col, row);
-				double val = Double.parseDouble(cell.getContents());
+				double val = 0;
+//				try {
+					val = Double.parseDouble(cell.getContents());
+//				} catch (Exception e) {
+//
+//				}
 				data[row - start_raw1][k] = new Company(k, val);
 			}
 			workbooks.close();

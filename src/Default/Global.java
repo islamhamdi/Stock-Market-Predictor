@@ -16,7 +16,7 @@ public class Global {
 
 	public static int min_tweets_perFile = 3;
 
-	public static String userName = "islamhamdi";
+	public static String userName = "mohamed";
 
 	public static int start_row_t1 = 55;
 	public static int start_row_t2 = 75;
@@ -50,7 +50,7 @@ public class Global {
 			globalPath + "/Sentiment-Twits/StockTwits/negative", };
 
 	// Statistics + history prices paths
-	public static String StatFolderPath = globalPath + "/statistics";
+	public static String StatFolderPath = "./statistics/";
 	// static String StatFolderPath = "Statistics";
 	public static String historyPath1 = globalPath + "/historical prices1/";
 

@@ -14,6 +14,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
 
+import Default.Global;
+
 import twitter4j.Status;
 
 public class step2 {
@@ -22,11 +24,11 @@ public class step2 {
 
 	public step2() throws Exception {
 		st = sdf2.parse("20-2-2014");
-		String finaloutputDir = "/media/mohamed/661038916B7ACCAB/StockTwits";
+		String finaloutputDir = Global.dataPaths[1];
 		File dir = new File(finaloutputDir);
 		if (!dir.exists())
 			dir.mkdir();
-		String inputDir = "/home/mohamed/workspace/gephi-twitter-visualization/Data/Serialized Data";
+		String inputDir = "./Serialized Data/";
 		// String inputDir = "./out1/";
 		dir = new File(inputDir);
 
