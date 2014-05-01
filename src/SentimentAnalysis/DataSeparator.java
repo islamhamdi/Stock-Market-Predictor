@@ -126,7 +126,7 @@ public class DataSeparator {
 			});
 
 			for (File f : dataList)
-				if (!fileSet.contains(f.getAbsoluteFile())) {
+				if (!fileSet.contains(f.getAbsolutePath())) {
 					System.out.println("Read File : " + f.getName());
 
 					// open status file
