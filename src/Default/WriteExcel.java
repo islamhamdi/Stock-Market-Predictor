@@ -53,6 +53,13 @@ public class WriteExcel {
 	private int lag_var = Global.lag_var;
 
 	HashMap<String, VOL_PR> volume_price_table;
+	
+	private WritableSheet sheetSet[];
+	
+	private void openAllSheets() {
+
+		
+	}
 
 	public void passFeatures(String[] features) throws IOException {
 		this.features = features;

@@ -6,13 +6,15 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.ParseException;
 
+import Default.Global;
+
 import jxl.Cell;
 import jxl.Sheet;
 import jxl.Workbook;
 import jxl.read.biff.BiffException;
 
 public class ExcelToWeka {
-	static int feature_num = 13;
+	static int feature_num = 16;
 	static int lags = 3;
 
 	public static String inDir = "/home/mohamed/Dropbox/Stock Market Daily Data/statistics";
@@ -92,21 +94,24 @@ public class ExcelToWeka {
 				// Get the first sheet
 				Sheet sheet = w.getSheet(0);
 
-				String raws = sheet.getCell(60, 0).getContents();
+				String raws = sheet.getCell(Global.specialCell, 0)
+						.getContents();
 
 				int rawscnt = Integer.parseInt(raws);
 
-				int h = rawscnt - 2 * lags - 1;
+				int h = rawscnt - lags - 1;
 
 				Cell[] c = sheet.getRow(0);
 
-				features = new String[feature_num];
+				features = new String[feature_num + 1];
 
 				for (int j = 0; j < feature_num; j++) {
 					features[j] = c[j + 1].getContents();
 				}
 
-				tuples = new double[h][feature_num];
+				features[feature_num] = "price";
+
+				tuples = new double[h][feature_num + 1];
 
 				int index = 0;
 				for (int i = lags + 1; i <= lags + h; i++) {
@@ -117,6 +122,15 @@ public class ExcelToWeka {
 					}
 					index++;
 				}
+
+				index = 0;
+				for (int i = lags + 1; i <= lags + h; i++) {
+					double price = Double.parseDouble(sheet.getCell(
+							Global.price_start_col, i).getContents());
+					
+					tuples[index++][feature_num] = price;
+				}
+
 			} catch (BiffException e) {
 				e.printStackTrace();
 			}

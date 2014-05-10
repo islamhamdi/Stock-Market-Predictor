@@ -70,6 +70,11 @@ public class step1 {
 								OOS[k].writeObject(msg);
 								counter[k]++;
 							}
+
+							if(cnt%10000==0){
+								OOS[k].flush();
+								OOS[k].reset();
+							}		
 						}
 					}
 

@@ -24,12 +24,12 @@ public class step2 {
 
 	public step2() throws Exception {
 		st = sdf2.parse("20-2-2014");
-		String finaloutputDir = Global.dataPaths[1];
+		String finaloutputDir = Global.dataPaths[0];
 		File dir = new File(finaloutputDir);
 		if (!dir.exists())
 			dir.mkdir();
-		String inputDir = "./Serialized Data/";
-		// String inputDir = "./out1/";
+		// String inputDir = "./Serialized Data/";
+		String inputDir = "./out1/";
 		dir = new File(inputDir);
 
 		if (!dir.exists())
@@ -136,13 +136,4 @@ public class step2 {
 		}
 
 	}
-
-	static boolean isOK(String s, String thrshold) throws ParseException {
-		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyy");
-		Date from = sdf.parse(s);
-		SimpleDateFormat sdf2 = new SimpleDateFormat("dd-MM-yyy");
-		Date to = sdf2.parse(thrshold);
-		return from.after(to) || from.equals(to);
-	}
-
 }

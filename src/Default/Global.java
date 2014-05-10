@@ -50,7 +50,7 @@ public class Global {
 			globalPath + "/Sentiment-Twits/StockTwits/negative", };
 
 	// Statistics + history prices paths
-	public static String StatFolderPath = "./statistics/";
+	public static String StatFolderPath = globalPath + "/statistics/";
 	// static String StatFolderPath = "Statistics";
 	public static String historyPath1 = globalPath + "/historical prices1/";
 
@@ -71,10 +71,10 @@ public class Global {
 
 	static int start_of_norm_table = 45;
 
-	static int price_start_col = features_num + lag_var + 2;
-	static int volume_start_col = price_start_col + 2 * lag_var + 2;
+	public static int price_start_col = features_num + lag_var + 2;
+	public static int volume_start_col = price_start_col + 2 * lag_var + 2;
 
-	static int specialCell = 40;
+	public static int specialCell = 40;
 	static int COLWIDTH = 15;
 	public static String[] companies;
 

@@ -23,8 +23,8 @@ public class Main {
 	static String statPath = Global.StatFolderPath;
 	static WriteExcel excel;
 	static HashSet<String> currAvailableDays;
-
 	static String historyPath = Global.historyPath1;
+	static double [] featuers;
 
 	public static void main(String[] args) throws Throwable {
 
@@ -33,7 +33,7 @@ public class Main {
 		// 0 Twitter - 1 StockTwits - 2 Combined - 3 PosTwitter - 4 NegTwitter -
 		// 5 PosStockTwit - 6 NegStockTwit
 
-		Global.files_to_run = Global.sheet_num[Global.twitter];
+		Global.files_to_run = Global.sheet_num[Global.negstocktwits];
 
 		// preprocessUrlExpansion();
 		path = Global.dataPaths[Global.files_to_run];
@@ -83,11 +83,9 @@ public class Main {
 						tool.buildActivityFeatures();
 						tool.buildGraphFeatures();
 
-						double[] a = tool.getFeaturesValues();
-						if (a == null)
-							continue;
+						featuers = tool.getFeaturesValues();
 						someThingNew = true;
-						excel.addNewDay(f[j].file.getName(), a, true);
+						excel.addNewDay(f[j].file.getName(), featuers, true);
 					} else {
 						throw new Exception(
 								"Make sure companies directories contain only files.");

@@ -12,13 +12,16 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Date;
 
+import Default.Global;
+
 import twitter4j.Status;
 
 public class DataCombiner {
-	private static String TwitterDir = "./Twitter Data/";
-	private static String StockTwitsDir = "./Stocktwits Data/";
-	private static String CombinedDir = "./Combined Data/";
-	private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+	private static String TwitterDir = Global.dataPaths[0] + "/";
+	private static String StockTwitsDir = Global.dataPaths[1] + "/";
+	private static String CombinedDir = Global.dataPaths[2] + "/";
+	private static SimpleDateFormat dateFormat = new SimpleDateFormat(
+			"dd-MM-yyyy");
 	private static Date startDate;
 
 	private static boolean areAfter(String day1) {
@@ -32,7 +35,7 @@ public class DataCombiner {
 	}
 
 	public static void main(String[] args) throws IOException, ParseException {
-		startDate = dateFormat.parse("25-12-2014");
+		startDate = dateFormat.parse("10-04-2014");
 		run();
 	}
 
@@ -51,13 +54,15 @@ public class DataCombiner {
 
 			// read company twiter files
 			if (isExists(TwitterDir + companyName)) {
-				HashSet<String> twitterFiles = getFileList(TwitterDir + companyName);
+				HashSet<String> twitterFiles = getFileList(TwitterDir
+						+ companyName);
 				combinedFilesNames.addAll(twitterFiles);
 			}
 
 			// read company stocktwits files
 			if (isExists(StockTwitsDir + companyName)) {
-				HashSet<String> stocktwtisFiles = getFileList(StockTwitsDir + companyName);
+				HashSet<String> stocktwtisFiles = getFileList(StockTwitsDir
+						+ companyName);
 				combinedFilesNames.addAll(stocktwtisFiles);
 			}
 
@@ -67,16 +72,19 @@ public class DataCombiner {
 			for (String fileName : combinedFilesNames) {
 				System.out.println("read file : " + fileName);
 
-				ArrayList<Status> twitterList = getStatusList(TwitterDir + companyName + "/" + fileName);
-				ArrayList<Status> stocktwitsList = getStatusList(StockTwitsDir + companyName + "/" + fileName);
+				ArrayList<Status> twitterList = getStatusList(TwitterDir
+						+ companyName + "/" + fileName);
+				ArrayList<Status> stocktwitsList = getStatusList(StockTwitsDir
+						+ companyName + "/" + fileName);
 
-				WriteLists(twitterList, stocktwitsList, CombinedDir + companyName + "/" + fileName);
+				WriteLists(twitterList, stocktwitsList, CombinedDir
+						+ companyName + "/" + fileName);
 			}
 		}
 	}
 
-	private static void WriteLists(ArrayList<Status> twitter, ArrayList<Status> stocktwits, String dir)
-			throws IOException {
+	private static void WriteLists(ArrayList<Status> twitter,
+			ArrayList<Status> stocktwits, String dir) throws IOException {
 		FileOutputStream fout = new FileOutputStream(dir);
 		ObjectOutputStream oos = new ObjectOutputStream(fout);
 
@@ -94,7 +102,8 @@ public class DataCombiner {
 
 	}
 
-	private static ArrayList<Status> getStatusList(String dir) throws IOException {
+	private static ArrayList<Status> getStatusList(String dir)
+			throws IOException {
 		ArrayList<Status> list = new ArrayList<Status>();
 		if (isExists(dir)) {
 			FileInputStream fiut = new FileInputStream(dir);

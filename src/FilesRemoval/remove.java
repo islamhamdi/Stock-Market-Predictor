@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.Arrays;
 
-import twitter4j.Status;
 import Default.Global;
 import StockTwitsCreator.MyStatus;
 
@@ -16,7 +15,7 @@ public class remove {
 		// 0 Twitter - 1 StockTwits - 2 Combined - 3 PosTwitter - 4 NegTwitter -
 		// 5 PosStockTwit - 6 NegStockTwit
 //		for (int v = 0; v <= 6; v++) {
-			File folder = new File(Global.dataPaths[1]);
+			File folder = new File(Global.dataPaths[6]);
 			File[] folders = folder.listFiles();
 			// Arrays.sort(folders);
 
