@@ -6,8 +6,6 @@ import java.util.Locale;
 
 import Default.Global;
 
-import edu.stanford.nlp.util.logging.Color;
-
 import jxl.Cell;
 import jxl.CellType;
 import jxl.Sheet;
