@@ -1,7 +1,19 @@
 package Average;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Scanner;
+
+import jxl.Workbook;
+import jxl.write.Label;
+import jxl.write.Number;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
+import jxl.write.WriteException;
+import jxl.write.biff.RowsExceededException;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -11,6 +23,8 @@ import org.jsoup.select.Elements;
 public class YahooFinanceStatisticsDownloader {
 	final static String TITLE_TABLE = "yfnc_mod_table_title1";
 	final static String DATA_TABLE = "yfnc_datamodoutline1";
+
+	static WritableSheet sheet;
 
 	public static Table[] getStatisticsTables(String companyName) {
 		String html = "http://finance.yahoo.com/q/ks?s=" + companyName;
@@ -32,7 +46,8 @@ public class YahooFinanceStatisticsDownloader {
 						list.add(null);
 						list.add(new String[] { title, title });
 					} else if (b.className().equals(DATA_TABLE)) {
-						Elements c = b.select("td").get(0).select("tr").select("td");
+						Elements c = b.select("td").get(0).select("tr")
+								.select("td");
 						int start = 0;
 						if (c.size() % 2 == 1) // first element is title (skip
 												// this element)
@@ -72,11 +87,60 @@ public class YahooFinanceStatisticsDownloader {
 		return result;
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
+		Scanner sc = new Scanner(new File("TrackingCompanies.txt"));
+		String company[] = new String[169];
+		for (int i = 0; i < company.length; i++) {
+			company[i] = sc.nextLine().substring(1);
+		}
+		sc.close();
+
+		File file = new File("CompaniesData.xls");
+		WritableWorkbook workbook = Workbook.createWorkbook(file);
+		workbook.createSheet("data", 0);
+		sheet = workbook.getSheet(0);
+
 		Table[] result = getStatisticsTables("AAPL");
 
-		for (int i = 0; i < result.length; i++)
-			System.out.println(result[i].toString());
+		int column = 1, row = 0;
+		for (int i = 0; i < result.length; i++) {
+			Table table = result[i];
+			String[] tuple = table.getHeader();
+			for (int j = 0; j < tuple.length; j++) {
+				addLabel(column++, row, tuple[j]);
+			}
+
+		}
+
+		row = 1;
+		for (int c = 0; c < 10; c++) {
+			result = getStatisticsTables(company[c]);
+			column = 1;
+
+			addLabel(0, row, company[c]);
+			for (int i = 0; i < result.length; i++) {
+				Table table = result[i];
+				String[] tuple = table.getTuple();
+
+				for (int j = 0; j < tuple.length; j++) {
+					addLabel(column++, row, tuple[j]);
+				}
+
+			}
+			row++;
+		}
+		workbook.write();
+		workbook.close();
+	}
+
+	private static void addNumber(int column, int row, Double d)
+			throws WriteException, RowsExceededException {
+		sheet.addCell(new Number(column, row, d));
+	}
+
+	private static void addLabel(int column, int row, String s)
+			throws WriteException, RowsExceededException {
+		sheet.addCell(new Label(column, row, s));
 	}
 
 	public static class Table {
@@ -97,6 +161,23 @@ public class YahooFinanceStatisticsDownloader {
 			result += "\n";
 			return result;
 		}
+
+		public String[] getTuple() {
+			String[] tuple = new String[data.size()];
+			for (int i = 0; i < data.size(); i++)
+				tuple[i] = data.get(i)[1];
+
+			return tuple;
+		}
+
+		public String[] getHeader() {
+			String[] tuple = new String[data.size()];
+			for (int i = 0; i < data.size(); i++)
+				tuple[i] = data.get(i)[0];
+
+			return tuple;
+		}
+
 	}
 }
 
