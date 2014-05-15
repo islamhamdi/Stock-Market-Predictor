@@ -100,7 +100,7 @@ public class YahooFinanceStatisticsDownloader {
 		workbook.createSheet("data", 0);
 		sheet = workbook.getSheet(0);
 
-		Table[] result = getStatisticsTables("AAPL");
+		Table[] result = getStatisticsTables(company[0]);
 
 		int column = 1, row = 0;
 		for (int i = 0; i < result.length; i++) {
@@ -113,7 +113,7 @@ public class YahooFinanceStatisticsDownloader {
 		}
 
 		row = 1;
-		for (int c = 0; c < 10; c++) {
+		for (int c = 0; c < company.length; c++) {
 			result = getStatisticsTables(company[c]);
 			column = 1;
 
