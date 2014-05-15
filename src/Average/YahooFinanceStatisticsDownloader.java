@@ -133,10 +133,6 @@ public class YahooFinanceStatisticsDownloader {
 		workbook.close();
 	}
 
-	private static void addNumber(int column, int row, Double d)
-			throws WriteException, RowsExceededException {
-		sheet.addCell(new Number(column, row, d));
-	}
 
 	private static void addLabel(int column, int row, String s)
 			throws WriteException, RowsExceededException {
