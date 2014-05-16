@@ -31,7 +31,7 @@ public class YahooFinanceStatisticsDownloader {
 		Table[] result = new Table[3];
 
 		try {
-			Document doc = Jsoup.connect(html).get();
+			Document doc = Jsoup.connect(html).timeout(100 * 1000).get();
 			Elements tableElements = doc.select("table");
 			Elements tableRowElements = tableElements.select(":not(thead) tr");
 
@@ -89,13 +89,16 @@ public class YahooFinanceStatisticsDownloader {
 
 	public static void main(String[] args) throws Exception {
 		Scanner sc = new Scanner(new File("YahooKeyCompanies.txt"));
-		String company[] = new String[168];
+		String company[] = new String[66];
+		for(int i = 0; i < 100; i++)
+			sc.nextLine();
+		
 		for (int i = 0; i < company.length; i++) {
 			company[i] = sc.nextLine().substring(1);
 		}
 		sc.close();
 
-		File file = new File("CompaniesData.xls");
+		File file = new File("CompaniesData3.xls");
 		WritableWorkbook workbook = Workbook.createWorkbook(file);
 		workbook.createSheet("data", 0);
 		sheet = workbook.getSheet(0);
@@ -114,7 +117,7 @@ public class YahooFinanceStatisticsDownloader {
 
 		row = 1;
 		for (int c = 0; c < company.length; c++) {
-			System.out.println("Start Company : " + company[c]);
+			System.out.println(c + " Start Company : " + company[c]);
 			
 			result = getStatisticsTables(company[c]);
 			System.out.println(company[c]);
@@ -131,8 +134,8 @@ public class YahooFinanceStatisticsDownloader {
 
 			}
 			row++;
-			workbook.write();
 		}
+		workbook.write();
 		workbook.close();
 	}
 
