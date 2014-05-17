@@ -23,6 +23,9 @@ import jxl.write.WriteException;
 import jxl.write.biff.RowsExceededException;
 
 public class AVR {
+	
+	
+	
 	String[] f = { "RTID", "RTU", "TID", "TSUM", "UFRN", "THTG", "TURL",
 			"UFLW", "UID", "NEG", "POS", "POS_NEG", "NUM_NODES", "NUM_EDGES",
 			"NUM_CMP", "MAX_DIST" };
@@ -65,11 +68,7 @@ public class AVR {
 		excelSheet = workbook.getSheet(sheetNum);
 		excelSheet.getSettings().setDefaultColumnWidth(15);
 
-		File statusDir = new File(inputFolder);
-		if (!statusDir.exists())
-			throw new Exception("input folder doesnt exist");
-
-		File[] files = statusDir.listFiles();
+		File[] files = ReadCurrMode();
 		for (int k = 0; k < files.length; k++) {
 			File inputWorkbook = new File(files[k].getAbsolutePath());
 			System.out.println(files[k].getName());
@@ -111,6 +110,15 @@ public class AVR {
 		down(buff_comb_price, 20, 1, 0);
 		down(buff_comb_volume, 30, 1, 1);
 
+	}
+
+	private File[] ReadCurrMode() throws Exception {
+		File statusDir = new File(inputFolder);
+		if (!statusDir.exists())
+			throw new Exception("input folder doesnt exist");
+
+		File[] files = statusDir.listFiles();
+		return files;
 	}
 
 	private void norm(double[][] buff, int n) {

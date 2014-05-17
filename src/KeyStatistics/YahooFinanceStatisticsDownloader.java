@@ -1,4 +1,4 @@
-package Average;
+package KeyStatistics;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -98,7 +98,7 @@ public class YahooFinanceStatisticsDownloader {
 		}
 		sc.close();
 
-		File file = new File("CompaniesData3.xls");
+		File file = new File("CompaniesData.xls");
 		WritableWorkbook workbook = Workbook.createWorkbook(file);
 		workbook.createSheet("data", 0);
 		sheet = workbook.getSheet(0);

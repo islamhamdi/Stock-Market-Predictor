@@ -110,4 +110,45 @@ public class Global {
 		return s;
 	}
 
+	// Modes
+
+	public static String[] mode_names = { "normal_average", "Market_Cap_low",
+			"Market_Cap_Medium", "Market_Cap_high", "Peg_Ratio_low",
+			"Peg_Ratio_medium", "Peg_Ratio_high", "Enterprise_Value_low",
+			"Enterprise_Value_medium", "Enterprise_Value_high",
+			"Gross_Profit_low", "Gross_Profit_medium", "Gross_Profit_high",
+			"Current_Ration_low", "Current_Ration_medium",
+			"Current_Ration_high", "Beta_low", "Beta_medium", "Beta_high",
+			"Float_low", "Float_medium", "Float_high" };
+	
+	public static int normal_average = 0;
+
+	public static int Market_Cap_low = 1;
+	public static int Market_Cap_Medium = 2;
+	public static int Market_Cap_high = 3;
+
+	public static int Peg_Ratio_low = 4;
+	public static int Peg_Ratio_medium = 5;
+	public static int Peg_Ratio_high = 6;
+
+	public static int Enterprise_Value_low = 7;
+	public static int Enterprise_Value_medium = 8;
+	public static int Enterprise_Value_high = 9;
+
+	public static int Gross_Profit_low = 10;
+	public static int Gross_Profit_medium = 11;
+	public static int Gross_Profit_high = 12;
+
+	public static int Current_Ration_low = 13;
+	public static int Current_Ration_medium = 14;
+	public static int Current_Ration_high = 15;
+
+	public static int Beta_low = 16;
+	public static int Beta_medium = 17;
+	public static int Beta_high = 18;
+
+	public static int Float_low = 19;
+	public static int Float_medium = 20;
+	public static int Float_high = 21;
+
 }
