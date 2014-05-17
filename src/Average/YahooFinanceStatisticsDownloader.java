@@ -88,8 +88,8 @@ public class YahooFinanceStatisticsDownloader {
 	}
 
 	public static void main(String[] args) throws Exception {
-		Scanner sc = new Scanner(new File("TrackingCompanies.txt"));
-		String company[] = new String[169];
+		Scanner sc = new Scanner(new File("YahooKeyCompanies.txt"));
+		String company[] = new String[168];
 		for (int i = 0; i < company.length; i++) {
 			company[i] = sc.nextLine().substring(1);
 		}
@@ -115,6 +115,7 @@ public class YahooFinanceStatisticsDownloader {
 		row = 1;
 		for (int c = 0; c < company.length; c++) {
 			result = getStatisticsTables(company[c]);
+			System.out.println(company[c]);
 			column = 1;
 
 			addLabel(0, row, company[c]);
@@ -128,8 +129,8 @@ public class YahooFinanceStatisticsDownloader {
 
 			}
 			row++;
+			workbook.write();
 		}
-		workbook.write();
 		workbook.close();
 	}
 

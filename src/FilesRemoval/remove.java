@@ -4,10 +4,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.util.Arrays;
 
+import twitter4j.Status;
 import Default.Global;
-import StockTwitsCreator.MyStatus;
 
 public class remove {
 	public static void main(String[] args) throws IOException,
@@ -15,7 +14,7 @@ public class remove {
 		// 0 Twitter - 1 StockTwits - 2 Combined - 3 PosTwitter - 4 NegTwitter -
 		// 5 PosStockTwit - 6 NegStockTwit
 //		for (int v = 0; v <= 6; v++) {
-			File folder = new File(Global.dataPaths[6]);
+			File folder = new File(Global.dataPaths[3]);
 			File[] folders = folder.listFiles();
 			// Arrays.sort(folders);
 
@@ -30,9 +29,9 @@ public class remove {
 					FileInputStream fr = new FileInputStream(files[c]);
 					ObjectInputStream is = new ObjectInputStream(fr);
 
-					MyStatus s = null;
+					Status s = null;
 					try {
-						s = (MyStatus) is.readObject();
+						s = (Status) is.readObject();
 					} catch (Exception e) {
 						// continue;
 					}
@@ -40,7 +39,7 @@ public class remove {
 					while (s != null) {
 						k++;
 						try {
-							s = (MyStatus) is.readObject();
+							s = (Status) is.readObject();
 						} catch (Exception e) {
 							break;
 						}
