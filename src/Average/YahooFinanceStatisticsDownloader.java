@@ -114,6 +114,8 @@ public class YahooFinanceStatisticsDownloader {
 
 		row = 1;
 		for (int c = 0; c < company.length; c++) {
+			System.out.println("Start Company : " + company[c]);
+			
 			result = getStatisticsTables(company[c]);
 			System.out.println(company[c]);
 			column = 1;
@@ -179,4 +181,3 @@ public class YahooFinanceStatisticsDownloader {
 }
 
 // Table 1 : yfnc_modtitlew1
-
