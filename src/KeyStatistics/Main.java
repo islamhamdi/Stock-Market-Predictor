@@ -1,17 +1,17 @@
 package KeyStatistics;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
-
-import Default.Global;
 
 import jxl.Sheet;
 import jxl.Workbook;
 import jxl.read.biff.BiffException;
+import Default.Global;
 
 public class Main {
 
@@ -58,6 +58,26 @@ public class Main {
 
 		System.out.println(tmplow.size() + " " + tmpmid.size() + " "
 				+ tmphigh.size());
+		
+		
+		writeHashMap("", hMap);
+	}
+
+	private static void writeHashMap(String directory, HashMap<Integer, ArrayList<String>> map){
+		FileOutputStream fout;
+		try {
+			fout = new FileOutputStream(directory + Global.kEYMAP);
+			ObjectOutputStream oos = new ObjectOutputStream(fout);
+			oos.writeObject(map);
+			
+			oos.close();
+			fout.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	private static void go(Sheet sh) {

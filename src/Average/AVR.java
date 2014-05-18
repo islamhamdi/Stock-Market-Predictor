@@ -1,7 +1,12 @@
 package Average;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Locale;
 
 import Default.Global;
@@ -24,7 +29,7 @@ import jxl.write.biff.RowsExceededException;
 
 public class AVR {
 	
-	
+	static HashMap<Integer, ArrayList<String>> keyMap = new HashMap<>();
 	
 	String[] f = { "RTID", "RTU", "TID", "TSUM", "UFRN", "THTG", "TURL",
 			"UFLW", "UID", "NEG", "POS", "POS_NEG", "NUM_NODES", "NUM_EDGES",
@@ -52,15 +57,39 @@ public class AVR {
 	// String inputFolder =
 	// "/home/mohamed/Dropbox/Stock Market Daily Data/statistics/plain";
 
-	String inputFolder = "/home/mohamed/Desktop/plain";
-
+//	static String inputFolder = "/home/mohamed/Desktop/plain";
+	static String inputFolder = "/media/MyData/DropBox/Dropbox/Stock Market Daily Data/statistics/plain/";
+	
 	public static void main(String[] args) throws Exception {
-
-		AVR avr = new AVR("avr.xls");
-		for (int i = 0; i < 7; i++)
-			avr.read(i);
-
-		avr.close();
+		// read hashMap
+		keyMap = readHashMap("");
+		File[] ss = ReadCurrMode(Global.Peg_Ratio_low);
+		for(int i = 0; i < ss.length; i++)
+			System.out.println("FOUND : " + ss[i].getName());
+		
+//		AVR avr = new AVR("avr.xls");
+//		for (int i = 0; i < 7; i++)
+//			avr.read(i);
+//
+//		avr.close();
+	}
+	
+	private static HashMap<Integer, ArrayList<String>> readHashMap(String directory){
+		FileInputStream fin;
+		try {
+			fin = new FileInputStream(directory + Global.kEYMAP);
+			ObjectInputStream ois = new ObjectInputStream(fin);
+			HashMap<Integer, ArrayList<String>> map = (HashMap<Integer, ArrayList<String>>) ois.readObject();
+			ois.close();
+			return map;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public void read(int sheetNum) throws Exception {
@@ -68,7 +97,7 @@ public class AVR {
 		excelSheet = workbook.getSheet(sheetNum);
 		excelSheet.getSettings().setDefaultColumnWidth(15);
 
-		File[] files = ReadCurrMode();
+		File[] files = ReadCurrMode(-1);
 		for (int k = 0; k < files.length; k++) {
 			File inputWorkbook = new File(files[k].getAbsolutePath());
 			System.out.println(files[k].getName());
@@ -112,13 +141,26 @@ public class AVR {
 
 	}
 
-	private File[] ReadCurrMode() throws Exception {
+	private static File[] ReadCurrMode(int mode) throws Exception {
 		File statusDir = new File(inputFolder);
 		if (!statusDir.exists())
 			throw new Exception("input folder doesnt exist");
 
 		File[] files = statusDir.listFiles();
-		return files;
+		ArrayList<File> result = new ArrayList<File>();
+		ArrayList<String> keyStatFiles = keyMap.get(mode);
+		for(File f : files){
+			String fileName = f.getName();
+			String companyName = fileName.substring(1, fileName.indexOf('.'));
+			if(keyStatFiles.contains(companyName))
+				result.add(f);
+		}
+		
+		File[] ans = new File[result.size()];
+		for(int i = 0; i < result.size(); i++)
+			ans[i] = result.get(i);
+		
+		return ans;
 	}
 
 	private void norm(double[][] buff, int n) {

@@ -150,5 +150,7 @@ public class Global {
 	public static int Float_low = 19;
 	public static int Float_medium = 20;
 	public static int Float_high = 21;
+	
+	public static String kEYMAP = "KeyStatisticsMap";
 
 }
