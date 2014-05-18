@@ -27,14 +27,14 @@ public class Main {
 		Sheet sh = workbooks.getSheet(0);
 		companies = getContent(sh, 0);
 
-		// marketCap(sh);
 		go(sh);
 
 		workbooks.close();
 
 	}
 
-	private static void addToHash(double low, double high, int col, Sheet sh) {
+	private static void addToHash(double low, double high, int col, Sheet sh,
+			int key) {
 		ArrayList<String> tmplow = new ArrayList<>();
 		ArrayList<String> tmphigh = new ArrayList<>();
 		ArrayList<String> tmpmid = new ArrayList<>();
@@ -52,9 +52,9 @@ public class Main {
 				tmpmid.add(companies[i]);
 			}
 		}
-		hMap.put(Global.Peg_Ratio_low, tmplow);
-		hMap.put(Global.Peg_Ratio_medium, tmpmid);
-		hMap.put(Global.Peg_Ratio_high, tmphigh);
+		hMap.put(key, tmplow);
+		hMap.put(key + 1, tmpmid);
+		hMap.put(key + 2, tmphigh);
 
 		System.out.println(tmplow.size() + " " + tmpmid.size() + " "
 				+ tmphigh.size());
@@ -71,20 +71,20 @@ public class Main {
 
 		// ->>long
 		// MarketCap
-		addToHash(13010000000f, 101310000000f, 1, sh);
+		addToHash(13010000000f, 101310000000f, 1, sh, Global.Market_Cap_low);
 		// Gross_Profit
-		addToHash(911890000, 10900000000L, 16, sh);
+		addToHash(911890000, 10900000000L, 16, sh, Global.Gross_Profit_low);
 		// Float
-		addToHash(100020000, 1010000000, 36, sh);
+		addToHash(100020000, 1010000000, 36, sh, Global.Float_low);
 		// ->>double
 		// Peg_Ratio(0,2,4)
-		addToHash(0, 2, 4, sh);
+		addToHash(0, 2, 4, sh, Global.Peg_Ratio_low);
 		// Enterprise_Value
-		addToHash(0, 50, 8, sh);
+		addToHash(0, 50, 8, sh, Global.Enterprise_Value_low);
 		// current ratio
-		addToHash(3, 5, 24, sh);
+		addToHash(3, 5, 24, sh, Global.Current_Ration_low);
 		// Beta
-		addToHash(1, 2, 28, sh);
+		addToHash(1, 2, 28, sh, Global.Beta_low);
 
 	}
 
