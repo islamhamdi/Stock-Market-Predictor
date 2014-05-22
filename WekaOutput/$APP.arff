@@ -1,0 +1,51 @@
+@relation $APP
+@attribute TID real
+@attribute POS real
+@attribute NUM_NODES real
+@attribute NUM_EDGES real
+@attribute NUM_CMP real
+@attribute class {increase , no_change ,decrease}
+@data
+3,0,16,14,2,no_change
+10,8,21,11,10,decrease
+20,14,64,55,11,increase
+18,12,54,48,10,decrease
+8,5,20,13,7,decrease
+7,5,21,14,7,increase
+7,6,21,15,6,decrease
+34,27,81,65,20,increase
+13,10,40,38,7,decrease
+14,11,35,30,9,decrease
+6,4,17,11,6,increase
+3,0,7,4,3,decrease
+5,5,15,11,4,increase
+8,6,27,19,8,decrease
+15,10,57,55,6,decrease
+4,0,14,15,2,decrease
+5,4,24,20,4,increase
+8,5,27,19,8,increase
+3,0,7,6,2,decrease
+4,0,16,12,4,increase
+9,6,30,34,5,increase
+11,7,37,49,4,decrease
+47,32,97,95,18,increase
+34,24,85,71,20,increase
+18,16,50,41,10,decrease
+39,29,83,67,18,decrease
+10,8,31,29,7,decrease
+11,8,26,18,9,increase
+21,17,57,42,17,increase
+60,45,141,136,19,decrease
+37,29,92,73,21,decrease
+14,9,50,52,8,increase
+42,29,104,82,26,increase
+37,30,109,92,23,increase
+6,4,23,17,6,decrease
+16,16,39,25,14,decrease
+6,6,20,17,4,decrease
+12,7,32,25,8,no_change
+28,21,78,60,19,decrease
+27,24,65,48,19,increase
+45,33,99,82,19,increase
+233,185,408,360,65,increase
+116,88,207,172,37,decrease

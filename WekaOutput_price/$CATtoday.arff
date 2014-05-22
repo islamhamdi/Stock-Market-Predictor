@@ -1,0 +1,42 @@
+@relation $CAT
+@attribute TID real
+@attribute POS real
+@attribute NUM_NODES real
+@attribute NUM_EDGES real
+@attribute NUM_CMP real
+@attribute class {increase , no_change ,decrease}
+@data
+7,5,23,17,6,no_change
+4,3,13,9,4,no_change
+9,8,25,16,9,no_change
+4,4,11,7,4,no_change
+4,4,20,16,4,no_change
+11,6,39,30,9,no_change
+14,13,46,35,11,no_change
+7,4,18,17,3,no_change
+6,5,22,16,6,increase
+9,5,25,20,6,no_change
+13,13,43,39,9,no_change
+13,6,37,35,7,no_change
+10,7,20,15,6,no_change
+11,8,37,31,7,decrease
+12,11,37,28,9,no_change
+11,8,42,32,10,no_change
+10,10,24,17,7,no_change
+8,8,27,21,6,no_change
+16,12,49,43,11,no_change
+16,14,45,39,10,increase
+10,7,30,21,9,no_change
+39,30,127,112,22,increase
+16,10,63,59,9,no_change
+11,6,34,26,8,no_change
+19,17,63,56,13,no_change
+47,31,135,124,24,no_change
+33,19,111,101,17,no_change
+68,45,170,172,33,increase
+31,26,80,66,16,no_change
+8,6,25,19,6,no_change
+11,8,32,34,4,decrease
+25,16,63,49,14,increase
+16,11,58,51,9,no_change
+5,3,14,9,5,no_change

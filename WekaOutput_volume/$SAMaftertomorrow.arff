@@ -1,0 +1,26 @@
+@relation $SAM
+@attribute TID real
+@attribute POS real
+@attribute NUM_NODES real
+@attribute NUM_EDGES real
+@attribute NUM_CMP real
+@attribute class {increase , no_change ,decrease}
+@data
+9,8,25,17,8,no_change
+55,36,107,96,20,decrease
+28,18,53,42,13,decrease
+3,0,7,4,3,increase
+10,7,19,15,4,increase
+6,4,14,10,4,decrease
+20,12,37,31,8,increase
+8,5,20,15,5,increase
+7,4,18,12,6,decrease
+5,0,18,13,5,decrease
+9,7,19,14,5,increase
+9,6,23,16,7,decrease
+3,3,6,5,1,increase
+3,3,7,6,2,increase
+4,3,9,5,4,decrease
+3,3,8,5,3,increase
+3,3,6,6,1,decrease
+3,3,11,9,2,decrease

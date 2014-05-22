@@ -1,0 +1,25 @@
+@relation $FRX
+@attribute TID real
+@attribute POS real
+@attribute NUM_NODES real
+@attribute NUM_EDGES real
+@attribute NUM_CMP real
+@attribute class {increase , no_change ,decrease}
+@data
+7,7,30,32,4,no_change
+12,9,44,33,11,increase
+5,5,16,12,4,increase
+3,3,11,12,1,decrease
+5,3,18,17,3,increase
+6,3,28,25,4,decrease
+3,0,13,10,3,no_change
+3,0,11,8,3,decrease
+8,8,26,22,5,increase
+4,4,21,17,4,decrease
+3,0,9,6,3,no_change
+4,3,15,14,3,increase
+3,0,7,5,2,decrease
+7,5,17,13,4,decrease
+5,4,16,11,5,increase
+4,0,25,21,4,decrease
+4,4,11,8,3,increase

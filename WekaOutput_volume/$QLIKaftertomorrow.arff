@@ -1,0 +1,20 @@
+@relation $QLIK
+@attribute TID real
+@attribute POS real
+@attribute NUM_NODES real
+@attribute NUM_EDGES real
+@attribute NUM_CMP real
+@attribute class {increase , no_change ,decrease}
+@data
+21,19,76,90,8,no_change
+4,3,11,7,4,decrease
+9,8,28,20,8,decrease
+4,4,15,11,4,increase
+3,3,9,8,2,increase
+3,3,9,6,3,increase
+3,0,6,6,1,decrease
+4,0,14,10,4,decrease
+4,3,14,10,4,decrease
+6,5,17,13,4,increase
+5,5,11,8,3,decrease
+5,3,11,7,4,decrease

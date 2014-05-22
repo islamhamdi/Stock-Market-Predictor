@@ -1,0 +1,51 @@
+@relation $KNDI
+@attribute TID real
+@attribute POS real
+@attribute NUM_NODES real
+@attribute NUM_EDGES real
+@attribute NUM_CMP real
+@attribute class {increase , no_change ,decrease}
+@data
+98,70,166,145,40,no_change
+392,303,685,648,99,decrease
+442,309,739,734,88,decrease
+298,219,476,426,71,decrease
+127,93,231,195,48,increase
+209,162,360,322,54,decrease
+145,97,288,298,41,increase
+247,168,464,509,55,increase
+454,330,758,744,103,increase
+356,243,567,569,71,decrease
+248,177,380,367,54,decrease
+122,85,217,219,38,increase
+154,99,270,246,52,decrease
+129,94,239,224,45,decrease
+106,68,212,213,28,increase
+339,247,515,463,71,increase
+872,625,1360,1341,155,decrease
+675,451,1000,931,116,increase
+768,494,1154,1100,127,decrease
+434,282,664,634,73,increase
+327,233,513,427,90,increase
+329,224,520,430,103,decrease
+323,213,520,481,68,increase
+292,187,492,435,84,increase
+303,190,476,417,79,increase
+586,415,867,864,93,decrease
+400,266,593,548,68,increase
+513,326,771,757,85,increase
+367,265,624,594,87,decrease
+101,62,204,160,49,increase
+591,381,891,779,155,decrease
+348,231,579,513,105,decrease
+379,278,592,570,69,decrease
+183,126,323,255,71,increase
+23,13,60,44,17,decrease
+300,192,465,439,62,increase
+308,201,471,410,72,increase
+346,244,522,471,78,decrease
+294,212,414,416,51,increase
+187,132,296,249,51,increase
+244,183,396,361,55,decrease
+338,250,511,461,68,decrease
+109,72,184,149,38,decrease

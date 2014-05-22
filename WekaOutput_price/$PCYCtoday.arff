@@ -1,0 +1,42 @@
+@relation $PCYC
+@attribute TID real
+@attribute POS real
+@attribute NUM_NODES real
+@attribute NUM_EDGES real
+@attribute NUM_CMP real
+@attribute class {increase , no_change ,decrease}
+@data
+18,14,78,102,3,no_change
+24,15,66,54,12,no_change
+17,14,45,34,12,decrease
+13,11,25,30,3,no_change
+16,12,34,25,12,decrease
+43,29,87,87,13,decrease
+13,7,45,38,8,decrease
+8,6,24,17,7,no_change
+14,11,32,23,9,increase
+15,8,47,41,9,decrease
+32,24,66,58,12,decrease
+5,4,26,22,4,increase
+3,3,6,3,3,no_change
+6,4,25,21,5,no_change
+11,7,24,16,8,decrease
+33,21,59,66,11,decrease
+25,16,55,45,10,decrease
+26,14,51,41,10,no_change
+42,31,74,67,15,increase
+46,36,94,73,22,decrease
+24,13,62,65,6,no_change
+22,14,56,52,8,decrease
+18,11,51,48,9,decrease
+13,7,34,28,7,decrease
+27,17,60,45,18,decrease
+120,72,213,216,27,decrease
+55,35,110,106,13,no_change
+69,42,120,108,20,increase
+51,27,91,81,12,decrease
+74,39,142,147,13,no_change
+66,44,142,144,24,decrease
+14,10,37,31,8,no_change
+26,22,63,48,16,no_change
+41,27,91,76,19,increase

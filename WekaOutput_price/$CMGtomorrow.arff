@@ -1,0 +1,50 @@
+@relation $CMG
+@attribute TID real
+@attribute POS real
+@attribute NUM_NODES real
+@attribute NUM_EDGES real
+@attribute NUM_CMP real
+@attribute class {increase , no_change ,decrease}
+@data
+13,10,41,33,8,no_change
+18,13,62,59,10,no_change
+34,22,85,76,15,increase
+27,17,89,89,14,no_change
+40,35,101,87,21,decrease
+19,15,66,61,12,increase
+139,91,307,295,53,no_change
+43,31,133,139,21,increase
+43,30,96,83,17,no_change
+21,16,56,52,10,no_change
+13,6,44,54,3,no_change
+16,8,39,42,6,no_change
+24,18,67,58,12,decrease
+32,16,66,199,6,no_change
+13,6,31,22,9,no_change
+10,6,39,30,9,increase
+45,31,115,95,25,no_change
+33,27,75,81,9,increase
+137,107,294,256,55,no_change
+33,24,90,66,24,decrease
+37,26,89,135,13,decrease
+36,25,80,66,22,decrease
+16,9,49,47,14,no_change
+13,9,46,37,10,increase
+20,12,69,63,14,no_change
+9,7,33,27,7,increase
+12,7,44,40,7,no_change
+3,0,12,9,3,no_change
+11,8,35,28,8,decrease
+27,20,61,63,13,decrease
+60,39,153,145,31,increase
+27,20,81,91,10,increase
+17,11,50,58,7,decrease
+36,0,82,98,9,no_change
+44,28,111,121,12,increase
+16,8,52,58,7,no_change
+27,11,73,98,11,increase
+54,34,137,125,24,decrease
+445,309,882,793,154,decrease
+123,78,281,265,48,increase
+71,46,164,149,31,decrease
+44,24,118,123,19,decrease

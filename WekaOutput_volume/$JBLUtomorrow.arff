@@ -1,0 +1,35 @@
+@relation $JBLU
+@attribute TID real
+@attribute POS real
+@attribute NUM_NODES real
+@attribute NUM_EDGES real
+@attribute NUM_CMP real
+@attribute class {increase , no_change ,decrease}
+@data
+10,6,29,23,7,no_change
+11,8,30,22,8,decrease
+3,0,10,7,3,increase
+7,4,22,17,5,increase
+4,3,9,5,4,increase
+4,0,9,6,3,decrease
+5,5,16,11,5,decrease
+4,0,10,6,4,increase
+5,4,15,10,5,increase
+4,3,23,30,1,increase
+13,13,34,23,11,decrease
+5,5,12,9,3,decrease
+5,3,14,9,5,decrease
+7,6,23,17,6,no_change
+3,3,9,6,3,increase
+4,3,20,17,3,decrease
+4,4,17,15,2,decrease
+5,5,20,15,5,increase
+7,4,15,9,6,decrease
+6,4,23,18,5,increase
+3,0,18,15,3,decrease
+7,4,23,18,5,decrease
+8,8,27,19,8,decrease
+8,7,21,18,4,increase
+3,3,8,5,3,increase
+13,12,36,34,8,decrease
+3,0,8,6,2,decrease

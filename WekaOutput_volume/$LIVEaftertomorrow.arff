@@ -1,0 +1,40 @@
+@relation $LIVE
+@attribute TID real
+@attribute POS real
+@attribute NUM_NODES real
+@attribute NUM_EDGES real
+@attribute NUM_CMP real
+@attribute class {increase , no_change ,decrease}
+@data
+33,18,60,51,12,no_change
+18,10,39,29,10,increase
+17,9,37,27,10,increase
+16,9,29,22,8,increase
+24,15,44,28,16,decrease
+42,35,81,61,21,increase
+17,11,36,27,9,decrease
+48,38,95,72,26,decrease
+17,14,42,40,9,decrease
+16,13,36,26,10,increase
+20,15,43,32,11,decrease
+34,29,69,51,18,decrease
+24,18,35,35,5,decrease
+28,18,64,58,10,decrease
+22,17,48,35,13,increase
+23,14,40,33,8,decrease
+34,23,63,53,15,increase
+19,13,30,23,7,increase
+21,16,43,34,11,decrease
+32,19,71,54,18,decrease
+21,11,56,42,14,decrease
+12,11,34,29,7,increase
+6,5,25,23,5,decrease
+6,6,16,13,3,increase
+8,5,21,18,5,increase
+6,6,15,11,4,increase
+12,11,29,24,5,decrease
+18,13,41,48,11,decrease
+10,7,39,32,7,decrease
+6,6,28,26,5,increase
+10,8,28,20,9,decrease
+7,4,16,11,5,increase

@@ -1,0 +1,51 @@
+@relation $YELP
+@attribute TID real
+@attribute POS real
+@attribute NUM_NODES real
+@attribute NUM_EDGES real
+@attribute NUM_CMP real
+@attribute class {increase , no_change ,decrease}
+@data
+6,3,21,20,3,no_change
+53,30,130,130,17,no_change
+28,18,87,89,11,no_change
+83,52,160,148,27,increase
+58,37,125,133,16,decrease
+60,37,154,166,24,no_change
+39,27,121,145,12,increase
+59,38,130,120,16,no_change
+67,53,153,129,31,no_change
+29,15,81,88,15,no_change
+49,35,112,96,22,decrease
+38,24,97,90,18,decrease
+34,23,80,67,16,increase
+42,26,129,123,18,decrease
+67,51,166,161,24,no_change
+25,14,59,51,12,increase
+63,44,147,144,22,increase
+29,23,67,67,11,decrease
+24,18,66,58,16,decrease
+90,62,168,171,20,decrease
+74,47,170,170,22,decrease
+66,48,175,176,28,decrease
+71,50,151,158,21,decrease
+43,33,116,114,19,increase
+56,34,140,153,20,decrease
+46,23,94,84,17,no_change
+35,25,69,58,18,increase
+51,34,124,117,19,decrease
+164,103,327,284,61,decrease
+275,166,554,562,78,decrease
+312,203,542,646,61,no_change
+218,133,402,438,41,increase
+190,126,385,435,45,increase
+114,77,247,241,36,decrease
+11,10,34,31,6,decrease
+158,103,316,338,34,no_change
+64,41,158,192,19,increase
+86,60,198,211,27,increase
+89,57,196,185,32,decrease
+33,21,79,73,10,increase
+33,21,86,83,14,increase
+40,28,105,127,11,decrease
+64,42,141,139,21,decrease

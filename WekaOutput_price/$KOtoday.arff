@@ -1,0 +1,43 @@
+@relation $KO
+@attribute TID real
+@attribute POS real
+@attribute NUM_NODES real
+@attribute NUM_EDGES real
+@attribute NUM_CMP real
+@attribute class {increase , no_change ,decrease}
+@data
+29,19,106,103,12,no_change
+21,10,92,91,6,no_change
+28,21,104,105,11,no_change
+31,20,90,83,17,no_change
+39,22,137,131,22,no_change
+33,13,108,121,13,no_change
+32,23,109,116,14,no_change
+34,19,98,100,12,no_change
+25,12,96,88,15,no_change
+17,13,66,60,10,no_change
+20,13,75,87,5,no_change
+18,10,76,68,11,no_change
+22,15,70,60,15,no_change
+21,15,86,84,10,no_change
+19,11,58,56,13,decrease
+22,13,75,66,15,no_change
+22,15,72,67,7,no_change
+34,20,120,119,13,no_change
+33,28,118,111,15,no_change
+29,17,93,95,14,no_change
+19,11,62,55,9,no_change
+29,12,101,97,14,no_change
+25,14,86,73,18,no_change
+19,11,68,63,9,no_change
+14,9,48,40,9,no_change
+16,9,53,45,11,no_change
+24,13,90,86,11,no_change
+27,19,88,85,11,no_change
+31,20,90,90,12,no_change
+31,19,115,116,15,no_change
+38,27,117,126,19,no_change
+44,34,161,152,21,increase
+45,31,150,147,20,no_change
+30,19,100,101,14,no_change
+8,5,34,28,6,no_change

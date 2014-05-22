@@ -1,0 +1,43 @@
+@relation $CHTP
+@attribute TID real
+@attribute POS real
+@attribute NUM_NODES real
+@attribute NUM_EDGES real
+@attribute NUM_CMP real
+@attribute class {increase , no_change ,decrease}
+@data
+150,103,273,241,53,no_change
+95,63,176,142,41,increase
+136,90,235,203,41,decrease
+103,65,187,139,51,decrease
+93,72,162,123,42,decrease
+52,37,108,85,27,increase
+42,32,104,92,23,decrease
+49,32,95,93,16,decrease
+30,24,64,70,10,decrease
+63,48,122,107,24,increase
+37,29,68,59,13,decrease
+43,24,88,74,20,decrease
+80,59,142,114,33,increase
+84,45,145,114,35,increase
+475,347,730,681,105,increase
+131,107,230,201,38,decrease
+49,43,93,77,24,decrease
+96,66,171,140,38,increase
+85,64,163,139,33,decrease
+60,41,109,110,20,decrease
+70,50,130,108,31,increase
+43,30,94,87,23,decrease
+48,32,110,104,14,decrease
+47,36,103,95,17,increase
+43,33,79,65,16,increase
+38,25,94,80,20,decrease
+29,23,66,59,10,increase
+34,27,77,85,9,decrease
+33,24,65,59,13,decrease
+27,20,62,55,11,no_change
+49,33,94,83,17,increase
+36,27,67,50,18,decrease
+34,25,73,59,14,decrease
+18,15,48,38,15,increase
+4,3,5,4,1,increase

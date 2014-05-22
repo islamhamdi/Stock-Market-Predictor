@@ -1,0 +1,46 @@
+@relation $CMCSA
+@attribute TID real
+@attribute POS real
+@attribute NUM_NODES real
+@attribute NUM_EDGES real
+@attribute NUM_CMP real
+@attribute class {increase , no_change ,decrease}
+@data
+38,26,113,120,9,no_change
+30,23,83,72,14,increase
+14,6,39,29,10,decrease
+10,6,27,18,9,increase
+14,10,33,25,8,increase
+13,8,45,44,7,decrease
+10,8,32,27,7,decrease
+18,11,44,34,11,increase
+8,6,25,19,6,decrease
+9,8,22,16,6,no_change
+9,7,28,22,6,decrease
+11,7,32,26,6,increase
+8,5,26,20,6,decrease
+3,0,6,4,2,increase
+3,3,8,6,2,no_change
+4,4,11,7,4,decrease
+4,0,9,5,4,increase
+9,4,36,35,6,increase
+9,6,32,29,4,decrease
+5,0,17,13,4,increase
+38,25,103,121,7,decrease
+11,7,35,38,4,no_change
+24,15,65,53,12,increase
+14,9,48,46,6,decrease
+7,5,18,13,5,increase
+11,9,39,31,8,increase
+5,5,19,14,5,decrease
+11,5,30,23,8,increase
+7,6,16,11,5,decrease
+3,0,14,11,3,increase
+16,13,37,29,8,increase
+21,14,67,59,11,decrease
+5,3,26,30,2,decrease
+4,3,11,7,4,increase
+6,4,30,28,4,decrease
+27,23,77,63,15,no_change
+52,35,143,123,25,increase
+11,8,33,25,8,decrease

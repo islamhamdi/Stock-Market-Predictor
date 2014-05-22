@@ -1,0 +1,43 @@
+@relation $FCEL
+@attribute TID real
+@attribute POS real
+@attribute NUM_NODES real
+@attribute NUM_EDGES real
+@attribute NUM_CMP real
+@attribute class {increase , no_change ,decrease}
+@data
+4,4,20,18,3,no_change
+13,7,26,31,3,increase
+18,15,49,51,7,decrease
+49,35,117,123,16,increase
+65,48,138,148,21,increase
+80,49,170,167,28,increase
+111,76,224,273,28,increase
+391,285,674,871,71,increase
+503,369,844,1014,89,increase
+247,179,450,493,58,decrease
+489,359,805,947,101,increase
+1119,780,1762,2182,176,increase
+1376,920,2205,2944,167,decrease
+528,338,968,1248,72,increase
+245,164,458,606,46,decrease
+202,130,377,407,54,decrease
+144,93,312,379,33,decrease
+142,90,294,319,43,decrease
+164,98,330,383,40,decrease
+170,93,300,314,39,decrease
+199,132,347,364,44,increase
+124,80,259,253,39,decrease
+219,169,425,497,45,increase
+191,128,399,449,45,decrease
+84,51,187,195,29,no_change
+58,41,130,127,21,decrease
+73,49,158,164,27,increase
+56,38,128,138,19,increase
+126,94,256,304,27,no_change
+97,71,205,231,18,decrease
+59,40,134,168,19,decrease
+63,42,142,158,21,decrease
+82,53,202,253,22,increase
+103,69,225,228,26,increase
+17,14,55,49,7,decrease

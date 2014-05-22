@@ -1,0 +1,42 @@
+@relation $BLOX
+@attribute TID real
+@attribute POS real
+@attribute NUM_NODES real
+@attribute NUM_EDGES real
+@attribute NUM_CMP real
+@attribute class {increase , no_change ,decrease}
+@data
+22,16,53,41,13,no_change
+33,26,71,57,14,increase
+42,27,91,78,17,decrease
+30,16,61,48,14,decrease
+10,8,29,19,10,increase
+4,3,14,10,4,decrease
+7,4,16,10,6,decrease
+7,5,15,9,6,increase
+3,0,8,5,3,increase
+4,3,9,11,2,decrease
+6,6,15,9,6,increase
+4,3,16,14,3,decrease
+7,6,15,10,5,increase
+3,0,8,5,3,decrease
+3,0,8,5,3,increase
+3,0,6,3,3,decrease
+15,11,27,20,7,decrease
+3,0,6,3,3,no_change
+7,3,14,11,3,increase
+3,0,6,3,3,decrease
+9,3,23,23,5,increase
+6,4,11,8,3,decrease
+3,0,7,4,3,increase
+3,0,5,3,2,decrease
+8,7,12,9,3,decrease
+5,4,12,9,3,decrease
+7,6,17,13,5,increase
+6,5,10,7,3,decrease
+3,3,6,4,2,decrease
+5,3,14,10,4,increase
+3,3,12,9,3,decrease
+15,11,27,21,7,decrease
+4,3,7,4,3,decrease
+3,3,5,3,2,increase

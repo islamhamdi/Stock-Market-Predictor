@@ -1,0 +1,51 @@
+@relation $AMZN
+@attribute TID real
+@attribute POS real
+@attribute NUM_NODES real
+@attribute NUM_EDGES real
+@attribute NUM_CMP real
+@attribute class {increase , no_change ,decrease}
+@data
+99,62,244,281,33,no_change
+88,53,229,336,26,no_change
+146,108,319,371,45,no_change
+136,102,303,356,36,no_change
+89,65,226,299,27,no_change
+115,72,256,318,44,increase
+66,42,183,221,21,increase
+80,53,216,246,27,no_change
+171,124,402,402,64,no_change
+99,63,265,281,38,no_change
+46,31,137,163,14,no_change
+53,36,174,250,14,no_change
+53,33,148,198,12,no_change
+59,36,184,215,19,no_change
+395,252,826,1063,104,no_change
+153,111,371,430,52,no_change
+76,50,196,265,27,decrease
+104,70,293,312,39,decrease
+84,54,244,305,21,decrease
+85,64,208,303,19,decrease
+74,50,207,253,27,no_change
+91,59,244,393,20,decrease
+78,54,229,300,23,decrease
+101,64,274,337,34,no_change
+199,118,452,551,49,no_change
+148,108,370,453,29,increase
+94,64,271,379,25,no_change
+92,67,241,268,30,decrease
+249,158,525,628,59,decrease
+288,198,608,691,75,decrease
+327,209,659,864,66,increase
+147,90,376,508,37,increase
+94,66,268,330,38,decrease
+102,67,250,302,23,decrease
+12,9,45,47,6,increase
+158,103,372,444,50,no_change
+110,74,280,314,28,increase
+147,98,355,474,34,no_change
+101,64,265,317,25,increase
+74,55,201,227,21,no_change
+93,59,257,318,18,decrease
+65,45,186,222,20,decrease
+172,119,436,517,32,decrease

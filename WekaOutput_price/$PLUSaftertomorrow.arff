@@ -1,0 +1,10 @@
+@relation $PLUS
+@attribute TID real
+@attribute POS real
+@attribute NUM_NODES real
+@attribute NUM_EDGES real
+@attribute NUM_CMP real
+@attribute class {increase , no_change ,decrease}
+@data
+5,0,10,8,2,no_change
+3,3,9,6,3,no_change

@@ -1,0 +1,51 @@
+@relation $GTAT
+@attribute TID real
+@attribute POS real
+@attribute NUM_NODES real
+@attribute NUM_EDGES real
+@attribute NUM_CMP real
+@attribute class {increase , no_change ,decrease}
+@data
+5,0,17,14,3,no_change
+122,81,279,263,47,decrease
+89,63,192,179,31,increase
+99,81,192,179,29,no_change
+58,44,116,133,12,decrease
+41,27,92,77,20,increase
+81,64,150,151,20,increase
+191,144,365,356,48,increase
+122,82,257,267,28,no_change
+60,41,132,119,22,increase
+141,107,304,276,48,decrease
+69,51,146,119,29,no_change
+107,83,206,210,22,decrease
+105,70,218,201,29,decrease
+87,57,182,156,39,increase
+233,164,340,302,47,increase
+103,69,187,149,42,increase
+172,138,324,279,62,increase
+152,102,299,306,41,no_change
+126,88,217,202,29,decrease
+72,54,150,132,28,decrease
+162,119,280,288,27,decrease
+77,59,146,112,34,decrease
+127,75,214,189,38,increase
+103,71,208,179,38,increase
+78,55,162,148,31,no_change
+28,24,70,59,15,increase
+60,40,95,89,12,increase
+205,148,370,356,52,decrease
+67,46,143,106,37,decrease
+104,70,185,163,29,decrease
+76,55,161,124,38,increase
+39,31,87,64,23,increase
+52,33,120,100,23,decrease
+12,7,34,33,4,no_change
+86,56,173,168,26,decrease
+78,46,151,119,37,decrease
+117,79,192,166,45,increase
+53,41,114,94,28,decrease
+37,33,85,69,18,increase
+36,28,71,61,14,increase
+55,40,115,105,20,decrease
+54,41,99,102,14,decrease

@@ -1,0 +1,38 @@
+@relation $AGEN
+@attribute TID real
+@attribute POS real
+@attribute NUM_NODES real
+@attribute NUM_EDGES real
+@attribute NUM_CMP real
+@attribute class {increase , no_change ,decrease}
+@data
+4,0,12,12,2,no_change
+24,18,57,57,8,no_change
+31,28,76,74,9,decrease
+53,43,119,101,21,increase
+38,26,64,53,13,decrease
+11,9,26,25,5,decrease
+15,11,27,23,4,increase
+6,5,16,11,5,decrease
+21,19,51,42,10,increase
+9,6,31,25,6,decrease
+12,8,29,23,7,increase
+8,4,21,17,5,decrease
+7,5,14,9,5,no_change
+4,3,9,5,4,decrease
+14,9,27,19,8,increase
+8,7,25,19,6,decrease
+3,3,8,5,3,decrease
+3,0,14,12,2,decrease
+31,18,72,75,10,increase
+8,4,31,24,7,decrease
+14,9,43,36,8,increase
+4,4,14,13,1,decrease
+11,8,27,20,7,decrease
+3,3,10,8,2,increase
+5,5,19,16,3,increase
+10,9,13,11,2,increase
+28,19,69,57,13,decrease
+7,3,24,26,4,no_change
+6,6,18,15,3,decrease
+3,3,12,10,2,decrease

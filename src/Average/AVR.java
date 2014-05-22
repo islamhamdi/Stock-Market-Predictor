@@ -28,9 +28,9 @@ import jxl.write.WriteException;
 import jxl.write.biff.RowsExceededException;
 
 public class AVR {
-	
+
 	static HashMap<Integer, ArrayList<String>> keyMap = new HashMap<>();
-	
+
 	String[] f = { "RTID", "RTU", "TID", "TSUM", "UFRN", "THTG", "TURL",
 			"UFLW", "UID", "NEG", "POS", "POS_NEG", "NUM_NODES", "NUM_EDGES",
 			"NUM_CMP", "MAX_DIST" };
@@ -54,32 +54,40 @@ public class AVR {
 	WritableWorkbook workbook;
 	WritableSheet excelSheet;
 
-	// String inputFolder =
-	// "/home/mohamed/Dropbox/Stock Market Daily Data/statistics/plain";
+	static String inputFolder = "/home/mohamed/Dropbox/Stock Market Daily Data/statistics/plain";
+	static String outputFolder = "/home/mohamed/Dropbox/Stock Market Daily Data/Average/";
 
-//	static String inputFolder = "/home/mohamed/Desktop/plain";
-	static String inputFolder = "/media/MyData/DropBox/Dropbox/Stock Market Daily Data/statistics/plain/";
-	
+	// static String inputFolder = "/home/mohamed/Desktop/plain";
+	// static String inputFolder =
+	// "/media/MyData/DropBox/Dropbox/Stock Market Daily Data/statistics/plain/";
+
 	public static void main(String[] args) throws Exception {
 		// read hashMap
+
 		keyMap = readHashMap("");
-		File[] ss = ReadCurrMode(Global.Peg_Ratio_low);
-		for(int i = 0; i < ss.length; i++)
-			System.out.println("FOUND : " + ss[i].getName());
-		
-//		AVR avr = new AVR("avr.xls");
-//		for (int i = 0; i < 7; i++)
-//			avr.read(i);
-//
-//		avr.close();
+
+		for (int k = 0; k <= 21; k++) {
+			File[] ss = ReadCurrMode(k);
+			for (int i = 0; i < ss.length; i++)
+				System.out.print(" " + ss[i].getName());
+			System.out.println();
+			AVR avr = new AVR(outputFolder + Global.mode_names[k] + ".xls");
+			for (int i = 0; i < 7; i++)
+				avr.read(i, k);
+
+			avr.close();
+		}
 	}
-	
-	private static HashMap<Integer, ArrayList<String>> readHashMap(String directory){
+
+	private static HashMap<Integer, ArrayList<String>> readHashMap(
+			String directory) {
 		FileInputStream fin;
 		try {
 			fin = new FileInputStream(directory + Global.kEYMAP);
 			ObjectInputStream ois = new ObjectInputStream(fin);
-			HashMap<Integer, ArrayList<String>> map = (HashMap<Integer, ArrayList<String>>) ois.readObject();
+			@SuppressWarnings("unchecked")
+			HashMap<Integer, ArrayList<String>> map = (HashMap<Integer, ArrayList<String>>) ois
+					.readObject();
 			ois.close();
 			return map;
 		} catch (FileNotFoundException e) {
@@ -92,15 +100,15 @@ public class AVR {
 		return null;
 	}
 
-	public void read(int sheetNum) throws Exception {
+	public void read(int sheetNum, int mode) throws Exception {
 
 		excelSheet = workbook.getSheet(sheetNum);
 		excelSheet.getSettings().setDefaultColumnWidth(15);
 
-		File[] files = ReadCurrMode(-1);
+		File[] files = ReadCurrMode(mode);
 		for (int k = 0; k < files.length; k++) {
+			name = files[k].getName();
 			File inputWorkbook = new File(files[k].getAbsolutePath());
-			System.out.println(files[k].getName());
 			Workbook w;
 			try {
 				w = Workbook.getWorkbook(inputWorkbook);
@@ -141,25 +149,29 @@ public class AVR {
 
 	}
 
+	public String name = "";
+
 	private static File[] ReadCurrMode(int mode) throws Exception {
 		File statusDir = new File(inputFolder);
 		if (!statusDir.exists())
 			throw new Exception("input folder doesnt exist");
 
 		File[] files = statusDir.listFiles();
+		if (mode == 0)
+			return files;
 		ArrayList<File> result = new ArrayList<File>();
 		ArrayList<String> keyStatFiles = keyMap.get(mode);
-		for(File f : files){
+		for (File f : files) {
 			String fileName = f.getName();
 			String companyName = fileName.substring(1, fileName.indexOf('.'));
-			if(keyStatFiles.contains(companyName))
+			if (keyStatFiles.contains(companyName))
 				result.add(f);
 		}
-		
+
 		File[] ans = new File[result.size()];
-		for(int i = 0; i < result.size(); i++)
+		for (int i = 0; i < result.size(); i++)
 			ans[i] = result.get(i);
-		
+
 		return ans;
 	}
 
@@ -176,17 +188,27 @@ public class AVR {
 			int start_col, int width, int high, int n) throws Exception {
 		for (int row = start_raw; row < start_raw + high; row++) {
 			for (int col = start_col; col < start_col + width; col++) {
-				Cell cell = sheet.getCell(col, row);
-				if (cell.getType() == CellType.NUMBER) {
-					double v = Double.parseDouble(cell.getContents());
-					int r = row - start_raw;
-					int c = col - start_col;
-					buff[r][c] += v;
-				} else {
-					System.err.println(sheet.getName());
-					System.out.println(row + " ," + col);
-					System.out.println(cell.getContents());
-					// throw new Exception("INVALID");
+				int r = row - start_raw;
+				int c = col - start_col;
+				try {
+
+					Cell cell = sheet.getCell(col, row);
+					if (cell.getType() == CellType.NUMBER) {
+						double v = Double.parseDouble(cell.getContents());
+						buff[r][c] += v;
+					} else {
+						buff[r][c] += 0.2;
+
+						// System.err.println(sheet.getName());
+						// System.err.println(row + " ," + col);
+						// System.err.println(cell.getContents());
+						// throw new Exception("INVALID");
+					}
+				} catch (Exception e) {
+					buff[r][c] += 0.2;
+					// System.out.println(row + " " + col + sheet.getName());
+					// System.out.println(name);
+					// System.exit(0);
 				}
 			}
 		}

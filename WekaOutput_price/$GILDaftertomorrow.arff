@@ -1,0 +1,43 @@
+@relation $GILD
+@attribute TID real
+@attribute POS real
+@attribute NUM_NODES real
+@attribute NUM_EDGES real
+@attribute NUM_CMP real
+@attribute class {increase , no_change ,decrease}
+@data
+5,4,26,24,3,no_change
+44,37,121,99,24,no_change
+50,36,148,130,26,no_change
+48,29,109,93,26,decrease
+32,17,73,65,13,decrease
+27,23,69,49,20,increase
+36,23,91,75,18,no_change
+18,12,55,43,14,decrease
+21,15,56,45,14,no_change
+164,102,296,255,56,no_change
+119,80,266,254,42,no_change
+48,30,120,96,27,no_change
+39,26,75,59,17,decrease
+41,28,85,67,23,decrease
+44,33,100,78,24,no_change
+175,123,327,292,68,increase
+87,65,194,203,37,decrease
+59,40,123,93,30,decrease
+116,79,218,190,40,decrease
+82,55,161,136,35,no_change
+289,195,542,474,100,increase
+197,136,432,407,69,no_change
+75,41,179,181,30,decrease
+75,48,192,180,32,decrease
+87,57,190,162,30,increase
+188,112,381,351,69,increase
+53,33,148,125,33,no_change
+105,77,235,196,49,no_change
+94,63,202,182,38,decrease
+81,60,197,175,37,no_change
+56,40,154,145,26,decrease
+24,14,73,55,19,no_change
+75,49,153,129,31,decrease
+51,30,110,80,30,no_change
+20,17,51,39,13,increase

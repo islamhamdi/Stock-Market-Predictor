@@ -1,0 +1,25 @@
+@relation $HUM
+@attribute TID real
+@attribute POS real
+@attribute NUM_NODES real
+@attribute NUM_EDGES real
+@attribute NUM_CMP real
+@attribute class {increase , no_change ,decrease}
+@data
+37,28,107,104,17,no_change
+5,4,16,12,4,no_change
+7,5,24,21,5,increase
+7,3,21,14,7,decrease
+7,7,21,18,4,no_change
+6,5,18,13,5,no_change
+4,3,12,8,4,increase
+5,4,17,14,3,increase
+9,9,22,16,6,increase
+7,7,22,15,7,decrease
+7,5,22,17,5,decrease
+4,3,11,8,3,no_change
+5,5,13,8,5,no_change
+5,4,12,10,2,no_change
+5,3,13,10,3,no_change
+3,3,6,3,3,no_change
+7,4,18,11,7,increase

@@ -28,9 +28,9 @@ public class Main {
 		companies = getContent(sh, 0);
 
 		go(sh);
-
 		workbooks.close();
 
+		writeHashMap("", hMap);
 	}
 
 	private static void addToHash(double low, double high, int col, Sheet sh,
@@ -60,7 +60,6 @@ public class Main {
 				+ tmphigh.size());
 		
 		
-		writeHashMap("", hMap);
 	}
 
 	private static void writeHashMap(String directory, HashMap<Integer, ArrayList<String>> map){

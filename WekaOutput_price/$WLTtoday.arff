@@ -1,0 +1,50 @@
+@relation $WLT
+@attribute TID real
+@attribute POS real
+@attribute NUM_NODES real
+@attribute NUM_EDGES real
+@attribute NUM_CMP real
+@attribute class {increase , no_change ,decrease}
+@data
+17,13,41,30,11,no_change
+27,18,66,51,16,no_change
+82,61,168,125,47,increase
+44,28,103,88,22,increase
+15,11,36,34,6,decrease
+17,12,41,39,6,decrease
+24,11,48,47,9,decrease
+15,10,38,33,8,no_change
+37,24,87,81,10,increase
+128,96,241,244,38,decrease
+96,59,197,159,44,decrease
+103,56,198,159,43,decrease
+61,42,136,121,33,increase
+27,20,57,46,11,decrease
+16,11,37,26,11,no_change
+11,9,33,24,9,increase
+32,13,74,66,17,decrease
+28,20,64,47,17,no_change
+349,225,629,601,91,decrease
+113,70,206,180,36,increase
+72,43,137,171,19,increase
+28,17,63,51,14,decrease
+41,26,81,67,15,decrease
+19,16,49,39,12,no_change
+18,12,39,32,11,increase
+12,6,37,34,7,decrease
+20,16,42,31,12,increase
+19,15,45,34,11,increase
+37,25,90,92,17,increase
+43,32,113,110,20,no_change
+29,18,73,63,13,decrease
+60,35,121,140,13,increase
+87,59,202,237,20,decrease
+5,0,13,9,4,decrease
+31,23,68,71,10,decrease
+15,10,40,31,9,increase
+58,42,115,101,20,increase
+17,10,51,38,13,decrease
+7,6,20,15,5,decrease
+80,52,163,162,23,decrease
+25,14,53,42,11,increase
+25,17,73,67,9,increase

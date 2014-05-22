@@ -1,0 +1,21 @@
+@relation $AER
+@attribute TID real
+@attribute POS real
+@attribute NUM_NODES real
+@attribute NUM_EDGES real
+@attribute NUM_CMP real
+@attribute class {increase , no_change ,decrease}
+@data
+15,12,40,29,11,no_change
+5,4,16,11,5,increase
+5,3,16,12,4,no_change
+4,0,12,9,3,no_change
+4,3,12,10,2,decrease
+4,0,14,16,2,decrease
+3,3,9,6,3,no_change
+5,5,15,11,4,no_change
+3,0,8,7,2,no_change
+3,0,9,7,2,increase
+3,3,8,6,2,decrease
+3,0,8,7,2,increase
+4,0,11,8,3,increase

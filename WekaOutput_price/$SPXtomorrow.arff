@@ -1,0 +1,51 @@
+@relation $SPX
+@attribute TID real
+@attribute POS real
+@attribute NUM_NODES real
+@attribute NUM_EDGES real
+@attribute NUM_CMP real
+@attribute class {increase , no_change ,decrease}
+@data
+169,125,438,484,40,no_change
+158,108,384,403,40,no_change
+217,153,499,548,39,no_change
+283,195,612,777,32,no_change
+382,247,751,938,52,no_change
+310,198,613,714,53,no_change
+355,232,770,939,54,increase
+285,188,643,761,54,no_change
+243,171,578,644,41,no_change
+206,124,494,549,40,no_change
+201,142,470,485,46,no_change
+196,132,475,516,33,no_change
+194,128,454,482,44,no_change
+204,137,486,526,37,decrease
+402,276,882,1163,60,no_change
+274,188,626,684,40,no_change
+246,162,588,658,43,no_change
+179,117,436,456,33,no_change
+230,150,509,536,44,no_change
+157,99,376,378,43,no_change
+221,141,489,531,42,no_change
+227,144,544,559,59,no_change
+218,157,523,604,35,no_change
+322,209,657,715,58,no_change
+342,215,709,809,55,no_change
+225,141,505,559,39,no_change
+220,149,528,567,50,no_change
+297,200,718,793,58,no_change
+193,139,491,500,50,no_change
+211,135,475,514,40,decrease
+384,252,753,786,59,decrease
+391,253,826,885,69,no_change
+286,183,593,644,46,increase
+266,179,575,629,45,decrease
+32,20,98,93,13,no_change
+454,302,948,1044,63,no_change
+235,157,566,643,36,no_change
+363,222,807,911,57,increase
+294,200,611,710,48,no_change
+205,135,489,521,38,no_change
+159,113,389,430,24,no_change
+186,128,445,504,32,no_change
+161,115,413,467,31,decrease

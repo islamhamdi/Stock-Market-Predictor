@@ -1,0 +1,29 @@
+@relation $JOEZ
+@attribute TID real
+@attribute POS real
+@attribute NUM_NODES real
+@attribute NUM_EDGES real
+@attribute NUM_CMP real
+@attribute class {increase , no_change ,decrease}
+@data
+15,12,39,29,10,no_change
+7,7,15,11,5,decrease
+4,4,10,7,3,decrease
+4,4,13,9,4,decrease
+5,5,17,12,5,decrease
+4,4,12,9,3,decrease
+5,5,11,6,5,no_change
+4,3,11,7,4,increase
+3,3,6,4,2,increase
+4,0,8,4,4,increase
+7,7,13,10,3,decrease
+6,5,16,10,6,decrease
+5,5,12,9,3,no_change
+6,6,15,10,5,decrease
+7,6,15,10,5,increase
+24,18,54,37,18,increase
+5,0,13,8,5,increase
+8,7,14,10,4,increase
+7,3,15,11,4,no_change
+5,4,15,16,2,decrease
+3,0,6,4,2,increase

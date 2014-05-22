@@ -1,0 +1,43 @@
+@relation $CSIQ
+@attribute TID real
+@attribute POS real
+@attribute NUM_NODES real
+@attribute NUM_EDGES real
+@attribute NUM_CMP real
+@attribute class {increase , no_change ,decrease}
+@data
+7,3,29,26,3,no_change
+49,40,131,120,21,increase
+55,36,105,100,14,no_change
+133,91,258,277,34,decrease
+30,18,78,86,12,decrease
+68,47,131,118,20,increase
+27,18,82,67,18,decrease
+79,53,191,167,31,no_change
+366,256,644,578,111,decrease
+124,96,254,226,48,decrease
+79,57,164,148,27,decrease
+70,43,153,135,28,no_change
+61,38,137,118,26,decrease
+66,43,153,130,30,no_change
+41,25,106,101,18,increase
+31,19,70,60,15,increase
+25,18,78,57,21,increase
+33,27,83,66,18,increase
+27,20,67,81,8,decrease
+42,32,88,63,25,decrease
+20,15,54,42,12,increase
+26,14,72,85,10,decrease
+15,11,40,27,13,decrease
+38,19,85,65,22,increase
+41,26,106,90,26,no_change
+40,33,87,75,16,increase
+24,14,54,48,10,increase
+25,15,62,51,12,decrease
+22,12,86,86,14,decrease
+23,15,60,51,12,decrease
+12,9,28,17,11,increase
+23,17,61,42,20,increase
+17,14,43,37,8,decrease
+21,18,54,41,14,decrease
+4,4,22,18,4,increase

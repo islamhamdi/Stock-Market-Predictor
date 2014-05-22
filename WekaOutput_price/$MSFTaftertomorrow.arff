@@ -1,0 +1,51 @@
+@relation $MSFT
+@attribute TID real
+@attribute POS real
+@attribute NUM_NODES real
+@attribute NUM_EDGES real
+@attribute NUM_CMP real
+@attribute class {increase , no_change ,decrease}
+@data
+63,39,201,236,22,no_change
+61,45,177,302,10,no_change
+66,43,194,269,10,increase
+56,40,174,197,16,increase
+56,36,174,233,12,decrease
+40,25,126,149,10,increase
+44,27,143,160,12,no_change
+58,36,182,220,14,no_change
+47,31,148,165,14,no_change
+45,29,129,147,10,no_change
+37,25,126,143,9,no_change
+39,30,126,136,12,no_change
+46,32,141,151,18,decrease
+62,46,210,259,17,no_change
+78,58,220,268,22,no_change
+50,34,157,214,12,increase
+53,40,178,237,19,no_change
+300,220,735,750,100,increase
+91,63,288,318,29,no_change
+120,88,327,350,49,no_change
+67,50,196,231,25,no_change
+64,45,195,228,22,decrease
+77,55,244,272,26,decrease
+57,43,187,220,15,increase
+121,81,300,325,42,increase
+100,62,294,372,22,increase
+107,78,287,332,40,no_change
+68,51,188,199,21,no_change
+54,36,157,176,23,decrease
+73,55,224,267,20,no_change
+57,43,184,189,30,no_change
+61,47,192,255,18,increase
+41,27,136,156,12,decrease
+32,24,113,130,8,no_change
+9,6,41,44,2,no_change
+40,31,126,138,11,increase
+46,32,147,169,15,increase
+36,27,120,137,11,no_change
+39,25,137,164,12,no_change
+33,22,132,163,9,no_change
+49,39,158,195,12,no_change
+43,28,139,169,13,decrease
+37,29,125,128,15,decrease

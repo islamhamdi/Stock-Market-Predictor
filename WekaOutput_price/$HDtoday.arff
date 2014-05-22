@@ -1,0 +1,40 @@
+@relation $HD
+@attribute TID real
+@attribute POS real
+@attribute NUM_NODES real
+@attribute NUM_EDGES real
+@attribute NUM_CMP real
+@attribute class {increase , no_change ,decrease}
+@data
+4,0,18,23,2,no_change
+36,27,103,93,18,no_change
+77,54,216,190,38,increase
+29,16,82,70,14,no_change
+4,3,10,6,4,no_change
+9,9,26,17,9,no_change
+13,6,38,32,9,no_change
+15,12,51,41,11,increase
+15,12,30,23,7,no_change
+12,8,37,29,8,no_change
+9,7,29,20,9,no_change
+10,7,32,24,8,no_change
+11,7,37,39,5,no_change
+11,5,41,39,6,no_change
+23,8,58,170,6,decrease
+5,3,18,13,5,no_change
+6,3,21,16,5,no_change
+4,3,17,13,4,no_change
+11,5,37,37,7,no_change
+4,0,12,8,4,no_change
+3,0,11,10,2,no_change
+15,8,63,58,9,no_change
+7,5,25,22,3,no_change
+6,4,17,12,5,no_change
+7,6,18,14,5,no_change
+10,7,41,33,8,no_change
+10,6,32,45,7,no_change
+4,4,12,9,3,no_change
+9,6,30,28,8,decrease
+3,0,14,12,2,no_change
+18,16,22,19,3,no_change
+8,8,15,12,3,decrease

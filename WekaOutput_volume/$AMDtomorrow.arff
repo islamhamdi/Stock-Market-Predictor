@@ -1,0 +1,43 @@
+@relation $AMD
+@attribute TID real
+@attribute POS real
+@attribute NUM_NODES real
+@attribute NUM_EDGES real
+@attribute NUM_CMP real
+@attribute class {increase , no_change ,decrease}
+@data
+3,0,11,8,3,no_change
+59,47,111,87,24,decrease
+96,61,180,149,34,increase
+85,64,173,128,46,increase
+143,109,264,221,51,decrease
+78,50,162,125,43,increase
+75,54,144,104,40,decrease
+70,46,159,132,32,increase
+75,49,132,106,27,no_change
+110,74,201,165,39,increase
+332,240,568,461,113,decrease
+182,128,338,263,75,decrease
+180,133,340,288,54,decrease
+119,77,221,195,34,increase
+104,76,205,168,44,decrease
+82,49,148,122,27,increase
+98,69,186,145,43,decrease
+108,82,191,163,31,increase
+215,169,375,329,57,decrease
+153,119,281,231,60,increase
+156,104,266,220,51,decrease
+137,97,243,260,36,decrease
+132,85,227,184,44,increase
+148,105,246,203,43,increase
+208,137,327,267,65,decrease
+108,66,188,166,26,increase
+161,126,257,236,32,increase
+170,130,305,248,57,decrease
+101,69,177,142,36,increase
+118,80,212,185,33,increase
+182,130,308,259,51,increase
+125,81,200,155,46,decrease
+201,137,336,299,44,decrease
+147,108,241,196,48,increase
+12,8,28,21,7,increase

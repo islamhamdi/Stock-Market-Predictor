@@ -1,0 +1,35 @@
+@relation $WEN
+@attribute TID real
+@attribute POS real
+@attribute NUM_NODES real
+@attribute NUM_EDGES real
+@attribute NUM_CMP real
+@attribute class {increase , no_change ,decrease}
+@data
+4,3,22,25,3,no_change
+13,12,31,21,10,decrease
+10,7,31,21,10,decrease
+16,11,37,26,11,increase
+5,5,17,13,4,increase
+3,0,7,4,3,decrease
+4,3,12,9,3,increase
+6,5,17,12,5,decrease
+3,0,9,6,3,decrease
+6,5,26,29,5,decrease
+4,3,13,11,2,increase
+4,3,10,7,3,decrease
+3,0,9,7,2,decrease
+9,6,27,22,8,increase
+3,3,10,7,3,decrease
+5,4,12,9,4,increase
+5,0,12,8,4,increase
+14,11,20,23,5,increase
+10,0,27,21,7,increase
+4,3,12,8,4,decrease
+8,5,15,15,4,increase
+5,3,13,8,5,decrease
+5,4,22,17,5,decrease
+4,3,16,12,4,increase
+5,5,21,16,5,decrease
+5,5,11,7,4,increase
+8,7,14,10,4,decrease

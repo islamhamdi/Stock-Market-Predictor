@@ -1,0 +1,20 @@
+@relation $RIGL
+@attribute TID real
+@attribute POS real
+@attribute NUM_NODES real
+@attribute NUM_EDGES real
+@attribute NUM_CMP real
+@attribute class {increase , no_change ,decrease}
+@data
+17,10,27,20,7,no_change
+4,4,9,6,3,decrease
+11,9,26,17,9,increase
+16,15,40,31,9,increase
+28,23,66,55,12,increase
+3,0,12,9,3,no_change
+6,5,17,14,3,increase
+3,3,7,5,2,decrease
+3,3,9,6,3,no_change
+15,14,32,26,8,increase
+3,0,11,9,2,decrease
+3,0,7,5,2,decrease

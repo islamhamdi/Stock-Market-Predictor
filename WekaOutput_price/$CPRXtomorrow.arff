@@ -1,0 +1,43 @@
+@relation $CPRX
+@attribute TID real
+@attribute POS real
+@attribute NUM_NODES real
+@attribute NUM_EDGES real
+@attribute NUM_CMP real
+@attribute class {increase , no_change ,decrease}
+@data
+3,3,11,16,1,no_change
+43,39,84,76,16,no_change
+38,24,73,57,16,increase
+44,36,93,81,19,increase
+24,19,55,42,13,decrease
+41,37,89,78,15,decrease
+17,14,48,42,8,no_change
+9,8,22,15,7,decrease
+18,10,34,21,13,decrease
+25,19,50,35,15,increase
+28,20,61,49,15,decrease
+16,11,37,27,10,no_change
+10,7,23,18,5,no_change
+6,4,18,12,6,increase
+16,13,47,35,12,no_change
+13,12,51,43,10,decrease
+12,11,34,25,9,increase
+6,4,18,12,6,increase
+46,34,105,83,24,increase
+78,59,150,119,36,no_change
+19,14,40,37,10,decrease
+22,14,46,48,7,increase
+46,35,98,84,20,decrease
+14,10,42,32,11,no_change
+12,9,30,22,9,no_change
+16,12,40,28,12,decrease
+11,9,29,21,8,increase
+37,31,81,62,20,decrease
+36,24,72,55,17,increase
+166,123,263,220,53,decrease
+35,30,81,74,17,decrease
+14,11,36,26,10,increase
+35,28,72,56,17,increase
+15,11,52,39,13,decrease
+4,0,16,13,3,decrease

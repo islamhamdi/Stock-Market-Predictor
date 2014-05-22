@@ -1,0 +1,41 @@
+@relation $ILMN
+@attribute TID real
+@attribute POS real
+@attribute NUM_NODES real
+@attribute NUM_EDGES real
+@attribute NUM_CMP real
+@attribute class {increase , no_change ,decrease}
+@data
+7,6,30,24,6,no_change
+18,16,47,32,15,decrease
+11,8,37,29,8,increase
+4,0,15,12,3,increase
+7,3,16,12,5,increase
+14,10,42,33,10,decrease
+7,6,25,19,6,increase
+11,9,36,28,9,decrease
+7,5,22,16,6,increase
+8,6,31,29,4,increase
+10,6,31,28,5,decrease
+7,6,30,24,6,decrease
+5,4,19,15,4,increase
+10,7,39,35,7,increase
+12,8,37,29,10,no_change
+11,5,39,31,9,decrease
+9,9,31,31,6,decrease
+6,5,25,22,3,decrease
+3,0,11,8,3,increase
+5,0,19,18,3,no_change
+10,5,29,22,7,decrease
+10,6,32,32,6,increase
+12,6,32,26,6,decrease
+15,10,50,36,14,decrease
+3,0,12,9,3,increase
+9,6,21,15,6,decrease
+11,7,38,31,9,increase
+11,9,39,32,8,increase
+15,10,45,36,10,decrease
+11,9,37,28,9,decrease
+6,4,22,16,6,decrease
+4,3,13,11,2,increase
+3,3,9,7,2,increase

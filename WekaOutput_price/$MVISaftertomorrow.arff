@@ -1,0 +1,39 @@
+@relation $MVIS
+@attribute TID real
+@attribute POS real
+@attribute NUM_NODES real
+@attribute NUM_EDGES real
+@attribute NUM_CMP real
+@attribute class {increase , no_change ,decrease}
+@data
+22,17,89,108,1,no_change
+40,27,89,76,19,increase
+36,22,80,59,22,decrease
+49,43,92,83,18,decrease
+14,9,38,35,8,increase
+7,6,17,12,5,decrease
+54,46,103,99,24,increase
+14,12,40,31,10,no_change
+9,9,20,11,9,no_change
+28,22,70,54,18,decrease
+9,5,22,17,5,no_change
+5,3,16,12,4,decrease
+6,6,12,8,4,increase
+4,3,9,5,4,decrease
+13,9,31,27,5,decrease
+9,7,27,21,8,increase
+3,0,6,4,2,increase
+6,5,11,8,3,decrease
+175,131,328,338,47,decrease
+91,67,174,176,26,decrease
+27,19,55,49,8,decrease
+19,14,37,29,10,increase
+30,25,52,38,14,increase
+32,22,58,50,13,increase
+24,19,44,36,9,decrease
+24,19,52,42,16,decrease
+16,13,32,23,10,no_change
+3,0,6,4,2,increase
+10,9,22,16,6,no_change
+4,0,11,7,4,decrease
+10,6,24,17,7,no_change

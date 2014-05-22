@@ -1,0 +1,18 @@
+@relation $ECL
+@attribute TID real
+@attribute POS real
+@attribute NUM_NODES real
+@attribute NUM_EDGES real
+@attribute NUM_CMP real
+@attribute class {increase , no_change ,decrease}
+@data
+18,13,48,37,11,no_change
+4,3,12,8,4,increase
+4,4,10,7,3,increase
+3,0,12,10,2,no_change
+3,0,14,11,3,no_change
+4,4,15,13,2,no_change
+3,3,8,5,3,no_change
+5,5,17,13,4,no_change
+3,0,14,16,2,decrease
+3,0,7,5,2,decrease

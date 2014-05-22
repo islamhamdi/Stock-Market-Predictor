@@ -1,0 +1,41 @@
+@relation $LULU
+@attribute TID real
+@attribute POS real
+@attribute NUM_NODES real
+@attribute NUM_EDGES real
+@attribute NUM_CMP real
+@attribute class {increase , no_change ,decrease}
+@data
+12,12,29,20,9,no_change
+22,14,49,31,18,increase
+26,19,63,57,13,no_change
+16,12,40,28,12,decrease
+127,80,220,192,46,increase
+31,19,78,58,20,decrease
+16,11,33,22,12,decrease
+8,6,22,14,8,decrease
+22,15,61,47,15,increase
+24,12,49,36,13,decrease
+15,11,33,23,10,decrease
+13,6,30,22,8,no_change
+37,22,73,52,22,increase
+15,9,35,22,13,decrease
+19,10,54,48,13,no_change
+18,12,35,23,12,increase
+22,17,65,57,15,increase
+41,33,77,64,19,increase
+21,13,52,39,17,decrease
+16,9,33,25,9,increase
+41,31,105,81,27,no_change
+42,32,116,95,25,decrease
+64,47,179,157,40,increase
+265,177,546,470,93,increase
+100,69,223,186,42,decrease
+59,40,159,146,32,decrease
+26,17,55,39,16,decrease
+83,58,156,152,26,increase
+71,49,143,105,41,decrease
+41,27,94,71,23,increase
+63,38,119,103,20,decrease
+9,4,25,17,8,decrease
+15,12,32,21,11,increase

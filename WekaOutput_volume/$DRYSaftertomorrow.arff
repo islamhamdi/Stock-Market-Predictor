@@ -1,0 +1,43 @@
+@relation $DRYS
+@attribute TID real
+@attribute POS real
+@attribute NUM_NODES real
+@attribute NUM_EDGES real
+@attribute NUM_CMP real
+@attribute class {increase , no_change ,decrease}
+@data
+23,15,39,32,9,no_change
+24,18,48,44,8,increase
+44,32,84,74,18,increase
+35,28,65,54,13,no_change
+53,34,115,122,18,decrease
+45,32,94,78,20,increase
+16,11,33,24,9,increase
+57,46,108,91,22,increase
+94,66,186,166,33,decrease
+118,75,205,185,39,increase
+31,16,63,47,17,decrease
+31,24,58,65,6,decrease
+37,28,59,48,13,increase
+23,12,49,36,13,decrease
+30,24,72,58,15,decrease
+26,17,63,52,16,increase
+21,12,48,36,13,decrease
+38,30,83,61,24,increase
+36,28,73,54,19,increase
+23,14,49,34,15,increase
+10,8,29,19,10,decrease
+15,10,31,19,12,increase
+13,11,33,22,11,increase
+14,11,37,26,11,decrease
+15,10,36,23,13,decrease
+23,20,50,44,9,increase
+5,5,14,9,5,decrease
+6,5,12,8,4,increase
+6,6,14,8,6,increase
+8,7,18,10,8,decrease
+11,6,26,15,11,decrease
+6,3,15,10,5,no_change
+3,3,12,9,3,increase
+5,4,18,13,5,decrease
+5,4,22,17,5,decrease

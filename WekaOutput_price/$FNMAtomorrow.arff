@@ -1,0 +1,43 @@
+@relation $FNMA
+@attribute TID real
+@attribute POS real
+@attribute NUM_NODES real
+@attribute NUM_EDGES real
+@attribute NUM_CMP real
+@attribute class {increase , no_change ,decrease}
+@data
+137,105,235,194,45,no_change
+105,79,202,157,53,increase
+199,147,331,275,70,increase
+498,382,719,626,107,increase
+766,577,1052,941,132,increase
+303,228,441,397,59,decrease
+171,131,295,237,62,increase
+115,83,213,171,42,increase
+188,141,307,244,66,increase
+705,537,952,884,100,decrease
+578,435,790,710,95,increase
+324,254,499,435,79,decrease
+1162,840,1579,1445,216,decrease
+755,490,1078,988,121,increase
+484,329,687,622,81,increase
+315,226,454,381,77,decrease
+435,310,624,558,82,decrease
+570,364,789,680,119,increase
+613,436,809,748,80,increase
+364,255,512,460,66,no_change
+428,315,595,520,81,no_change
+163,104,264,220,45,decrease
+224,146,319,283,40,increase
+180,113,274,227,49,increase
+196,139,319,274,52,decrease
+114,77,191,150,43,increase
+337,244,521,429,102,increase
+229,179,348,297,59,decrease
+138,95,211,169,44,increase
+188,146,287,220,67,decrease
+290,197,456,389,75,increase
+147,110,251,203,51,increase
+193,126,269,229,41,increase
+196,126,283,241,42,decrease
+23,16,40,30,11,decrease

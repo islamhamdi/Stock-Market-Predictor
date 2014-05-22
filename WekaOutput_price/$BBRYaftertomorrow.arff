@@ -1,0 +1,43 @@
+@relation $BBRY
+@attribute TID real
+@attribute POS real
+@attribute NUM_NODES real
+@attribute NUM_EDGES real
+@attribute NUM_CMP real
+@attribute class {increase , no_change ,decrease}
+@data
+449,291,710,721,61,no_change
+761,495,1252,1269,111,decrease
+1525,1052,2312,2428,163,increase
+880,601,1365,1379,102,decrease
+621,397,979,1089,57,increase
+764,481,1178,1166,92,no_change
+601,403,974,977,87,decrease
+600,409,1035,1068,90,no_change
+501,308,803,834,63,decrease
+508,339,791,782,55,decrease
+400,266,643,604,75,decrease
+415,249,678,661,69,no_change
+458,306,733,712,74,decrease
+446,280,719,677,76,increase
+324,210,515,533,55,decrease
+332,221,578,526,75,no_change
+264,175,486,432,64,increase
+225,139,436,410,52,decrease
+380,267,643,576,89,decrease
+342,231,586,530,78,increase
+454,295,722,674,72,no_change
+345,228,603,584,62,decrease
+317,215,582,574,57,decrease
+421,269,729,710,58,decrease
+1046,695,1566,1497,146,decrease
+2234,1528,3082,3102,237,no_change
+827,535,1320,1324,124,increase
+431,269,720,695,90,no_change
+471,309,769,719,81,decrease
+260,178,452,417,54,decrease
+255,172,412,362,58,increase
+255,160,436,415,53,no_change
+324,224,538,558,41,decrease
+255,152,443,427,44,decrease
+92,54,180,144,36,decrease

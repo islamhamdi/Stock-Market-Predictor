@@ -1,0 +1,46 @@
+@relation $WWE
+@attribute TID real
+@attribute POS real
+@attribute NUM_NODES real
+@attribute NUM_EDGES real
+@attribute NUM_CMP real
+@attribute class {increase , no_change ,decrease}
+@data
+16,12,32,21,11,no_change
+8,7,14,9,5,decrease
+5,0,10,7,3,no_change
+8,6,12,8,4,no_change
+7,5,16,13,3,increase
+11,5,23,19,5,increase
+36,31,84,67,18,increase
+27,20,68,53,16,increase
+85,62,200,167,45,no_change
+51,37,104,86,19,increase
+17,12,40,34,9,no_change
+4,3,9,5,4,no_change
+28,23,50,43,12,increase
+20,15,39,29,10,decrease
+14,7,35,22,13,increase
+8,6,27,19,8,no_change
+11,6,25,18,7,decrease
+3,3,6,4,2,decrease
+4,4,10,7,3,decrease
+9,6,16,10,6,no_change
+24,11,55,42,13,no_change
+8,7,17,12,5,increase
+5,3,9,6,3,increase
+6,5,15,9,6,decrease
+7,5,18,12,6,decrease
+17,13,24,17,7,decrease
+154,108,314,250,77,decrease
+37,23,77,59,18,increase
+19,10,43,32,12,decrease
+10,0,26,19,7,decrease
+11,8,30,19,11,decrease
+3,0,6,3,3,increase
+19,10,51,36,15,increase
+5,0,13,8,5,decrease
+9,7,20,14,6,increase
+12,6,18,13,5,no_change
+4,4,9,7,3,decrease
+4,4,12,9,3,decrease

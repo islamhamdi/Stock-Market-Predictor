@@ -1,0 +1,51 @@
+@relation $GALE
+@attribute TID real
+@attribute POS real
+@attribute NUM_NODES real
+@attribute NUM_EDGES real
+@attribute NUM_CMP real
+@attribute class {increase , no_change ,decrease}
+@data
+130,98,226,182,47,no_change
+78,45,131,149,13,decrease
+157,97,238,267,19,no_change
+106,74,186,172,31,no_change
+118,78,201,175,36,no_change
+269,197,448,423,56,increase
+158,102,271,255,40,decrease
+151,101,260,278,35,decrease
+102,62,178,160,38,decrease
+250,156,409,329,98,increase
+150,101,301,248,67,decrease
+139,112,240,204,45,decrease
+96,59,171,152,35,decrease
+118,87,208,166,44,decrease
+333,207,521,444,97,increase
+170,120,310,282,52,decrease
+873,632,1221,1145,138,increase
+501,349,801,692,135,increase
+329,237,541,509,74,decrease
+99,70,198,212,36,decrease
+102,67,186,195,31,increase
+78,49,176,183,22,no_change
+78,53,149,119,33,decrease
+155,100,278,260,42,increase
+137,91,210,189,29,decrease
+175,126,296,250,65,increase
+122,85,212,174,44,increase
+90,66,167,138,33,decrease
+63,44,134,110,27,decrease
+39,24,95,84,22,decrease
+48,34,105,80,29,increase
+40,31,81,71,15,decrease
+41,26,86,73,19,increase
+22,16,51,38,15,decrease
+16,11,35,24,11,increase
+57,36,109,86,28,no_change
+108,71,190,131,59,increase
+122,74,206,175,41,increase
+95,63,157,116,41,decrease
+64,46,103,84,23,decrease
+32,26,67,44,23,no_change
+126,102,212,181,42,increase
+169,128,280,242,43,increase

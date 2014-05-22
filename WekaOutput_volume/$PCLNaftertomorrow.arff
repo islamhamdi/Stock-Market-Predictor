@@ -1,0 +1,43 @@
+@relation $PCLN
+@attribute TID real
+@attribute POS real
+@attribute NUM_NODES real
+@attribute NUM_EDGES real
+@attribute NUM_CMP real
+@attribute class {increase , no_change ,decrease}
+@data
+250,186,552,547,76,no_change
+55,43,145,235,19,decrease
+170,122,357,477,30,decrease
+180,135,332,446,35,increase
+83,58,190,229,24,decrease
+78,44,174,212,31,decrease
+74,52,170,193,23,decrease
+108,78,222,256,24,increase
+91,72,190,184,25,increase
+127,92,242,237,34,increase
+82,56,168,179,25,no_change
+94,68,212,241,26,no_change
+111,85,218,222,33,increase
+115,86,229,248,40,decrease
+220,146,391,419,45,increase
+137,92,264,337,30,decrease
+122,87,253,328,34,increase
+82,63,177,186,22,decrease
+109,75,233,222,38,increase
+58,41,129,146,19,increase
+91,63,208,255,28,decrease
+173,121,353,503,40,decrease
+135,89,272,319,37,increase
+145,101,302,371,49,decrease
+152,108,294,323,45,decrease
+120,81,250,258,38,increase
+54,34,120,134,12,decrease
+143,102,308,329,44,increase
+77,58,157,147,25,increase
+80,64,171,173,30,decrease
+197,144,384,473,41,decrease
+174,126,327,336,52,increase
+99,70,216,252,25,increase
+143,95,297,305,40,increase
+11,7,32,23,9,decrease

@@ -1,0 +1,32 @@
+@relation $BKS
+@attribute TID real
+@attribute POS real
+@attribute NUM_NODES real
+@attribute NUM_EDGES real
+@attribute NUM_CMP real
+@attribute class {increase , no_change ,decrease}
+@data
+98,57,202,175,42,no_change
+39,21,78,68,11,increase
+10,5,28,21,9,decrease
+33,24,75,60,15,increase
+7,4,17,12,5,decrease
+3,0,7,5,2,decrease
+3,0,7,4,3,increase
+10,7,18,14,4,decrease
+6,5,14,9,5,increase
+4,3,10,6,4,decrease
+3,0,6,4,2,decrease
+8,6,19,13,6,increase
+4,3,9,6,3,decrease
+4,0,10,6,4,increase
+3,0,6,4,2,increase
+6,5,13,9,4,decrease
+75,45,165,133,33,increase
+14,8,50,39,11,decrease
+13,9,22,14,8,increase
+3,0,10,7,3,decrease
+18,12,47,37,10,increase
+6,0,21,17,5,decrease
+29,19,70,54,18,decrease
+3,0,12,9,3,decrease

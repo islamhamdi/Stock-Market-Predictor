@@ -1,0 +1,51 @@
+@relation $VRNG
+@attribute TID real
+@attribute POS real
+@attribute NUM_NODES real
+@attribute NUM_EDGES real
+@attribute NUM_CMP real
+@attribute class {increase , no_change ,decrease}
+@data
+5,3,16,14,3,no_change
+108,68,175,139,38,no_change
+82,62,157,126,35,no_change
+81,60,159,119,45,no_change
+62,43,110,69,41,decrease
+90,71,159,116,43,no_change
+214,128,307,268,49,decrease
+76,52,153,115,40,no_change
+82,54,153,106,47,no_change
+75,40,152,104,49,decrease
+86,51,147,117,38,decrease
+255,159,381,298,87,no_change
+339,206,497,424,89,decrease
+151,100,248,192,61,no_change
+140,86,209,171,42,increase
+67,41,122,87,35,no_change
+145,103,221,172,53,decrease
+67,44,138,111,37,no_change
+94,47,153,122,37,increase
+88,63,151,115,37,decrease
+151,106,259,211,54,no_change
+50,27,101,70,33,decrease
+54,37,98,79,22,decrease
+138,80,211,168,48,increase
+141,87,220,189,45,decrease
+141,79,208,193,34,increase
+50,30,93,72,23,increase
+187,130,284,225,62,decrease
+177,124,279,228,55,increase
+117,69,177,150,34,decrease
+96,67,160,132,36,increase
+53,31,101,75,27,increase
+130,91,220,180,45,decrease
+210,131,325,306,54,decrease
+40,27,63,56,10,no_change
+41,32,79,61,25,no_change
+36,28,74,52,23,increase
+49,33,98,66,32,decrease
+56,30,97,83,22,no_change
+41,25,74,53,24,increase
+27,20,62,41,21,no_change
+180,105,240,255,28,decrease
+95,50,139,120,22,decrease

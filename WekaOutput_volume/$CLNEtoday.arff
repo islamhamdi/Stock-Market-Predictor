@@ -1,0 +1,34 @@
+@relation $CLNE
+@attribute TID real
+@attribute POS real
+@attribute NUM_NODES real
+@attribute NUM_EDGES real
+@attribute NUM_CMP real
+@attribute class {increase , no_change ,decrease}
+@data
+3,0,7,5,2,no_change
+3,3,12,9,3,decrease
+21,13,49,34,15,increase
+49,30,95,75,22,increase
+10,7,24,16,8,decrease
+12,9,27,19,8,no_change
+7,4,20,14,6,decrease
+9,5,22,14,8,increase
+8,5,31,23,8,increase
+5,4,13,9,4,decrease
+6,4,17,12,5,increase
+3,3,8,5,3,decrease
+4,3,12,10,2,increase
+4,4,10,6,4,decrease
+3,3,6,3,3,decrease
+20,16,46,35,11,increase
+6,5,16,12,4,decrease
+10,5,23,19,5,decrease
+4,4,8,5,3,increase
+7,4,14,12,3,decrease
+4,3,7,5,2,no_change
+4,4,7,5,2,no_change
+5,3,13,9,4,decrease
+4,4,8,5,3,increase
+4,4,7,5,2,decrease
+6,5,12,8,4,increase

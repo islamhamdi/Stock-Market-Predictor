@@ -1,0 +1,51 @@
+@relation $CYTK
+@attribute TID real
+@attribute POS real
+@attribute NUM_NODES real
+@attribute NUM_EDGES real
+@attribute NUM_CMP real
+@attribute class {increase , no_change ,decrease}
+@data
+7,4,21,18,4,no_change
+15,8,36,26,10,increase
+30,21,59,42,17,no_change
+18,12,41,35,7,increase
+28,17,58,44,14,decrease
+8,7,18,11,7,no_change
+8,6,27,20,7,increase
+9,4,16,13,3,increase
+46,38,92,72,20,decrease
+23,13,44,35,9,no_change
+11,7,29,21,10,no_change
+8,6,19,14,5,decrease
+11,9,17,13,5,increase
+4,0,8,5,3,decrease
+9,5,25,23,6,no_change
+4,3,8,4,4,no_change
+10,7,22,18,4,increase
+5,3,10,7,3,decrease
+9,7,17,14,3,decrease
+6,5,13,9,4,decrease
+7,4,12,7,5,decrease
+17,8,33,22,11,increase
+9,4,22,16,6,decrease
+9,5,25,19,6,increase
+35,27,67,52,16,decrease
+11,9,24,17,7,increase
+5,4,9,5,4,increase
+9,4,26,18,8,no_change
+8,4,14,11,3,decrease
+4,3,16,12,4,decrease
+4,0,9,5,4,no_change
+8,6,19,14,5,increase
+20,11,34,26,9,increase
+35,24,86,77,13,decrease
+5,5,22,21,3,decrease
+13,11,37,29,9,increase
+3,0,11,10,2,decrease
+10,7,27,20,7,increase
+11,6,25,21,4,increase
+5,4,22,17,5,increase
+43,29,85,64,21,increase
+49,42,105,93,19,no_change
+53,33,122,100,23,decrease

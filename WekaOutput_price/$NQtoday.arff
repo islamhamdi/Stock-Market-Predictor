@@ -1,0 +1,51 @@
+@relation $NQ
+@attribute TID real
+@attribute POS real
+@attribute NUM_NODES real
+@attribute NUM_EDGES real
+@attribute NUM_CMP real
+@attribute class {increase , no_change ,decrease}
+@data
+13,9,42,46,3,no_change
+117,84,223,177,53,increase
+195,139,340,281,71,increase
+183,144,289,262,43,no_change
+494,364,719,667,88,increase
+1107,788,1549,1434,197,decrease
+558,390,845,826,91,increase
+287,181,456,438,53,increase
+374,253,568,526,70,decrease
+215,145,344,304,54,no_change
+146,98,254,215,43,decrease
+275,164,431,375,64,decrease
+218,140,379,352,65,decrease
+225,155,390,346,51,increase
+216,130,364,319,51,decrease
+176,103,285,240,46,decrease
+259,175,458,404,68,increase
+194,139,332,274,64,no_change
+151,101,267,235,46,no_change
+198,141,314,257,58,decrease
+157,109,284,233,57,decrease
+167,122,296,261,47,decrease
+428,269,651,632,62,decrease
+576,353,841,790,88,decrease
+253,163,422,374,65,no_change
+176,126,293,244,50,no_change
+215,152,355,315,51,increase
+150,107,266,220,53,increase
+188,125,322,281,54,decrease
+190,124,330,275,64,no_change
+276,179,447,382,75,no_change
+236,163,403,369,62,decrease
+186,133,298,259,52,no_change
+186,126,331,268,70,increase
+37,24,76,50,26,decrease
+914,564,1346,1308,145,decrease
+646,413,1009,968,137,decrease
+736,505,1127,1114,121,increase
+432,275,655,679,45,decrease
+423,288,623,589,61,increase
+128,84,236,218,37,increase
+184,125,288,265,37,increase
+159,106,285,241,61,no_change
