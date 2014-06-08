@@ -20,15 +20,20 @@ import java.util.Properties;
 
 import twitter4j.Status;
 
-import com.itextpdf.text.Annotation;
+import edu.stanford.nlp.ling.CoreAnnotations;
+import edu.stanford.nlp.pipeline.StanfordCoreNLP;
+import edu.stanford.nlp.rnn.RNNCoreAnnotations;
+import edu.stanford.nlp.sentiment.SentimentCoreAnnotations;
+import edu.stanford.nlp.trees.Tree;
+import edu.stanford.nlp.util.CoreMap;
 
 public class DataSeparator {
 
 	private static String dataDir = "/media/MyData/DropBox/Dropbox/Stock Market Daily Data/";
 	private static String outputDir = "/media/MyData/DropBox/Dropbox/Stock Market Daily Data/Sentiment-Twits/";
-	private static String FileSetPath = "/media/MyData/DropBox/Dropbox/Stock Market Daily Data/Sentiment-Twits/FileSet.txt";
-	private static HashSet<String> fileSet;
-	private static BufferedWriter fileSetWriter;
+	private static String FileSetPath1 = "/media/MyData/DropBox/Dropbox/Stock Market Daily Data/Sentiment-Twits/FileSet.txt";
+	private static String FileSetPath2 = "/media/MyData/DropBox/Dropbox/Stock Market Daily Data/Sentiment-Twits/FileSet2.txt";
+	
 	private static DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
 	private static StanfordCoreNLP pipeline;
@@ -37,7 +42,7 @@ public class DataSeparator {
 		int mainSentiment = 0;
 		if (line != null && line.length() > 0) {
 			int longest = 0;
-			Annotation annotation = pipeline.process(line);
+			edu.stanford.nlp.pipeline.Annotation annotation = pipeline.process(line);
 			for (CoreMap sentence : annotation.get(CoreAnnotations.SentencesAnnotation.class)) {
 				Tree tree = sentence.get(SentimentCoreAnnotations.AnnotatedTree.class);
 				int sentiment = RNNCoreAnnotations.getPredictedClass(tree);
@@ -62,18 +67,14 @@ public class DataSeparator {
 		props.setProperty("annotators", "tokenize, ssplit, parse, sentiment");
 		pipeline = new StanfordCoreNLP(props);
 
-		fileSetWriter = new BufferedWriter(new FileWriter(FileSetPath, true));
+		System.out.println(">> Start StockTwits ...");
+		run(dataDir + "StockTwits", outputDir + "StockTwits/", FileSetPath2);
 
-		fileSet = readSet();
-
-		System.out.println("Start Twitter ...");
-		run(dataDir + "Twitter", outputDir + "Twitter/");
-
-		System.out.println("Start StockTwits ...");
-		run(dataDir + "StockTwits", outputDir + "StockTwits/");
+		System.out.println(">> Start Twitter ...");
+		run(dataDir + "Twitter", outputDir + "Twitter/", FileSetPath1);
 	}
 
-	private static HashSet<String> readSet() throws IOException {
+	private static HashSet<String> readSet(String FileSetPath) throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader(FileSetPath));
 		String s;
 
@@ -87,8 +88,11 @@ public class DataSeparator {
 		return set;
 	}
 
-	private static void run(String inputPath, String outputPath) throws IOException {
+	private static void run(String inputPath, String outputPath, String FileSetPath) throws IOException {
 		File file = new File(inputPath);
+
+		BufferedWriter fileSetWriter = new BufferedWriter(new FileWriter(FileSetPath, true));
+		HashSet<String> fileSet = readSet(FileSetPath);
 
 		File[] companyList = file.listFiles();
 
@@ -171,5 +175,7 @@ public class DataSeparator {
 				}
 
 		}
+		
+		fileSetWriter.close();
 	}
 }
