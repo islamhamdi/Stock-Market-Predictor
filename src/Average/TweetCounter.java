@@ -22,7 +22,7 @@ public class TweetCounter {
 			ClassNotFoundException {
 
 //		ArrayList<String> strings = new ArrayList<String>();
-		File folder = new File(Global.dataPaths[0]);
+		File folder = new File(Global.dataPaths[1]);
 		File[] folders = folder.listFiles();
 		Arrays.sort(folders);
 
@@ -36,9 +36,9 @@ public class TweetCounter {
 				FileInputStream fr = new FileInputStream(files[c]);
 				ObjectInputStream is = new ObjectInputStream(fr);
 
-				Status s;
+				MyStatus s;
 				try {
-					s = (Status) is.readObject();
+					s = (MyStatus) is.readObject();
 				} catch (Exception e) {
 					continue;
 				}
@@ -46,7 +46,7 @@ public class TweetCounter {
 				while (s != null) {
 					k++;
 					try {
-						s = (Status) is.readObject();
+						s = (MyStatus) is.readObject();
 					} catch (Exception e) {
 						break;
 					}
@@ -54,11 +54,10 @@ public class TweetCounter {
 
 				counter += k;
 //				is.reset();
-//				fr.reset();
 				fr.close();
 				is.close();
 			}
-			
+//			System.out.println(folders[i].getName());
 			System.out.println( counter);
 			// if (counter > 2000)
 //			strings.add(folders[i].getName() + " " + counter);

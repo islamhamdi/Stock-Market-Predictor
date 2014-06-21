@@ -6,7 +6,6 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,16 +13,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
 
-import Default.Global;
-
 import twitter4j.Status;
+
+import Default.Global;
 
 public class step2 {
 	static SimpleDateFormat sdf2 = new SimpleDateFormat("dd-MM-yyy");
 	static Date st;
 
 	public step2() throws Exception {
-		st = sdf2.parse("20-2-2014");
+		st = sdf2.parse("20-3-2014");
 		String finaloutputDir = Global.dataPaths[0];
 		File dir = new File(finaloutputDir);
 		if (!dir.exists())
@@ -129,7 +128,9 @@ public class step2 {
 				arrlst.clear();
 				writer.clear();
 				for (Map.Entry<String, Integer> entry : counter.entrySet()) {
-					System.out.println(entry.getKey() + " " + entry.getValue());
+					if (entry.getValue() > 1)
+						System.out.println(entry.getKey() + " "
+								+ entry.getValue());
 				}
 				counter.clear();
 			}

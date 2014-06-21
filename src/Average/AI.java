@@ -81,7 +81,7 @@ public class AI {
 			inputWorkbook = new File(files[k].getAbsolutePath());
 
 			Workbook workbooks = Workbook.getWorkbook(inputWorkbook);
-			Sheet sh = workbooks.getSheet(5);
+			Sheet sh = workbooks.getSheet(2);
 			int col = start_col2 + Global.lag_var;
 
 			for (int row = start_raw1; row < start_raw1 + hight1; row++) {

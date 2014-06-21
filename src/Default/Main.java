@@ -31,7 +31,7 @@ public class Main {
 		currAvailableDays = getAvailableDays("$AAPL");
 
 		// 0 Twitter - 1 StockTwits - 2 Combined - 3 PosTwitter - 4 NegTwitter -
-		// 5 PosStockTwit - 6 NegStockTwit
+		// 5 PosStockTwit - 6 NegStockTwitc
 
 		Global.files_to_run = Global.sheet_num[Global.negstocktwits];
 

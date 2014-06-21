@@ -5,59 +5,59 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
-import twitter4j.Status;
 import Default.Global;
+import StockTwitsCreator.MyStatus;
 
 public class remove {
 	public static void main(String[] args) throws IOException,
 			ClassNotFoundException {
 		// 0 Twitter - 1 StockTwits - 2 Combined - 3 PosTwitter - 4 NegTwitter -
 		// 5 PosStockTwit - 6 NegStockTwit
-//		for (int v = 0; v <= 6; v++) {
-			File folder = new File(Global.dataPaths[3]);
-			File[] folders = folder.listFiles();
-			// Arrays.sort(folders);
+		// for (int v = 0; v <= 6; v++) {
+		File folder = new File(Global.dataPaths[1]);
+		File[] folders = folder.listFiles();
+		// Arrays.sort(folders);
 
-			for (int i = 0; i < folders.length; i++) {
-				folder = new File(folders[i].getAbsolutePath());
-				File[] files = folder.listFiles();
+		for (int i = 0; i < folders.length; i++) {
+			folder = new File(folders[i].getAbsolutePath());
+			File[] files = folder.listFiles();
 
-				int counter = 0;
-				int k = 0;
+			int counter = 0;
+			int k = 0;
 
-				for (int c = 0; c < files.length; c++) {
-					FileInputStream fr = new FileInputStream(files[c]);
-					ObjectInputStream is = new ObjectInputStream(fr);
+			for (int c = 0; c < files.length; c++) {
+				FileInputStream fr = new FileInputStream(files[c]);
+				ObjectInputStream is = new ObjectInputStream(fr);
 
-					Status s = null;
+				MyStatus s = null;
+				try {
+					s = (MyStatus) is.readObject();
+				} catch (Exception e) {
+					// continue;
+				}
+				k = 0;
+				while (s != null) {
+					k++;
 					try {
-						s = (Status) is.readObject();
+						s = (MyStatus) is.readObject();
 					} catch (Exception e) {
-						// continue;
+						break;
 					}
-					k = 0;
-					while (s != null) {
-						k++;
-						try {
-							s = (Status) is.readObject();
-						} catch (Exception e) {
-							break;
-						}
-					}
+				}
 
-//					System.out.println(k);
-					counter += k;
-					fr.close();
-					is.close();
+				// System.out.println(k);
+				counter += k;
+				fr.close();
+				is.close();
 
-					if (k < Global.min_tweets_perFile) {
-						System.out.println(files[c].getAbsolutePath());
-						files[c].delete();
-					}
+				if (k < Global.min_tweets_perFile) {
+					System.out.println(files[c].getAbsolutePath());
+					files[c].delete();
+				}
 
-//				}
+				// }
 
-//				System.out.println(folders[i].getName() + " " + counter);
+				// System.out.println(folders[i].getName() + " " + counter);
 				// if (counter > 2000)
 				// strings.add(folders[i].getName() + " " + counter);
 
@@ -69,4 +69,3 @@ public class remove {
 		}
 	}
 }
-
