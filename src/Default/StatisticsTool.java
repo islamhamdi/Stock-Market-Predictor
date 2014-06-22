@@ -159,7 +159,7 @@ public class StatisticsTool {
 			handleHashTagsAndSymbols(curTweet, tweetNID.node);
 
 			// Check for URLs
-			handleURLs(curTweet, tweetNID.node);
+			// handleURLs(curTweet, tweetNID.node);
 
 			// Handle created/mentioned users
 			handleUsers(curTweet, tweetNID.node);
