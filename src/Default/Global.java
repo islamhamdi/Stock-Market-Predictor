@@ -118,7 +118,7 @@ public class Global {
 			"Current_Ration_low", "Current_Ration_medium",
 			"Current_Ration_high", "Beta_low", "Beta_medium", "Beta_high",
 			"Float_low", "Float_medium", "Float_high" };
-	
+
 	public static int normal_average = 0;
 
 	public static int Market_Cap_low = 1;
@@ -148,7 +148,7 @@ public class Global {
 	public static int Float_low = 19;
 	public static int Float_medium = 20;
 	public static int Float_high = 21;
-	
+
 	public static String kEYMAP = "KeyStatisticsMap";
 
 }

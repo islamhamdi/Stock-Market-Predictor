@@ -134,16 +134,21 @@ public class StatisticsTool {
 				// Perform original tweets check on twitter data only
 				if (Global.files_to_run == Global.sheet_num[0]) {
 					// Check for original Retweeted Status
-					Long originalTweetId = curTweet.getRetweetedStatus()
-							.getId();
-					if (nodeMap.containsKey(originalTweetId)) {
-						NodeIdentifier origTweetNID = nodeMap
-								.get(originalTweetId);
 
-						Edge newEdge = graphModel.factory().newEdge(
-								tweetNID.node, origTweetNID.node);
-						graph.addEdge(newEdge);
-						edgeCounter++;
+					Status retweetedStatus = curTweet.getRetweetedStatus();
+					// only happens with stock-twit status treated as twitter
+					// status
+					if (retweetedStatus != null) {
+						Long originalTweetId = retweetedStatus.getId();
+						if (nodeMap.containsKey(originalTweetId)) {
+							NodeIdentifier origTweetNID = nodeMap
+									.get(originalTweetId);
+
+							Edge newEdge = graphModel.factory().newEdge(
+									tweetNID.node, origTweetNID.node);
+							graph.addEdge(newEdge);
+							edgeCounter++;
+						}
 					}
 				}
 				activityFeatures.incRTID(); // increment number of re-tweets

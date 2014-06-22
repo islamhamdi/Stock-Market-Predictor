@@ -24,7 +24,7 @@ public class Main {
 	static WriteExcel excel;
 	static HashSet<String> currAvailableDays;
 	static String historyPath = Global.historyPath1;
-	static double [] featuers;
+	static double[] featuers;
 
 	public static void main(String[] args) throws Throwable {
 
@@ -33,7 +33,7 @@ public class Main {
 		// 0 Twitter - 1 StockTwits - 2 Combined - 3 PosTwitter - 4 NegTwitter -
 		// 5 PosStockTwit - 6 NegStockTwitc
 
-		Global.files_to_run = Global.sheet_num[Global.negstocktwits];
+		Global.files_to_run = Global.sheet_num[Global.twitter];
 
 		// preprocessUrlExpansion();
 		path = Global.dataPaths[Global.files_to_run];
@@ -87,6 +87,8 @@ public class Main {
 						someThingNew = true;
 						excel.addNewDay(f[j].file.getName(), featuers, true);
 					} else {
+						System.out.println(f[j].file.getName());
+						System.out.println(f[j].file.getAbsolutePath());
 						throw new Exception(
 								"Make sure companies directories contain only files.");
 					}
