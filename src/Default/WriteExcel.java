@@ -53,12 +53,11 @@ public class WriteExcel {
 	private int lag_var = Global.lag_var;
 
 	HashMap<String, VOL_PR> volume_price_table;
-	
+
 	private WritableSheet sheetSet[];
-	
+
 	private void openAllSheets() {
 
-		
 	}
 
 	public void passFeatures(String[] features) throws IOException {
@@ -137,7 +136,7 @@ public class WriteExcel {
 
 	public void initializeExcelSheet(int sheetNum, String start)
 			throws Exception {
-		
+
 		file = new File(path);
 		Workbook myWorkbook = Workbook.getWorkbook(file);
 		workbook = Workbook.createWorkbook(file, myWorkbook);
@@ -355,6 +354,8 @@ public class WriteExcel {
 		for (int col = 1; col < width; col++) {
 			for (int raw = lag_var + 1; raw < raw_n; raw++) {
 				String s = sheet.getCell(col, raw).getContents();
+				if (s.isEmpty())
+					s = "0";
 				normTable[raw][col] = Double.parseDouble(s);
 				max[col] = Math.max(max[col], normTable[raw][col]);
 				min[col] = Math.min(min[col], normTable[raw][col]);

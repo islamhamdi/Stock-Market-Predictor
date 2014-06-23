@@ -16,8 +16,8 @@ public class Global {
 
 	public static String userName = "mohamed";
 
-	public static int start_row_t1 = 55;
-	public static int start_row_t2 = 75;
+	public static int start_row_t1 = 95;
+	public static int start_row_t2 = 125;
 
 	public static int start_col_t1 = 1;
 	public static int start_col_t2 = 12;
