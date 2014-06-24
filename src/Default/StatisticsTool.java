@@ -21,10 +21,8 @@ import SentimentAnalysis.SentimentAnalyzer;
 import StockTwitsCreator.MyStatus;
 
 import twitter4j.HashtagEntity;
-import twitter4j.MediaEntity;
 import twitter4j.Status;
 import twitter4j.SymbolEntity;
-import twitter4j.URLEntity;
 import twitter4j.UserMentionEntity;
 
 public class StatisticsTool {

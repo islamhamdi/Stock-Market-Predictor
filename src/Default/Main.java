@@ -117,37 +117,6 @@ public class Main {
 		}
 	}
 
-	private static void preprocessUrlExpansion() throws InterruptedException {
-		String sourcePath = null, destPath = null;
-
-		if (Global.files_to_run == Global.sheet_num[0]) {
-			// sourcePath = Global.twitterDataPath;
-			// destPath = Global.twitterDataExpandedPath;
-		} else {
-			// sourcePath = Global.stockTwitDataPath;
-			// destPath = Global.stockTwitDataExpandedPath;
-		}
-
-		File statusDir = new File(sourcePath);
-		File[] folders = statusDir.listFiles();
-		URLExpander urlExpander;
-		for (int i = 0; i < folders.length; i++) {
-			String folderName = folders[i].getName();
-			if (folders[i].isDirectory()) {
-				String destinationPath = destPath + "/" + folderName;
-				File destDir = new File(destinationPath);
-				if (!destDir.exists())
-					destDir.mkdir();
-				urlExpander = new URLExpander(sourcePath + "/" + folderName,
-						destinationPath);
-				// System.out.println(destinationPath);
-				urlExpander.startURLExpander();
-				while (!urlExpander.isTerminated())
-					;
-			}
-		}
-	}
-
 	private static void openExcelWriter(String folderName, String start)
 			throws Exception {
 		String statfilePath = statPath + "/" + folderName + ".xls";
