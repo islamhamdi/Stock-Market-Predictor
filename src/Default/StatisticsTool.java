@@ -352,10 +352,8 @@ public class StatisticsTool {
 
 	void buildActivityFeatures() throws Exception {
 		activityFeatures.setTHTG(hashtagsMap.size());
-		if (!usersMap.isEmpty()) {
-			activityFeatures.setUFLW(totalFollowersCounter / usersMap.size());
-			activityFeatures.setUFRN(totalFriendsCounter / usersMap.size());
-		}
+		activityFeatures.setUFLW(totalFollowersCounter);
+		activityFeatures.setUFRN(totalFriendsCounter);
 		setSentimentFeatures();
 		activityFeatures.printActivityFeatures();
 	}

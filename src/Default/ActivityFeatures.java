@@ -5,9 +5,9 @@ public class ActivityFeatures {
 	private int RTU; // number of diff users that have re-tweeted
 	private int TID; // number of tweets
 	private int TUSM; // number of tweets that mention any user
-	private int UFRN; // avg number of friends for user that posted in graph
+	private int UFRN; // number of friends for user that posted in graph
 	private int THTG;// number of hash-tags used in all tweets
-	private int UFLW; // avg number of followers for user
+	private int UFLW; // number of followers for user
 	private int UID; // number diff users that posted a tweet
 	private int NEG, POS, POS_NEG; // sentiment analysis statistics
 	private static String[] ACTIVITY_FEATURES_NAMES = new String[] { "RTID",
