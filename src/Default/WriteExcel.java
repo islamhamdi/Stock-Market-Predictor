@@ -347,8 +347,8 @@ public class WriteExcel {
 		for (int i = 7; i <= lastRow; i++) {
 			int col = Global.start_col_t2 + (index++);
 
-			addLabel(col + 1, Global.start_row_t1 - 1, sheet.getCell(0, i - 1)
-					.getContents());
+			addLabel(col + 1, Global.start_row_t1 + 25 - 1,
+					sheet.getCell(0, i - 1).getContents());
 			drawDailyStepTable(Global.start_row_t1 + 25, col, "price", i,
 					Global.price_cols);
 		}
