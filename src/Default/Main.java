@@ -28,7 +28,7 @@ public class Main {
 
 	public static void main(String[] args) throws Throwable {
 
-		currAvailableDays = getAvailableDays("$AMZN");
+		currAvailableDays = getAvailableDays("$PLUG");
 
 		// 0 Twitter - 1 StockTwits - 2 Combined - 3 PosTwitter - 4 NegTwitter -
 		// 5 PosStockTwit - 6 NegStockTwitc
@@ -47,6 +47,8 @@ public class Main {
 		File statusDir = new File(path);
 		File[] folders = statusDir.listFiles();
 		String[] featuresList = Helper.getFeaturesList();
+		System.out.println(featuresList.length);
+		// Global.features_num = featuresList.length;
 		StatisticsTool tool = new StatisticsTool();
 		excel = new WriteExcel();
 		System.out.println("Start ");
@@ -95,8 +97,8 @@ public class Main {
 				}
 				System.out.println(">>>>>>>>>>>>>>>>>>>>>next>>>>>>>>>>>>>>");
 				excel.adddummyDaysAtEnd();
-				if (someThingNew)
-					excel.drawTables();
+				// if (someThingNew)
+				excel.drawTables();
 				excel.writeAndClose();
 			}
 

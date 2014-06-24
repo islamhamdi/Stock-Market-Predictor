@@ -17,7 +17,7 @@ public class Global {
 	public static String userName = "mohamed";
 
 	public static int start_row_t1 = 95;
-	public static int start_row_t2 = 125;
+	public static int start_row_t2 = 150;
 
 	public static int start_col_t1 = 1;
 	public static int start_col_t2 = 12;
@@ -65,7 +65,7 @@ public class Global {
 	static String startDate = "20-2-2014";
 
 	public static int lag_var = 3;
-	static int features_num = 16;
+	static int features_num = 19;
 
 	static int start_of_norm_table = 45;
 

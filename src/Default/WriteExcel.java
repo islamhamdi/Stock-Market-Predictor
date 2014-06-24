@@ -251,8 +251,8 @@ public class WriteExcel {
 	}
 
 	// feature = 0 then price else volume
-	public void drawTable1(int frow, int fcolumn, String tname, String[] a)
-			throws Exception {
+	public void drawTable1(int frow, int fcolumn, String tname, int lastRow,
+			String[] a) throws Exception {
 
 		addLabel(fcolumn, frow, "Features\\Lag");
 		int r = frow + 1;
@@ -266,21 +266,21 @@ public class WriteExcel {
 		}
 
 		int cnt = 1;
-		for (char ch2 = 'B'; ch2 <= 'Q'; ch2++) {
+		for (char ch2 = 'B'; ch2 <= 'T'; ch2++) {
 			int index = 0;
 			pos = fcolumn + 1;
 			for (int i = -lag_var; i <= lag_var; i++) {
 				String ch1 = a[index++];
 				calcCorrel(pos++, frow + cnt, ch1, ch2 + "", lag_var + 2,
-						getRowsCnt());
+						lastRow);
 
 			}
 			cnt++;
 		}
 	}
 
-	public void drawTable3(int frow, int fcolumn, String tname, String[] f)
-			throws Exception {
+	public void drawTable3(int frow, int fcolumn, String tname, int lastRow,
+			String[] f) throws Exception {
 		addLabel(fcolumn, frow, "Features\\Lag");
 		int r = frow + 1;
 
@@ -306,34 +306,76 @@ public class WriteExcel {
 			for (int i = -lag_var; i <= lag_var; i++) {
 				String ch1 = f[index++];
 				calcCorrel(pos++, frow + cnt, ch1, ch2 + "", lag_var + 2,
-						getRowsCnt());
+						lastRow);
 			}
+			cnt++;
+		}
+	}
+
+	// feature = 0 then price else volume
+	public void drawDailyStepTable(int frow, int fcolumn, String tname,
+			int lastRow, String[] a) throws Exception {
+		int pos = fcolumn + 1;
+		addCaption(pos++, frow, tname + "(0)");
+
+		int cnt = 1;
+		for (char ch2 = 'B'; ch2 <= 'T'; ch2++) {
+			pos = fcolumn + 1;
+			String ch1 = a[a.length / 2];
+			calcCorrel(pos++, frow + cnt, ch1, ch2 + "", lag_var + 2, lastRow);
 			cnt++;
 		}
 	}
 
 	public void drawTables() throws Exception {
 
+		int lastRow = getRowsCnt();
+
 		drawNormalizedTable();
 		clear();
 
-		drawTable1(Global.start_row_t1, Global.start_col_t1, "volume",
+		int index = 0;
+		for (int i = 7; i <= lastRow; i++) {
+			int col = Global.start_col_t2 + (index++);
+			addLabel(col + 1, Global.start_row_t1 - 1, sheet.getCell(0, i - 1)
+					.getContents());
+			drawDailyStepTable(Global.start_row_t1, col, "volume", i,
+					Global.volume_cols);
+		}
+
+		index = 0;
+		for (int i = 7; i <= lastRow; i++) {
+			int col = Global.start_col_t2 + (index++);
+
+			addLabel(col + 1, Global.start_row_t1 - 1, sheet.getCell(0, i - 1)
+					.getContents());
+			drawDailyStepTable(Global.start_row_t1 + 25, col, "price", i,
+					Global.price_cols);
+		}
+
+		// drawTable1(Global.start_row_t1,
+		// Global.start_col_t1,
+		// "volume",
+		// lastRow / 2, Global.volume_cols);
+		// drawTable1(Global.start_row_t1, Global.start_col_t2, "price",
+		// lastRow / 2, Global.price_cols);
+
+		drawTable1(Global.start_row_t1, Global.start_col_t1, "volume", lastRow,
+				Global.volume_cols);
+		drawTable1(Global.start_row_t1 + 25, Global.start_col_t1, "price",
+				lastRow, Global.price_cols);
+
+		drawTable3(Global.start_row_t2, Global.start_col_t1, "volume", lastRow,
 				Global.volume_cols);
 
-		drawTable1(Global.start_row_t1, Global.start_col_t2, "price",
-				Global.price_cols);
-
-		drawTable3(Global.start_row_t2, Global.start_col_t1, "volume",
-				Global.volume_cols);
-
-		drawTable3(Global.start_row_t2, Global.start_col_t2, "price",
+		drawTable3(Global.start_row_t2, Global.start_col_t2, "price", lastRow,
 				Global.price_cols);
 
 	}
 
 	private void clear() throws Exception {
 		int raws = getRowsCnt() + 5;
-		for (int column = 0; column < 100; column++)
+		for (int column = 0; column < 200; column++)
 			for (int r = raws + 1; r < raws + 200; r++)
 				addLabel(column, r, "");
 	}
