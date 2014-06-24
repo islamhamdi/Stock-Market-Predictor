@@ -14,16 +14,17 @@ import org.gephi.graph.api.GraphModel;
 import org.gephi.graph.api.Node;
 import org.gephi.project.api.ProjectController;
 import org.gephi.statistics.plugin.ConnectedComponents;
+import org.gephi.statistics.plugin.Degree;
+import org.gephi.statistics.plugin.GraphDensity;
 import org.gephi.statistics.plugin.GraphDistance;
+import org.gephi.statistics.plugin.Modularity;
 import org.openide.util.Lookup;
-
-import SentimentAnalysis.SentimentAnalyzer;
-import StockTwitsCreator.MyStatus;
 
 import twitter4j.HashtagEntity;
 import twitter4j.Status;
 import twitter4j.SymbolEntity;
 import twitter4j.UserMentionEntity;
+import SentimentAnalysis.SentimentAnalyzer;
 
 public class StatisticsTool {
 
@@ -424,6 +425,27 @@ public class StatisticsTool {
 		GraphDistance distance = new GraphDistance();
 		distance.execute(graphModel, attributeModel);
 		graphFeatures.setMAX_DIST(distance.getDiameter());
+
+		// Average degree of nodes in the graph
+		Degree d = new Degree();
+		d.execute(graphModel, attributeModel);
+		graphFeatures.setAVG_DEGREE(d.getAverageDegree());
+
+		// Graph density
+		GraphDensity dens = new GraphDensity();
+		dens.execute(graphModel, attributeModel);
+		graphFeatures.setGRAPH_DENSITY(dens.getDensity());
+
+		// Average path length
+		GraphDistance avg_path = new GraphDistance();
+		avg_path.execute(graphModel, attributeModel);
+		graphFeatures.setAVG_PATH_LEN(avg_path.getPathLength());
+
+		// Graph modularity
+		Modularity mod = new Modularity();
+		mod.execute(graphModel, attributeModel);
+		graphFeatures.setMODULARITY(mod.getModularity());
+
 		graphFeatures.printGraphFeatures();
 	}
 
