@@ -7,13 +7,12 @@ public class ActivityFeatures {
 	private int TUSM; // number of tweets that mention any user
 	private int UFRN; // avg number of friends for user that posted in graph
 	private int THTG;// number of hash-tags used in all tweets
-	// private int TURL; // number of tweets with URLs
 	private int UFLW; // avg number of followers for user
 	private int UID; // number diff users that posted a tweet
 	private int NEG, POS, POS_NEG; // sentiment analysis statistics
 	private static String[] ACTIVITY_FEATURES_NAMES = new String[] { "RTID",
-			"RTU", "TID", "TSUM", "UFRN", "THTG", "TURL", "UFLW", "UID", "NEG",
-			"POS", "POS_NEG" };
+			"RTU", "TID", "TSUM", "UFRN", "THTG", "UFLW", "UID", "NEG", "POS",
+			"POS_NEG" };
 
 	public ActivityFeatures() {
 		this.RTID = 0;
@@ -22,7 +21,6 @@ public class ActivityFeatures {
 		this.TUSM = 0;
 		this.UFRN = 0;
 		this.THTG = 0;
-		// this.TURL = 0;
 		this.UFLW = 0;
 		this.UID = 0;
 		this.NEG = 0;
@@ -80,10 +78,6 @@ public class ActivityFeatures {
 
 	public void setTHTG(int tHTG) {
 		THTG = tHTG;
-	}
-
-	public void setTURL(int tURL) {
-		// TURL = tURL;
 	}
 
 	public void setUFLW(int uFLW) {
@@ -146,10 +140,6 @@ public class ActivityFeatures {
 		THTG++;
 	}
 
-	public void incTURL() {
-		// TURL++;
-	}
-
 	public void incUFLW() {
 		UFLW++;
 	}
@@ -162,9 +152,8 @@ public class ActivityFeatures {
 	public String toString() {
 		return "ActivityFeatures [RTID=" + RTID + ", RTU=" + RTU + ", TID="
 				+ TID + ", TUSM=" + TUSM + ", UFRN=" + UFRN + ", THTG=" + THTG
-				+ /* ", TURL=" + TURL + */", UFLW=" + UFLW + ", UID=" + UID
-				+ ", NEG=" + NEG + ", POS=" + POS + ", POS_NEG=" + POS_NEG
-				+ "]";
+				+ ", UFLW=" + UFLW + ", UID=" + UID + ", NEG=" + NEG + ", POS="
+				+ POS + ", POS_NEG=" + POS_NEG + "]";
 	}
 
 	public static String[] getActivityFeaturesList() {
@@ -173,8 +162,8 @@ public class ActivityFeatures {
 
 	public double[] getValues() {
 		return new double[] { this.RTID, this.RTU, this.TID, this.TUSM,
-				this.UFRN, this.THTG/* , this.TURL */, this.UFLW, this.UID,
-				this.NEG, this.POS, this.POS_NEG };
+				this.UFRN, this.THTG, this.UFLW, this.UID, this.NEG, this.POS,
+				this.POS_NEG };
 	}
 
 	public void printActivityFeatures() {

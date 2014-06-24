@@ -158,9 +158,6 @@ public class StatisticsTool {
 			// Check for hashTag, financial symbols
 			handleHashTagsAndSymbols(curTweet, tweetNID.node);
 
-			// Check for URLs
-			// handleURLs(curTweet, tweetNID.node);
-
 			// Handle created/mentioned users
 			handleUsers(curTweet, tweetNID.node);
 
@@ -242,50 +239,6 @@ public class StatisticsTool {
 
 			// tweets that mention any user
 			activityFeatures.incTUSM();
-		}
-	}
-
-	private void handleURLs(Status curTweet, Node tweetNode) throws IOException {
-		URLEntity[] urls = curTweet.getURLEntities();
-		MediaEntity[] mediaUrls = curTweet.getMediaEntities();
-		if (mediaUrls == null)
-			mediaUrls = new MediaEntity[0];
-		String[] list = new String[urls.length + mediaUrls.length];
-		int index = 0;
-
-		for (int i = 0; i < urls.length; i++)
-			list[index++] = urls[i].getText();
-		for (int i = 0; i < mediaUrls.length; i++)
-			list[index++] = mediaUrls[i].getText();
-
-		if (list != null && list.length > 0) {
-			for (int i = 0; i < list.length; i++) {
-
-				String curUrlText = list[i];
-				NodeIdentifier urlNID;
-
-				if (urlsMap.containsKey(curUrlText)) {
-					urlNID = urlsMap.get(curUrlText);
-				} else {
-					// create new url node
-					urlNID = new NodeIdentifier(graphModel.factory().newNode(
-							"" + nodeCounter), "" + (nodeCounter++));
-					urlNID.setText(curUrlText);
-					urlsMap.put(curUrlText, urlNID);
-					graph.addNode(urlNID.node);
-				}
-
-				// repeated URL in the tweet
-				if (!graph.isAdjacent(tweetNode, urlNID.node)) {
-					Edge newEdge = graphModel.factory().newEdge(tweetNode,
-							urlNID.node);
-					graph.addEdge(newEdge);
-					edgeCounter++;
-				}
-			}
-
-			// number of tweets with URLs
-			activityFeatures.incTURL();
 		}
 	}
 
