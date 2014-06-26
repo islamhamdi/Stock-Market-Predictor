@@ -12,7 +12,7 @@ public class Global {
 	public static final int posstocktwits = 5;
 	public static final int negstocktwits = 6;
 
-	public static int min_tweets_perFile = 3;
+	public static int min_tweets_perFile = 5;
 
 	public static String userName = "mohamed";
 

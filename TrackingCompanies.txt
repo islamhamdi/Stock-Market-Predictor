@@ -3,7 +3,6 @@ $ABX
 $ACAD
 $AGEN
 $AIG
-$ALNY
 $AMD
 $AMRN
 $AMZN
@@ -39,7 +38,6 @@ $CVX
 $CYTK
 $DATA
 $DDD
-$DECK
 $DIS
 $DLIA
 $DRYS
@@ -52,7 +50,6 @@ $EXPE
 $FB
 $FCEL
 $FNMA
-$FRX
 $FSLR
 $FTEK
 $GALE
@@ -72,7 +69,6 @@ $HIMX
 $HLF
 $HOV
 $HPQ
-$HSY
 $HUM
 $IBM
 $IDN
@@ -132,7 +128,6 @@ $SNE
 $SNTA
 $SODA
 $SPY
-$SR
 $SWY
 $TGT
 $TSLA

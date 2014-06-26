@@ -117,20 +117,24 @@ public class WriteExcel {
 	 */
 
 	public void adddummyDaysAtEnd() throws Exception {
-		temp_var = 0;
-		int size = getRowsCnt();
-		String lastDay = sheet.getCell(0, size - 1).getContents();
-		Date date = Global.sdf.parse(lastDay);
-		int cnt = 0, i;
-		for (i = 1; i < 20; i++) {
-			Date d = new Date(date.getTime() + TimeUnit.DAYS.toMillis(i));
-			String day = Global.sdf.format(d);
-			if (volume_price_table.containsKey(day)) {
-				addNewDay(day, v, false);
-				cnt++;
-				if (cnt == Global.lag_var)
-					break;
+		try {
+			temp_var = 0;
+			int size = getRowsCnt();
+			String lastDay = sheet.getCell(0, size - 1).getContents();
+			Date date = Global.sdf.parse(lastDay);
+			int cnt = 0, i;
+			for (i = 1; i < 20; i++) {
+				Date d = new Date(date.getTime() + TimeUnit.DAYS.toMillis(i));
+				String day = Global.sdf.format(d);
+				if (volume_price_table.containsKey(day)) {
+					addNewDay(day, v, false);
+					cnt++;
+					if (cnt == Global.lag_var)
+						break;
+				}
 			}
+		} catch (Exception e) {
+
 		}
 	}
 

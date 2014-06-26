@@ -1,9 +1,11 @@
-package FilesRemoval;
+package Threshoulding;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+
+import twitter4j.Status;
 
 import Default.Global;
 import StockTwitsCreator.MyStatus;
@@ -13,40 +15,35 @@ public class remove {
 			ClassNotFoundException {
 		// 0 Twitter - 1 StockTwits - 2 Combined - 3 PosTwitter - 4 NegTwitter -
 		// 5 PosStockTwit - 6 NegStockTwit
-		// for (int v = 0; v <= 6; v++) {
-		File folder = new File(Global.dataPaths[1]);
+
+		File folder = new File(Global.dataPaths[0]);
 		File[] folders = folder.listFiles();
-		// Arrays.sort(folders);
 
 		for (int i = 0; i < folders.length; i++) {
 			folder = new File(folders[i].getAbsolutePath());
 			File[] files = folder.listFiles();
 
-			int counter = 0;
 			int k = 0;
 
 			for (int c = 0; c < files.length; c++) {
 				FileInputStream fr = new FileInputStream(files[c]);
 				ObjectInputStream is = new ObjectInputStream(fr);
 
-				MyStatus s = null;
+				Status s = null;
 				try {
-					s = (MyStatus) is.readObject();
+					s = (Status) is.readObject();
 				} catch (Exception e) {
-					// continue;
 				}
 				k = 0;
 				while (s != null) {
-					k++;
 					try {
-						s = (MyStatus) is.readObject();
+						k++;
+						s = (Status) is.readObject();
 					} catch (Exception e) {
 						break;
 					}
 				}
 
-				// System.out.println(k);
-				counter += k;
 				fr.close();
 				is.close();
 
@@ -54,8 +51,6 @@ public class remove {
 					System.out.println(files[c].getAbsolutePath());
 					files[c].delete();
 				}
-
-				// }
 
 				// System.out.println(folders[i].getName() + " " + counter);
 				// if (counter > 2000)
