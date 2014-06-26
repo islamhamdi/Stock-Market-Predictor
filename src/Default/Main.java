@@ -23,17 +23,17 @@ public class Main {
 	static String statPath = Global.StatFolderPath;
 	static WriteExcel excel;
 	static HashSet<String> currAvailableDays;
-	static String historyPath = Global.historyPath2;
+	static String historyPath = Global.historyPath1;
 	static double[] featuers;
 
 	public static void main(String[] args) throws Throwable {
 
-		currAvailableDays = getAvailableDays("$ORCL");
+		currAvailableDays = getAvailableDays("$PLUG");
 
 		// 0 Twitter - 1 StockTwits - 2 Combined - 3 PosTwitter - 4 NegTwitter -
 		// 5 PosStockTwit - 6 NegStockTwitc
 
-		Global.files_to_run = Global.sheet_num[Global.negstocktwits];
+		Global.files_to_run = Global.sheet_num[Global.twitter];
 
 		// preprocessUrlExpansion();
 		path = Global.dataPaths[Global.files_to_run];
@@ -75,7 +75,6 @@ public class Main {
 
 				boolean someThingNew = false;
 				for (int j = start; j < f.length; j++) {
-
 					if (f[j].file.isFile()) {
 						System.out.println(f[j].file.getName());
 						tool.resetTool(folderName, f[j].file.getName(),
@@ -95,11 +94,11 @@ public class Main {
 								"Make sure companies directories contain only files.");
 					}
 				}
-				System.out.println(">>>>>>>>>>>>>>>>>>>>>next>>>>>>>>>>>>>>");
 				excel.adddummyDaysAtEnd();
 				// if (someThingNew)
 				excel.drawTables();
 				excel.writeAndClose();
+				System.out.println(">>>>>>>>>>>>>>>>>>>>>next>>>>>>>>>>>>>>");
 			}
 
 		}

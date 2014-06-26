@@ -146,7 +146,7 @@ public class WriteExcel {
 		workbook = Workbook.createWorkbook(file, myWorkbook);
 		sheet = workbook.getSheet(sheetNum);
 
-		int r = sheet.getRows();
+		int r = getRowsCnt();
 		if (r < lag_var)
 			adddummyDays(start);
 

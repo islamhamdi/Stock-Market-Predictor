@@ -1,4 +1,4 @@
-package Threshoulding;
+package thresholding;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -16,7 +16,7 @@ public class remove {
 		// 0 Twitter - 1 StockTwits - 2 Combined - 3 PosTwitter - 4 NegTwitter -
 		// 5 PosStockTwit - 6 NegStockTwit
 
-		File folder = new File(Global.dataPaths[0]);
+		File folder = new File(Global.dataPaths[4]);
 		File[] folders = folder.listFiles();
 
 		for (int i = 0; i < folders.length; i++) {

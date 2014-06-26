@@ -6,7 +6,7 @@ import java.util.Arrays;
 public class Main {
 	public static void main(String[] args) {
 		//
-		String s = "/home/mohamed/Dropbox/Stock Market Daily Data/historical prices1";
+		String s = "/home/mohamed/Dropbox/Stock Market Daily Data/historical prices2";
 		File statDir = new File(s);
 
 
