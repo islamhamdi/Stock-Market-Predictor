@@ -28,7 +28,7 @@ public class ExcelToWeka {
 	private static void run() throws IOException, ParseException {
 		int index = 0;
 		String tmp[] = { "today", "tomorrow", "aftertomorrow" };
-		int type = Global.volume_start_col-index;
+		int type = Global.volume_start_col - index;
 		// int type=Global.volume_start_col;
 
 		String outDir = outDir2;
@@ -152,9 +152,7 @@ public class ExcelToWeka {
 					double ratio = 100 * Math.abs(currprice - pastprice)
 							/ currprice;
 					/***
-					 * take care to change ratio 
-					 * for price 1
-					 * for volume 5
+					 * take care to change ratio for price 1 for volume 5
 					 */
 					if (index == 0 || ratio < 5)
 						tuples[index][feature_num] = "no_change";

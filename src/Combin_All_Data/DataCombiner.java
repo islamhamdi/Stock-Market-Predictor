@@ -35,7 +35,7 @@ public class DataCombiner {
 	}
 
 	public static void main(String[] args) throws IOException, ParseException {
-		startDate = dateFormat.parse("10-04-2014");
+		startDate = dateFormat.parse("01-05-2014");
 		run();
 	}
 

@@ -42,7 +42,6 @@ $DIS
 $DLIA
 $DRYS
 $DUST
-$DV
 $EBAY
 $ED
 $EE
@@ -51,7 +50,6 @@ $FB
 $FCEL
 $FNMA
 $FSLR
-$FTEK
 $GALE
 $GE
 $GILD
@@ -98,7 +96,6 @@ $NFLX
 $NKE
 $NOK
 $NQ
-$NRG
 $NUS
 $OCN
 $OPK
@@ -120,10 +117,8 @@ $RFMD
 $RH
 $RNN
 $RXII
-$SAM
 $SCTY
 $SINA
-$SLW
 $SNE
 $SNTA
 $SODA
