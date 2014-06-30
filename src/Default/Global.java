@@ -54,6 +54,8 @@ public class Global {
 
 	public static String historyPath2 = globalPath + "/historical prices2/";
 
+	public static String historyPath3 = globalPath + "/historical prices3/";
+
 	static String sentimentTwitterPath = globalPath
 			+ "/Sentiment-Twits/Twitter";
 	static String sentimentStockTwitPath = globalPath
