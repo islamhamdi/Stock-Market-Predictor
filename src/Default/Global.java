@@ -151,4 +151,7 @@ public class Global {
 
 	public static String kEYMAP = "KeyStatisticsMap";
 
+	public static int GRAPH_DISTANCE_THRESHOLD = 2000;
+	public static double GRAPH_DIST_VAL = 25.0;
+	public static double AVG_PATH_LEN_VAL = 9.0;
 }

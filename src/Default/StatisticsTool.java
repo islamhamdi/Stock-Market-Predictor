@@ -422,9 +422,13 @@ public class StatisticsTool {
 		graphFeatures.setNUM_CMP(c.getConnectedComponentsCount());
 
 		// Maximum diameter in any component in the graph
-		GraphDistance distance = new GraphDistance();
-		distance.execute(graphModel, attributeModel);
-		graphFeatures.setMAX_DIST(distance.getDiameter());
+		if (activityFeatures.getTID() <= Global.GRAPH_DISTANCE_THRESHOLD) {
+			GraphDistance distance = new GraphDistance();
+			distance.execute(graphModel, attributeModel);
+			graphFeatures.setMAX_DIST(distance.getDiameter());
+		} else {
+			graphFeatures.setMAX_DIST(Global.GRAPH_DIST_VAL);
+		}
 
 		// Average degree of nodes in the graph
 		Degree d = new Degree();
@@ -437,9 +441,13 @@ public class StatisticsTool {
 		graphFeatures.setGRAPH_DENSITY(dens.getDensity());
 
 		// Average path length
-		GraphDistance avg_path = new GraphDistance();
-		avg_path.execute(graphModel, attributeModel);
-		graphFeatures.setAVG_PATH_LEN(avg_path.getPathLength());
+		if (activityFeatures.getTID() <= Global.GRAPH_DISTANCE_THRESHOLD) {
+			GraphDistance avg_path = new GraphDistance();
+			avg_path.execute(graphModel, attributeModel);
+			graphFeatures.setAVG_PATH_LEN(avg_path.getPathLength());
+		} else {
+			graphFeatures.setAVG_PATH_LEN(Global.AVG_PATH_LEN_VAL);
+		}
 
 		// Graph modularity
 		Modularity mod = new Modularity();
