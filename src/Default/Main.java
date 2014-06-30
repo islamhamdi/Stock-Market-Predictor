@@ -28,7 +28,7 @@ public class Main {
 
 	public static void main(String[] args) throws Throwable {
 
-		currAvailableDays = getAvailableDays("$PLUG");
+		currAvailableDays = getAvailableDays("$IBM");
 
 		// 0 Twitter - 1 StockTwits - 2 Combined - 3 PosTwitter - 4 NegTwitter -
 		// 5 PosStockTwit - 6 NegStockTwitc
@@ -95,8 +95,8 @@ public class Main {
 					}
 				}
 				excel.adddummyDaysAtEnd();
-				// if (someThingNew)
-				excel.drawTables();
+				if (someThingNew)
+					excel.drawTables();
 				excel.writeAndClose();
 				System.out.println(">>>>>>>>>>>>>>>>>>>>>next>>>>>>>>>>>>>>");
 			}

@@ -50,7 +50,7 @@ public class Global {
 	// Statistics + history prices paths
 	public static String StatFolderPath = globalPath + "/statistics/";
 	// static String StatFolderPath = "Statistics";
-	public static String historyPath1 = globalPath + "/historical prices1/";
+	public static String historyPath1 = globalPath + "/historical prices4/";
 
 	public static String historyPath2 = globalPath + "/historical prices2/";
 
@@ -153,7 +153,7 @@ public class Global {
 
 	public static String kEYMAP = "KeyStatisticsMap";
 
-	public static int GRAPH_DISTANCE_THRESHOLD = 2000;
+	public static int GRAPH_DISTANCE_THRESHOLD = 2600;
 	public static double GRAPH_DIST_VAL = 25.0;
 	public static double AVG_PATH_LEN_VAL = 9.0;
 }
