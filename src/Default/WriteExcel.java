@@ -94,11 +94,14 @@ public class WriteExcel {
 	Date temp;
 
 	private void adddummyDays(String start) throws Exception {
+		// start = "01-04-2014";
 		Date date = Global.sdf.parse(start);
 		int cnt = 0, i;
-		for (i = 1; i < 20; i++) {
+		for (i = 1; i < 70; i++) {
 			temp = new Date(date.getTime() - TimeUnit.DAYS.toMillis(i));
+			System.out.println(Global.sdf.format(temp));
 			if (volume_price_table.containsKey(Global.sdf.format(temp))) {
+				System.out.println("DONE");
 				cnt++;
 				if (cnt == lag_var)
 					break;
@@ -356,14 +359,6 @@ public class WriteExcel {
 			drawDailyStepTable(Global.start_row_t1 + 25, col, "price", i,
 					Global.price_cols);
 		}
-
-		// drawTable1(Global.start_row_t1,
-		// Global.start_col_t1,
-		// "volume",
-		// lastRow / 2, Global.volume_cols);
-		// drawTable1(Global.start_row_t1, Global.start_col_t2, "price",
-		// lastRow / 2, Global.price_cols);
-
 		drawTable1(Global.start_row_t1, Global.start_col_t1, "volume", lastRow,
 				Global.volume_cols);
 		drawTable1(Global.start_row_t1 + 25, Global.start_col_t1, "price",
@@ -378,7 +373,7 @@ public class WriteExcel {
 	}
 
 	private void clear() throws Exception {
-		int raws = getRowsCnt() + 5;
+		int raws = getRowsCnt() + 1;
 		for (int column = 0; column < 200; column++)
 			for (int r = raws + 1; r < raws + 200; r++)
 				addLabel(column, r, "");
@@ -397,16 +392,24 @@ public class WriteExcel {
 		max = new double[width];
 		min = new double[width];
 
+		int lastRow = 0;
+		boolean empty_happens = false;
 		for (int col = 1; col < width; col++) {
 			for (int raw = lag_var + 1; raw < raw_n; raw++) {
 				String s = sheet.getCell(col, raw).getContents();
-				if (s.isEmpty())
-					s = "0";
+				if (s.isEmpty()) {
+					empty_happens = true;
+					lastRow = Math.max(lastRow, raw_n);
+					continue;
+				}
 				normTable[raw][col] = Double.parseDouble(s);
 				max[col] = Math.max(max[col], normTable[raw][col]);
 				min[col] = Math.min(min[col], normTable[raw][col]);
 			}
 		}
+
+		if (empty_happens)
+			raw_n = lastRow;
 
 		for (int col = 1; col < width; col++)
 			for (int raw = lag_var + 1; raw < raw_n; raw++) {

@@ -1,5 +1,4 @@
 $AAPL
-$ABX
 $ACAD
 $AGEN
 $AIG

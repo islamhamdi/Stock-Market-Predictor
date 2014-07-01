@@ -28,12 +28,12 @@ public class Main {
 
 	public static void main(String[] args) throws Throwable {
 
-		currAvailableDays = getAvailableDays("$IBM");
+		currAvailableDays = getAvailableDays("$AAPL");
 
 		// 0 Twitter - 1 StockTwits - 2 Combined - 3 PosTwitter - 4 NegTwitter -
 		// 5 PosStockTwit - 6 NegStockTwitc
 
-		Global.files_to_run = Global.sheet_num[Global.twitter];
+		Global.files_to_run = Global.sheet_num[0];
 
 		// preprocessUrlExpansion();
 		path = Global.dataPaths[Global.files_to_run];
@@ -95,8 +95,8 @@ public class Main {
 					}
 				}
 				excel.adddummyDaysAtEnd();
-				if (someThingNew)
-					excel.drawTables();
+				// if (someThingNew)
+				excel.drawTables();
 				excel.writeAndClose();
 				System.out.println(">>>>>>>>>>>>>>>>>>>>>next>>>>>>>>>>>>>>");
 			}
