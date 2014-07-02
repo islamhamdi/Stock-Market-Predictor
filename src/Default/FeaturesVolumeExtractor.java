@@ -1,4 +1,4 @@
-package Average;
+package Default;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -10,19 +10,17 @@ import jxl.Sheet;
 import jxl.Workbook;
 import jxl.read.biff.BiffException;
 
-import Default.Global;
 
 public class FeaturesVolumeExtractor {
 	private static String companiesDirectory = "/media/MyData/DropBox/Dropbox/Stock Market Daily Data/statistics/";
 	private static String outputDirectory = "/media/MyData/DropBox/Dropbox/Stock Market Daily Data/PlotCompanies/";
 	private static int featureIndex, sheetIndex;
-	private static final String[] GRAPH_FEATURES_NAMES = new String[] { "NUM_NODES", "NUM_EDGES", "NUM_CMP",
-			"MAX_DIST", "AVG_DEGREE", "GRAPH_DENSITY", "AVG_PATH_LEN", "MODULARITY" };
+	private static final String[] GRAPH_FEATURES_NAMES = Helper.getFeaturesList();
 
 	public static void main(String[] args) throws IndexOutOfBoundsException, BiffException, IOException {
-		featureIndex = 1;
+		featureIndex = 2;
 		sheetIndex = Global.stocktwits;
-
+		
 		String sheetDirectory = outputDirectory + Global.sheets[sheetIndex] + "/";
 		createDirectory(sheetDirectory);
 
