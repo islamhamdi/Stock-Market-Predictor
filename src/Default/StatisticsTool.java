@@ -130,8 +130,8 @@ public class StatisticsTool {
 
 			if (curTweet.isRetweet()) {
 
-				// Perform original tweets check on twitter data only
-				if (Global.files_to_run == Global.sheet_num[0]) {
+				// Perform original tweets check on twitter data-type only
+				if (Helper.getDataType(Global.files_to_run) == Global.twitter) {
 					// Check for original Retweeted Status
 
 					Status retweetedStatus = curTweet.getRetweetedStatus();
@@ -284,8 +284,7 @@ public class StatisticsTool {
 	void addSimilarityNodes() {
 
 		// add similarity nodes only for stockTwits data
-		if (!(Global.files_to_run == Global.sheet_num[1]
-				|| Global.files_to_run == Global.sheet_num[5] || Global.files_to_run == Global.sheet_num[6]))
+		if (!(Helper.getDataType(Global.files_to_run) == Global.stocktwits))
 			return;
 
 		boolean[] visited = new boolean[nodesList.size()];
@@ -365,13 +364,13 @@ public class StatisticsTool {
 				Global.sentimentStockTwitPath };
 
 		int startIndex = 0, loopCounter = 0;
-		if (Global.files_to_run == Global.sheet_num[0]) {// TWITTER
+		if (Global.files_to_run == Global.twitter) {// TWITTER
 			startIndex = 0;
 			loopCounter = 1;
-		} else if (Global.files_to_run == Global.sheet_num[1]) {// STOCK TWITS
+		} else if (Global.files_to_run == Global.stocktwits) {// STOCK TWITS
 			startIndex = 1;
 			loopCounter = 2;
-		} else if (Global.files_to_run == Global.sheet_num[2]) {// COMBINED
+		} else if (Global.files_to_run == Global.combined) {// COMBINED
 			startIndex = 0;
 			loopCounter = 2;
 		} else {
@@ -453,7 +452,7 @@ public class StatisticsTool {
 		Modularity mod = new Modularity();
 		mod.execute(graphModel, attributeModel);
 		graphFeatures.setMODULARITY(mod.getModularity());
-		
+
 		graphFeatures.printGraphFeatures();
 	}
 
