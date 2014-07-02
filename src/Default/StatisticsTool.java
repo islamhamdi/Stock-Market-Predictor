@@ -24,7 +24,6 @@ import twitter4j.HashtagEntity;
 import twitter4j.Status;
 import twitter4j.SymbolEntity;
 import twitter4j.UserMentionEntity;
-import SentimentAnalysis.SentimentAnalyzer;
 
 public class StatisticsTool {
 
@@ -51,7 +50,7 @@ public class StatisticsTool {
 			totalFriendsCounter;
 
 	private TreeMap<Long, NodeIdentifier> nodeMap, usersMap;
-	private TreeMap<String, NodeIdentifier> hashtagsMap, urlsMap;
+	private TreeMap<String, NodeIdentifier> hashtagsMap;
 	private ArrayList<NodeIdentifier> nodesList;
 	private double[] featureValues;
 	private String curCompanyName;
@@ -70,7 +69,6 @@ public class StatisticsTool {
 
 		this.nodeMap = new TreeMap<Long, NodeIdentifier>();
 		this.hashtagsMap = new TreeMap<String, NodeIdentifier>();
-		this.urlsMap = new TreeMap<String, NodeIdentifier>();
 		this.usersMap = new TreeMap<Long, NodeIdentifier>();
 		this.nodesList = new ArrayList<NodeIdentifier>();
 		this.graphFeatures = new GraphFeatures();
@@ -101,7 +99,6 @@ public class StatisticsTool {
 
 		this.nodeMap.clear();
 		this.hashtagsMap.clear();
-		this.urlsMap.clear();
 		this.usersMap.clear();
 		this.nodesList.clear();
 		this.graphFeatures = new GraphFeatures();
@@ -160,23 +157,8 @@ public class StatisticsTool {
 			// Handle created/mentioned users
 			handleUsers(curTweet, tweetNID.node);
 
-			// Handle sentiment analsyis of the tweet
-			// handleSentimentAnalysis(curTweet.getText());
 		}
 		finalize();
-	}
-
-	private void handleSentimentAnalysis(String text) {
-		// res[0] negative, res[1] neutral, res[2] positive, res[3] positive -
-		// negative
-		int sentiment = SentimentAnalyzer.findSentiment(text);
-		if (sentiment == 0 || sentiment == 1) {
-			activityFeatures.incNEG();
-			activityFeatures.decPOS_NEG();
-		} else if (sentiment == 2 || sentiment == 3 || sentiment == 4) {
-			activityFeatures.incPOS();
-			activityFeatures.incPOS_NEG();
-		}
 	}
 
 	private void handleUsers(Status curTweet, Node tweetNode) {
@@ -322,16 +304,6 @@ public class StatisticsTool {
 			}
 		}
 
-		// for (int i = 0; i < ans.size(); i++) {
-		// ArrayList<NodeIdentifier> current = ans.get(i);
-		// if (current.size() > 1) { // similar nodes exist
-		// for (int j = 0; j < current.size(); j++) {
-		// System.out.println(current.get(j));
-		// }
-		// System.out.println("=========================");
-		// }
-		// }
-
 		for (int i = 0; i < ans.size(); i++) {
 			ArrayList<NodeIdentifier> current = ans.get(i);
 			if (current.size() > 1) { // similar nodes exist
@@ -374,10 +346,8 @@ public class StatisticsTool {
 			startIndex = 0;
 			loopCounter = 2;
 		} else {
-			// System.err
-			// .println("Twitter/StockTwits/Combined data are only sentiment supported!");
-			// System.err
-			// .println("Setting sentiment features to number of tweets");
+			// "Twitter/StockTwits/Combined data are only sentiment supported!"
+			// Setting sentiment features to number of tweets
 			activityFeatures.setPOS(activityFeatures.getTID());
 			activityFeatures.setNEG(activityFeatures.getTID());
 			activityFeatures.setPOS_NEG(activityFeatures.getTID());

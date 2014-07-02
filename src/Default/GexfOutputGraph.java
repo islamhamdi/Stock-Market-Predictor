@@ -20,10 +20,8 @@ import java.util.Calendar;
 import java.util.TreeMap;
 
 import twitter4j.HashtagEntity;
-import twitter4j.MediaEntity;
 import twitter4j.Status;
 import twitter4j.SymbolEntity;
-import twitter4j.URLEntity;
 import twitter4j.UserMentionEntity;
 
 public class GexfOutputGraph {
@@ -54,7 +52,7 @@ public class GexfOutputGraph {
 	public static Graph graph;
 	public static AttributeList attrList;
 	private TreeMap<Long, NodeIdentifier> nodeMap, usersMap;
-	private TreeMap<String, NodeIdentifier> hashtagsMap, urlsMap;
+	private TreeMap<String, NodeIdentifier> hashtagsMap;
 	private ArrayList<NodeIdentifier> nodesList;
 	private int nodeCounter, edgeCounter;
 	private String curCompanyName;
@@ -275,7 +273,6 @@ public class GexfOutputGraph {
 		// initialize graph topology
 		nodeMap = new TreeMap<Long, NodeIdentifier>();
 		hashtagsMap = new TreeMap<String, NodeIdentifier>();
-		urlsMap = new TreeMap<String, NodeIdentifier>();
 		usersMap = new TreeMap<Long, NodeIdentifier>();
 		nodesList = new ArrayList<NodeIdentifier>();
 		nodeCounter = edgeCounter = 0;
