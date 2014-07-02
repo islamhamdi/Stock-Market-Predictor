@@ -453,7 +453,7 @@ public class StatisticsTool {
 		Modularity mod = new Modularity();
 		mod.execute(graphModel, attributeModel);
 		graphFeatures.setMODULARITY(mod.getModularity());
-
+		
 		graphFeatures.printGraphFeatures();
 	}
 

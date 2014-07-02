@@ -37,7 +37,7 @@ public class Global {
 			// StockTwits Data Path
 			globalPath + "/StockTwits",
 			// Combined Data Path
-			globalPath + "/Combined",
+			globalPath + "/combined",
 			// Twitter Positive Data Path
 			globalPath + "/Sentiment-Twits/Twitter/positive",
 			// Twitter Negative Data Path
