@@ -50,7 +50,7 @@ public class Global {
 	// Statistics + history prices paths
 	public static String StatFolderPath = globalPath + "/statistics/";
 	// static String StatFolderPath = "Statistics";
-	public static String historyPath1 = globalPath + "/historical prices1/";
+	public static String historyPath1 = globalPath + "/historical prices4/";
 
 	public static String historyPath2 = globalPath + "/historical prices2/";
 

@@ -173,7 +173,10 @@ public class WriteExcel {
 	}
 
 	public int getRowsCnt() throws Exception {
+		System.out.println("special col = " + specialCol);
 		Cell cell = sheet.getCell(specialCol, 0);
+		System.out.println("special col content = " + cell.getContents());
+
 		return (int) Double.parseDouble(cell.getContents());
 	}
 

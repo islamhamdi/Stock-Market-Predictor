@@ -31,9 +31,10 @@ public class AVR {
 
 	static HashMap<Integer, ArrayList<String>> keyMap = new HashMap<>();
 
-	String[] f = { "RTID", "RTU", "TID", "TSUM", "UFRN", "THTG", "TURL",
-			"UFLW", "UID", "NEG", "POS", "POS_NEG", "NUM_NODES", "NUM_EDGES",
-			"NUM_CMP", "MAX_DIST" };
+	String[] f = { "RTID", "RTU", "TID", "TSUM", "UFRN", "THTG", "UFLW", "UID",
+			"NEG", "POS", "POS_NEG", "NUM_NODES", "NUM_EDGES", "NUM_CMP",
+			"MAX_DIST", "AVG_DEGREE", "GRAPH_DENSITY", "AVG_PATH_LEN",
+			"MODULARITY" };
 
 	int width = 7;
 	int hight1 = f.length;
@@ -54,7 +55,7 @@ public class AVR {
 	WritableWorkbook workbook;
 	WritableSheet excelSheet;
 
-	static String inputFolder = "/home/mohamed/Dropbox/Stock Market Daily Data/statistics/plain";
+	static String inputFolder = "/home/mohamed/Dropbox/Stock Market Daily Data/plain";
 	static String outputFolder = "/home/mohamed/Dropbox/Stock Market Daily Data/Average/";
 
 	// static String inputFolder = "/home/mohamed/Desktop/plain";
@@ -108,6 +109,7 @@ public class AVR {
 		File[] files = ReadCurrMode(mode);
 		for (int k = 0; k < files.length; k++) {
 			name = files[k].getName();
+			System.out.println(name);
 			File inputWorkbook = new File(files[k].getAbsolutePath());
 			Workbook w;
 			try {
@@ -120,8 +122,8 @@ public class AVR {
 						hight1, files.length);
 
 				// price
-				add_to_buff(sheet, buff_price, start_raw1, start_col2, width,
-						hight1, files.length);
+				add_to_buff(sheet, buff_price, start_raw1 + 25, start_col1,
+						width, hight1, files.length);
 
 				// vol
 				add_to_buff(sheet, buff_comb_volume, start_raw2, start_col1,
@@ -197,9 +199,10 @@ public class AVR {
 						double v = Double.parseDouble(cell.getContents());
 						buff[r][c] += v;
 					} else {
-						buff[r][c] += 0.2;
+						buff[r][c] += 0.5;
 
-						// System.err.println(sheet.getName());
+						System.err.print(" check " + sheet.getName() + " "
+								+ row + " ," + col);
 						// System.err.println(row + " ," + col);
 						// System.err.println(cell.getContents());
 						// throw new Exception("INVALID");

@@ -28,12 +28,12 @@ public class Main {
 
 	public static void main(String[] args) throws Throwable {
 
-		currAvailableDays = getAvailableDays("$AAPL");
+		currAvailableDays = getAvailableDays("$UA");
 
 		// 0 Twitter - 1 StockTwits - 2 Combined - 3 PosTwitter - 4 NegTwitter -
 		// 5 PosStockTwit - 6 NegStockTwitc
 
-		Global.files_to_run = Global.sheet_num[0];
+		Global.files_to_run = Global.sheet_num[2];
 
 		// preprocessUrlExpansion();
 		path = Global.dataPaths[Global.files_to_run];
