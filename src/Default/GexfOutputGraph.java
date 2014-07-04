@@ -20,12 +20,12 @@ import java.util.Calendar;
 import java.util.TreeMap;
 
 import twitter4j.HashtagEntity;
-import twitter4j.MediaEntity;
 import twitter4j.Status;
-import twitter4j.URLEntity;
+import twitter4j.SymbolEntity;
 import twitter4j.UserMentionEntity;
 
 public class GexfOutputGraph {
+
 
 	static class NodeIdentifier {
 		Node node;
@@ -40,6 +40,10 @@ public class GexfOutputGraph {
 		public void setText(String s) {
 			text = s;
 		}
+
+		public String toString() {
+			return "Text = " + text;
+		}
 	}
 
 	private Parser streamer;
@@ -47,17 +51,16 @@ public class GexfOutputGraph {
 	public static Calendar date;
 	public static Graph graph;
 	public static AttributeList attrList;
-	private TreeMap<Long, NodeIdentifier> nodeMap;
+	private TreeMap<Long, NodeIdentifier> nodeMap, usersMap;
 	private TreeMap<String, NodeIdentifier> hashtagsMap;
-	private TreeMap<String, NodeIdentifier> urlsMap;
-	private TreeMap<Long, NodeIdentifier> usersMap;
 	private ArrayList<NodeIdentifier> nodesList;
 	private int nodeCounter, edgeCounter;
+	private String curCompanyName;
 
 	private void generateGexfFile() {
 		StaxGraphWriter graphWriter = new StaxGraphWriter();
 		File f = new File(
-				"/home/islamhamdi/Desktop/TwitterStockData/twitter_graph.gexf");
+				"/home/islamhamdi/Desktop/StockTwitsData/$AAPL/stoc_twit_graph.gexf");
 		Writer out;
 		try {
 			out = new FileWriter(f, false);
@@ -65,6 +68,47 @@ public class GexfOutputGraph {
 			System.out.println(f.getAbsolutePath());
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+
+	private void parseData() throws IOException {
+
+		Status curTweet;
+		while ((curTweet = streamer.getNextStatus()) != null) {
+			
+			// TWEET Node
+			Long tweetID = curTweet.getId();
+			NodeIdentifier tweetNID = new NodeIdentifier(graph.createNode(""
+					+ nodeCounter), "" + (nodeCounter++));
+			tweetNID.node.setLabel("+").setSize(Constants.TWEET_NODE_SIZE)
+					.setColor(Constants.TWEET_NODE_COLOR).getShapeEntity()
+					.setNodeShape(Constants.TWEET_NODE_SHAPE);
+			tweetNID.setText(curTweet.getText());
+			nodeMap.put(tweetID, tweetNID);
+			nodesList.add(tweetNID);
+
+			if (curTweet.isRetweet()) {
+				// Check for original Retweeted Status
+				
+				Status retweetedStatus = curTweet.getRetweetedStatus();
+					// only happens with stock-twit status treated as twitter
+					// status
+				if (retweetedStatus != null) {
+					Long originalTweetId = retweetedStatus.getId();
+					if (nodeMap.containsKey(originalTweetId)) {
+						NodeIdentifier origTweetNID = nodeMap
+								.get(originalTweetId);
+						tweetNID.node.connectTo("" + (edgeCounter++), "Retweet",
+							origTweetNID.node);
+					}
+				}
+			}
+
+			// Check for hashTag, financial symbols
+			handleHashTagsAndSymbols(curTweet, tweetNID.node);
+
+			// Handle created/mentioned users
+			handleUsers(curTweet, tweetNID.node);
 		}
 	}
 
@@ -79,6 +123,7 @@ public class GexfOutputGraph {
 			// new user registration
 			userNID = new NodeIdentifier(graph.createNode("" + nodeCounter), ""
 					+ (nodeCounter++));
+			userNID.setText(curTweet.getUser().getScreenName());
 			userNID.node.setLabel("@").setSize(Constants.USER_NODE_SIZE)
 					.setColor(Constants.USER_NODE_COLOR).getShapeEntity()
 					.setNodeShape(Constants.USER_NODE_SHAPE);
@@ -120,117 +165,48 @@ public class GexfOutputGraph {
 		}
 	}
 
-	private void handleURLs(Status curTweet, Node tweetNode) throws IOException {
-		URLEntity[] urls = curTweet.getURLEntities();
-		MediaEntity[] mediaUrls = curTweet.getMediaEntities();
-		String[] list = new String[urls.length + mediaUrls.length];
-		int index = 0;
-
-		for (int i = 0; i < urls.length; i++)
-			list[index++] = urls[i].getText();
-		for (int i = 0; i < mediaUrls.length; i++)
-			list[index++] = mediaUrls[i].getText();
-
-		if (list != null && list.length > 0) {
-			for (int i = 0; i < list.length; i++) {
-
-				// URL expansion, from t.co --> bit.ly --> original one
-				// String curUrlText = URLExpander.expandUrl(list[i]);
-				String curUrlText = list[i];
-				NodeIdentifier urlNID;
-
-				if (urlsMap.containsKey(curUrlText)) {
-					urlNID = urlsMap.get(curUrlText);
-				} else {
-					// create new url node
-					urlNID = new NodeIdentifier(graph.createNode(""
-							+ nodeCounter), "" + (nodeCounter++));
-					urlNID.node.setLabel("*").setSize(Constants.URL_NODE_SIZE)
-							.setColor(Constants.URL_NODE_COLOR)
-							.getShapeEntity()
-							.setNodeShape(Constants.URL_NODE_SHAPE);
-					urlNID.setText(curUrlText);
-					urlsMap.put(curUrlText, urlNID);
-				}
-
-				// repeated URL in the tweet
-				if (!tweetNode.hasEdgeTo(urlNID.nodeIndex)) {
-					tweetNode.connectTo("" + (edgeCounter++), "Cited",
-							urlNID.node);
-				}
-			}
-
-		}
-	}
-
-	private void handleHashTags(Status curTweet, Node tweetNode) {
+	private void handleHashTagsAndSymbols(Status curTweet, Node tweetNode) {
 		HashtagEntity[] hashtags = curTweet.getHashtagEntities();
+		SymbolEntity[] symbols = curTweet.getSymbolEntities();
+		String[] tags = Helper.combineTags(hashtags, symbols);
 
-		if (hashtags != null && hashtags.length > 0) {
-			for (int i = 0; i < hashtags.length; i++) {
-				String hashtagText = hashtags[i].getText();
-				NodeIdentifier hashtagNID;
+		if (tags != null && tags.length > 0) {
+			for (int i = 0; i < tags.length; i++) {
+				String tagText = tags[i];
+				if (tagText.startsWith("$"))
+					tagText = tagText.substring(1);
 
-				if (hashtagsMap.containsKey(hashtagText)) {
-					hashtagNID = hashtagsMap.get(hashtagText);
+				// skip $company_name as a symbol
+				if (("$" + tagText).equals(this.curCompanyName))
+					continue;
+
+				NodeIdentifier tagNID;
+
+				if (hashtagsMap.containsKey(tagText)) {
+					tagNID = hashtagsMap.get(tagText);
 				} else {
 					// create new hash tag node
-					hashtagNID = new NodeIdentifier(graph.createNode(""
+					tagNID = new NodeIdentifier(graph.createNode(""
 							+ nodeCounter), "" + (nodeCounter++));
-					hashtagNID.node.setLabel("#")
+					tagNID.node.setLabel("#")
 							.setSize(Constants.HASHTAG_NODE_SIZE)
 							.setColor(Constants.HASHTAG_NODE_COLOR)
 							.getShapeEntity()
 							.setNodeShape(Constants.HASHTAG_NODE_SHAPE);
-					hashtagNID.setText(hashtagText);
-					hashtagsMap.put(hashtagText, hashtagNID);
+					tagNID.setText(tagText);
+					hashtagsMap.put(tagText, tagNID);
 				}
 
 				// repeated hashtags in the same tweet
-				if (!tweetNode.hasEdgeTo(hashtagNID.nodeIndex)) {
+				if (!tweetNode.hasEdgeTo(tagNID.nodeIndex)) {
 					tweetNode.connectTo("" + (edgeCounter++), "Annotated",
-							hashtagNID.node);
+							tagNID.node);
 				}
 			}
 		}
 	}
 
-	private void parseData() throws IOException {
-
-		Status curTweet;
-		while ((curTweet = streamer.getNextStatus()) != null) {
-			// TWEET Node
-			Long tweetID = curTweet.getId();
-
-			NodeIdentifier tweetNID = new NodeIdentifier(graph.createNode(""
-					+ nodeCounter), "" + (nodeCounter++));
-			tweetNID.node.setLabel("+").setSize(Constants.TWEET_NODE_SIZE)
-					.setColor(Constants.TWEET_NODE_COLOR).getShapeEntity()
-					.setNodeShape(Constants.TWEET_NODE_SHAPE);
-			tweetNID.setText(curTweet.getText());
-			nodeMap.put(tweetID, tweetNID);
-			nodesList.add(tweetNID);
-
-			if (curTweet.isRetweet()) {
-				// Check for original Retweeted Status
-				Long originalTweetId = curTweet.getRetweetedStatus().getId();
-				if (nodeMap.containsKey(originalTweetId)) {
-					NodeIdentifier origTweetNID = nodeMap.get(originalTweetId);
-					tweetNID.node.connectTo("" + (edgeCounter++), "Retweet",
-							origTweetNID.node);
-				}
-			}
-
-			// Check for hashTag, financial symbols
-			handleHashTags(curTweet, tweetNID.node);
-
-			// Check for URLs
-			handleURLs(curTweet, tweetNID.node);
-
-			// Handle created/mentioned users
-			handleUsers(curTweet, tweetNID.node);
-		}
-	}
+	
 
 	private void addSimilarityNodes() {
 		boolean[] visited = new boolean[nodesList.size()];
@@ -239,6 +215,14 @@ public class GexfOutputGraph {
 		for (int i = 0; i < nodesList.size(); i++)
 			if (!visited[i]) {
 				NodeIdentifier currentNID = nodesList.get(i);
+				
+				String tweetText = currentNID.text;
+
+				// a retweet starts with @username: or RT
+				if (!(tweetText.matches("(@[a-zA-Z0-9]+:.+).*") || tweetText
+						.toUpperCase().startsWith("RT")))
+					continue;
+
 				ArrayList<NodeIdentifier> tempAns = new ArrayList<NodeIdentifier>();
 				tempAns.add(currentNID);
 				visited[i] = true;
@@ -246,8 +230,12 @@ public class GexfOutputGraph {
 				for (int j = i + 1; j < nodesList.size(); j++)
 					if (!visited[j]) {
 						NodeIdentifier next = nodesList.get(j);
-						if (JaccardSimilarity.getJaccardCoefficient(
-								currentNID.text, next.text) > Constants.MIN_JACCARD_THRESHOLD) {
+						String retweetBody = tweetText.substring(tweetText
+								.indexOf(' ') + 1);
+						double cofff = JaccardSimilarity.getJaccardCoefficient(
+								retweetBody, next.text);
+						if (cofff > Constants.MIN_JACCARD_THRESHOLD
+								&& cofff < Constants.MAX_JACCARD_THRESHOLD) {
 							visited[j] = true;
 							tempAns.add(next);
 						}
@@ -275,7 +263,7 @@ public class GexfOutputGraph {
 		}
 	}
 
-	private void initialize(String path, EdgeType graphType, Mode graphMode)
+	private void initialize(String company, String path, EdgeType graphType, Mode graphMode)
 			throws IOException {
 
 		// initialize parser
@@ -285,10 +273,11 @@ public class GexfOutputGraph {
 		// initialize graph topology
 		nodeMap = new TreeMap<Long, NodeIdentifier>();
 		hashtagsMap = new TreeMap<String, NodeIdentifier>();
-		urlsMap = new TreeMap<String, NodeIdentifier>();
 		usersMap = new TreeMap<Long, NodeIdentifier>();
 		nodesList = new ArrayList<NodeIdentifier>();
 		nodeCounter = edgeCounter = 0;
+
+		this.curCompanyName = company;
 
 		// gexf initialization
 		gexf = new GexfImpl();
@@ -306,11 +295,11 @@ public class GexfOutputGraph {
 
 	public static void main(String[] args) throws IOException {
 		GexfOutputGraph gexfGraph = new GexfOutputGraph();
-		gexfGraph.initialize(
-				"/home/islamhamdi/Desktop/TwitterStockData/$AAPL/27-02-2014",
+		gexfGraph.initialize("$APPL",
+				"/home/islamhamdi/Desktop/StockTwitsData/$AAPL/02-05-2014",
 				EdgeType.UNDIRECTED, Mode.STATIC);
 		gexfGraph.parseData();
-		// gexfGraph.addSimilarityNodes();
+		gexfGraph.addSimilarityNodes();
 		gexfGraph.generateGexfFile();
 	}
 }

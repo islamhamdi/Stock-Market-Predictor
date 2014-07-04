@@ -27,8 +27,7 @@ public class Main {
 	static double[] featuers;
 
 	public static void main(String[] args) throws Throwable {
-
-		currAvailableDays = getAvailableDays("$UA");
+		currAvailableDays = getAvailableDays("$IBM");
 
 		// 0 Twitter - 1 StockTwits - 2 Combined - 3 PosTwitter - 4 NegTwitter -
 		// 5 PosStockTwit - 6 NegStockTwitc

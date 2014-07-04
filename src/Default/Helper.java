@@ -34,4 +34,28 @@ public class Helper {
 		return combineStrings(ActivityFeatures.getActivityFeaturesList(),
 				GraphFeatures.getGraphFeaturesNames());
 	}
+
+	public static int getDataType(int files_to_run) {
+		int ans = -1;
+		switch (files_to_run) {
+		case Global.twitter:
+		case Global.postwitter:
+		case Global.negtwitter:
+			ans = Global.twitter;
+			break;
+
+		case Global.stocktwits:
+		case Global.posstocktwits:
+		case Global.negstocktwits:
+			ans = Global.stocktwits;
+			break;
+
+		case Global.combined:
+			ans = Global.combined;
+		default:
+			ans = -2;
+			break;
+		}
+		return ans;
+	}
 }
