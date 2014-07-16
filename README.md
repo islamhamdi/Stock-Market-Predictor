@@ -1,4 +1,2 @@
-gephi-twitter-visualization
+Stock Market Activity Forecasting
 ===========================
-
-A graph visualization for a set of twitter data used to get some statistics from graph features.
