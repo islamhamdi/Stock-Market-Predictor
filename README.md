@@ -13,3 +13,9 @@ As we've analyzed data from both sources for ~3 months, over 4 million tweets fr
 - Sentiment analysis does not improve our correlation results.
 - Using various Machine Learning algorithms to find a better model for predicting price movements than Cross-Correlation coefficient, we found out that we could predict the future movement of a price with correctness over 65%
 
+![Apple Case1](https://user-images.githubusercontent.com/1479894/95679886-f74eac80-0bd5-11eb-8b19-acadc72b0710.png)
+![Apple Case2](https://user-images.githubusercontent.com/1479894/95679888-fb7aca00-0bd5-11eb-94fa-d56ff89f3347.png)
+
+
+![Scatterplot Matrix](https://user-images.githubusercontent.com/1479894/95679889-fddd2400-0bd5-11eb-905e-7b285ab20482.png)
+![Graph Relations](https://user-images.githubusercontent.com/1479894/95679890-ff0e5100-0bd5-11eb-917e-ef7df6273956.png)
